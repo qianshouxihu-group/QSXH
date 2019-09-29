@@ -309,7 +309,7 @@
             ,limit: 3
             ,toolbar:"#userToolBar"
             ,id: 'docReload'
-            ,url: '<%=path%>admin/userselect.action' //数据接口
+            ,url: '<%=path%>testManager/userselect.action' //数据接口
             ,page: true //开启分页
             , parseData: function (res) {
 
@@ -382,7 +382,7 @@
                     });
                     alert(params);
                     layer.confirm('真的删除选中的这些用户吗', function(index){
-                        sendDelectData("<%=path%>admin/deleteUsers.action",params);
+                        sendDelectData("<%=path%>testManager/deleteUsers.action",params);
                         layer.close(index);
                     });
                     break;
@@ -415,7 +415,7 @@
                 area:['800px','400px'],
                 success:function(index){
                     form.val("dataFrm",data);
-                    url="<%=path%>admin/updateUser.action";
+                    url="<%=path%>testManager/updateUser.action";
                 }
             });
         }
@@ -464,12 +464,12 @@
             alert(data.userid);
             if (obj.event === 'delete') {
                 layer.confirm('确定删除用户？', function (index) {
-                    fal("<%=path%>admin/deleteUser.action",data.userid);
+                    fal("<%=path%>testManager/deleteUser.action",data.userid);
                     layer.close(index);
                 });
             }else if (obj.event === 'resetpwd') {
                 layer.confirm('确定重置密码为123456？', function (index) {
-                    fal("<%=path%>admin/resetpwd.action",data.userid);
+                    fal("<%=path%>testManager/resetpwd.action",data.userid);
                     layer.close(index);
                 });
             }else if (obj.event === 'edit') {
