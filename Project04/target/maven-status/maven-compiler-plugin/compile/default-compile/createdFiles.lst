@@ -4,6 +4,7 @@ com\qsxh\controller\TestAction.class
 com\qsxh\dao\TestDao.class
 com\qsxh\service\IInformBiz.class
 com\qsxh\entity\TblRelation.class
+com\qsxh\service\ICheckBiz.class
 com\qsxh\dao\InformDao.class
 com\qsxh\dao\MessageDao.class
 com\qsxh\service\UserService.class
@@ -16,6 +17,7 @@ com\qsxh\entity\TblUser.class
 com\qsxh\dao\AdminDao.class
 com\qsxh\dao\DatingDao.class
 com\qsxh\dao\ChatUserDao.class
+com\qsxh\controller\CheckAction.class
 com\qsxh\websocket\MyHandShakeInterceptor.class
 com\qsxh\controller\InformAction.class
 com\qsxh\entity\Message.class
@@ -53,6 +55,7 @@ com\qsxh\controller\AccountAction.class
 com\qsxh\dao\PersonalDao.class
 com\qsxh\service\IAdminBiz.class
 com\qsxh\dao\UserDao.class
+com\qsxh\service\impl\CheckBizImpl.class
 com\qsxh\dao\AccountDao.class
 com\qsxh\dao\RelationDao.class
 com\qsxh\service\IRoleBiz.class

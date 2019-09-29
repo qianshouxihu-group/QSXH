@@ -26,6 +26,7 @@ public class InformAction {
     @RequestMapping("/systemInform.action")
     public ModelAndView systemInform(@RequestParam(value = "page" , defaultValue = "1") Integer page)
     {
+        System.out.println("页数："+page);
         PageHelper.startPage(page , 3);//(当前页，每页条数)
         List<Inform> list = informBiz.systemInform("1001");//这边的user需要从session里面取~~~~~~~~~~~~~~~~~
 

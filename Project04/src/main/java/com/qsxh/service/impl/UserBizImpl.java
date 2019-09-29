@@ -71,7 +71,7 @@ public class UserBizImpl implements UserBiz {
             deleteVipUser(userid);
         }
     }
-    /*============wzq=================*/
+    /*=================wzq=================*/
     //账号重复验证
     @Override
     public boolean checkUserid(String userid) {
@@ -87,7 +87,7 @@ public class UserBizImpl implements UserBiz {
         }
         return flag;
     }
-    //前台注册 插入tbluser和tbldata
+    //前台注册 插入tbluser\tbldata\tblcplimit\tblhabit
     @Override
     @Transactional(propagation= Propagation.REQUIRED,rollbackForClassName="Exception")
     public boolean insert4table(String userid, String upass) {
@@ -112,22 +112,7 @@ public class UserBizImpl implements UserBiz {
         {
             return false;
         }
-
-//        try {
-//            num = userDao.reg(userid, upass , regdate);
-////            int i = 1/0;
-//            num2 = userDao.addHisData("ffff");//测试，让第二个dao层插入失败
-//            if (num > 0 && num2 > 0)
-//            {
-//                return true;
-//            }
-//            else
-//            {
-//                return false;
-//            }
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//            return false;
-//        }
     }
+
+
 }
