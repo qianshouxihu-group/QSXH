@@ -16,7 +16,6 @@
     <link type="text/css" rel="stylesheet" href="<%=basePath%>css/chat.css"/>
     <script type="text/javascript" src="js/jquery-1.8.3.min.js"></script>
     <script type="text/javascript" src="js/jquery.collapse.js" ></script>
-    <script type="text/javascript" src="<%=basePath%>js/selectstate.js" ></script>
 
 </head>
 <body>
@@ -56,7 +55,7 @@
                 <div class="list-top"><a href="">基本资料</a></div>
                 <div class="list-top"><a href="">择偶条件</a></div>
                 <div class="list-top"><a href="">我的照片</a></div>
-                <div class="list-top"><a href="" class="cur">我的关注</a></div>
+                <div class="list-top"><a href="MyFollowManager/getlist.action" class="cur">我的关注</a></div>
                 <div class="css3-animated-example">
                     <h3>详情资料</h3>
                     <div>
@@ -84,26 +83,32 @@
             <div class="safty">
                 <%--<div class="tit">关注列表  >></div>--%>
                 <ul class="success">
-                    <c:forEach items="${requestScope.followlist}" var="followuser">
+                    <c:forEach items="${requestScope.pageInfo.list}" var="followuser">
                         <li>
                             <div class="success-text">
                                 <a class="success-pic"><img src="images/test1.png"/></a>
                                 <c:if test="${followuser.uonline==11}">
                                     <a >用户名：${followuser.uname} &nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp; <a style="color: #eb6877;"> 我在线上 </a></a>
+                                    <p>&nbsp;</p>
+                                    <p>
+                                        <a href="" class="myfollow" style="color:#fff;">&nbsp; 发起聊天 &nbsp;</a>
+                                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                 </c:if>
                                 <c:if test="${followuser.uonline==12}">
                                     <a >用户名：${followuser.uname} &nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp; <a style="color: #a0a0a0;"> 离线 </a></a>
+                                    <p>&nbsp;</p>
+                                    <p>
+                                        <a class="myfollow" style="background: #959595;color:#fff;">&nbsp; 发起聊天 &nbsp;</a>
+                                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                 </c:if>
-                                <p>&nbsp;</p>
-                                <p>
-                                    <a href="" class="myfollow" style="color:#fff;">&nbsp; 发起聊天 &nbsp;</a>
-                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                     <a href="" class="myfollow" style="color:#fff;">&nbsp; 取消关注 &nbsp;</a>
                                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                    <a href="" class="myfollow" style="color:#fff;">&nbsp; 喜欢 &nbsp;</a>
+                                        <c:if test="${followuser.fgood==62}">
+                                            <a href="" class="myfollow" style="color:#fff;">&nbsp; 喜欢 &nbsp;</a>
+                                        </c:if>
                                 </p>
                                 <p>&nbsp;</p>
-                                <p class="mem-text">25岁  |  本科  |  165CM  |  有房</p>
+                                <p class="mem-text">&nbsp;${followuser.uage}&nbsp;岁&nbsp;|&nbsp;${followuser.uheight}&nbsp;CM&nbsp;|&nbsp;${followuser.conste}&nbsp;|&nbsp;月收入：&nbsp;${followuser.uincome}&nbsp;元</p>
                                 <p><a href="" class="cf60">[查看详情]</a></p>
                             </div>
                         </li>
@@ -144,6 +149,37 @@
                     </li>
                 </ul>
             </div>
+
+            <div class="page">
+                <a href="MyFollowManager/getlist.action?page=1">首页</a>
+                <c:if test="${pageInfo.hasPreviousPage}">
+                    <a href="MyFollowManager/getlist.action?page=${pageInfo.pageNum-1}">上一页</a>
+                </c:if>
+                <c:forEach items="${pageInfo.navigatepageNums}" var="page">
+                    <c:if test="${page==(pageInfo.pageNum-5)}">
+                        <span>...</span>
+                    </c:if>
+                    <c:if test="${page<(pageInfo.pageNum+5) and page>(pageInfo.pageNum-5)}">
+                        <c:if test="${page==pageInfo.pageNum}">
+                            <a class="cur">${page}</a>
+                        </c:if>
+                        <c:if test="${page!=pageInfo.pageNum}">
+                            <a href="MyFollowManager/getlist.action?page=${page}">${page}</a>
+                        </c:if>
+                    </c:if>
+                    <c:if test="${page==(pageInfo.pageNum+5)}">
+                        <span>...</span>
+                    </c:if>
+                    <c:if test="${page>(pageInfo.pageNum+5) and page==pageInfo.pages}">
+                        <a href="MyFollowManager/getlist.action?page=${pageInfo.pages}">${pageInfo.pages}</a>
+                    </c:if>
+                </c:forEach>
+                <c:if test="${pageInfo.hasNextPage}">
+                    <a href="MyFollowManager/getlist.action?page=${pageInfo.pageNum+1}">下一页</a>
+                </c:if>
+                <a href="MyFollowManager/getlist.action?page=${pageInfo.pages}">末页</a>
+            </div>
+
         </div><!--left-->
     </div>
     <div class="copy">
@@ -183,12 +219,6 @@
             this.removeClass("open");
         }
     });
-
-    $(function () {
-        getSelectState("uwork", "");
-        getSelectState("ucar", "");
-        getSelectState("uhouse", "");
-    })
 
 </script>
 </body>

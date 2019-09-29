@@ -13,7 +13,7 @@ import java.util.List;
 public class RelationServiceImpl implements RelationService {
 
     @Resource
-    private  RelationDao relationDao;
+    private RelationDao relationDao;
 
     //查询关系，包括点赞和关注
     @Override
@@ -29,8 +29,8 @@ public class RelationServiceImpl implements RelationService {
     }
 
     @Override
-    public List<TblUser> updateRelation(TblRelation relation) {
-        return null;
+    public List<TblUser> findFollowed(String userid) {
+        return relationDao.findFollowed(userid);
     }
 
     @Override

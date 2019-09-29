@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.qsxh.dao.TestDao">
+<mapper namespace="com.qsxh.dao.RelationDao">
 
     <select id="findRelation" parameterType="com.qsxh.entity.TblRelation" resultType="com.qsxh.entity.TblRelation">
         SELECT ffromid,ftoid,fgood,ffollow FROM tblrelation
@@ -19,8 +19,12 @@
         WHERE ffromid=#{ffromid} AND ftoid=#{ftoid};
     </update>
 
-    <select id="findFollowed" parameterType="com.qsxh.entity.TblRelation" resultType="com.qsxh.entity.TblUser">
-
+    <select id="findFollowed" resultType="com.qsxh.entity.TblUser">
+        SELECT td.uage,tu.uname,tu.uonline,td.uheight,
+        td.conste,td.uincome,tr.ffollow,tr.fgood
+        FROM tblrelation tr,tbluser tu,tbldata td
+        WHERE tr.ffollow='71' AND tr.ffromid=#{userid}
+        AND tr.ftoid=tu.userid AND tu.userid=td.userid
     </select>
 
 </mapper>

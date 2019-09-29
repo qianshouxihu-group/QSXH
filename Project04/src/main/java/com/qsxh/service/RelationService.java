@@ -11,7 +11,7 @@ public interface RelationService {
     public TblRelation findRelation(TblRelation relation);
 
     //查看关注列表
-    public List<TblUser> updateRelation(TblRelation relation);
+    public List<TblUser> findFollowed(String userid);
 
     //点赞
     public boolean good(TblRelation relation);

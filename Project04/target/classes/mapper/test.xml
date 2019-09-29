@@ -4,7 +4,7 @@
 
 <mapper namespace="com.qsxh.dao.TestDao">
 
-    <select id="userLogin" resultType="com.qsxh.entity.User">
+    <select id="userLogin" resultType="com.qsxh.entity.TblUser">
         select userid, upass,uname from tbluser where userid = #{userid} and upass = #{upass}
     </select>
 

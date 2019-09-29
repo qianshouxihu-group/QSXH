@@ -2,6 +2,7 @@ package com.qsxh.dao;
 
 import com.qsxh.entity.TblRelation;
 import com.qsxh.entity.TblUser;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -19,6 +20,6 @@ public interface RelationDao {
     public Integer addRelation(TblRelation tblRelation);
 
     //查找已关注列表
-    public List<TblUser> findFollowed(TblRelation relation);
+    public List<TblUser> findFollowed(@Param("userid") String userid);
 
 }

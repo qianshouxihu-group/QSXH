@@ -316,9 +316,9 @@
 
                 return {
                     "code": eval(res.code), //解析接口状态
-                    // "msg": res.msg, //解析提示文本
-                    "count": res.count, //解析数据长度
-                    "data": res.data//解析数据列表
+                    // "msg": res.msg,      //解析提示文本
+                    "count": res.count,     //解析数据长度
+                    "data": res.data        //解析数据列表
                 };
             }
             ,cols: [[ //表头

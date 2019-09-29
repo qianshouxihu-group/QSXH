@@ -60,7 +60,7 @@ public class UserAction extends ActionSupport {
         }
 
 
-        mv.setViewName("muban");
+        mv.setViewName("myfollowed");
         }else{
             mv.setViewName("loginfile");
         }
