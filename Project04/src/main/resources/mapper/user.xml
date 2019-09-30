@@ -74,6 +74,11 @@
         update tbluser set roleid = '5' where userid = #{userid}
     </update>
 
+    <!--后台注册审核 查看资料详情-->
+    <select id="dataDetails" resultType="com.qsxh.entity.User">
+        select u.* , d.* from tbluser u , tbldata d where u.userid = d.userid and u.userid = #{userid}
+    </select>
+
     <!--===============kjy===============-->
 
     <select id="userLogin" resultType="com.qsxh.entity.User">

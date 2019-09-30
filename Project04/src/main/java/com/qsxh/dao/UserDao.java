@@ -28,6 +28,8 @@ public interface UserDao {
     public Integer regCheckPass(@Param("userid") String userid);
     //后台注册审核 不通过
     public Integer regCheckNoPass(@Param("userid") String userid);
+    //后台注册审核 查看资料详情
+    public User dataDetails(@Param("userid") String userid);
 
     /*============cjc=============*/
     //获取聊天列表

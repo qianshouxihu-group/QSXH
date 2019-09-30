@@ -73,4 +73,14 @@ public class CheckAction {
         checkBiz.allNoPass(user.getUserids());
         return "noPassSuccess";
     }
+
+    //注册审核 查看资料详情
+    @RequestMapping("/dataDetails.action")
+    @ResponseBody
+    public User dataDetails(String userid)
+    {
+        System.out.println("查看资料详情："+userid);
+        User user = checkBiz.dataDetails(userid);
+        return user;
+    }
 }

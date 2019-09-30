@@ -101,7 +101,12 @@
                             <td>${inform.ititle}</td>
                             <td>${inform.icontext}</td>
                             <td>${inform.itime}</td>
-                            <td>${inform.istate}</td>
+                            <c:if test="${inform.istate == '31'}">
+                                <td><label style="color: green ; font-weight:bold">已读</label></td>
+                            </c:if>
+                            <c:if test="${inform.istate == '32'}">
+                                <td><label style="color: red ; font-weight:bold">未读</label></td>
+                            </c:if>
                             <td><a href="<%=path%>/informManager/sysDetails.action?informid=${inform.informid}">查看详情</a></td>
                         </tr>
                     </c:forEach>

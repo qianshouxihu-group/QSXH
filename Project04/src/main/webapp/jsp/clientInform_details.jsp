@@ -23,7 +23,7 @@
         .button {
             background-color: pink; /* Green */
             border: none;
-            color: white;
+            color: black;
             padding: 15px 32px;
             text-align: center;
             text-decoration: none;
@@ -126,17 +126,28 @@
                         </tr>
                     </table>
                     <div style="text-align: right">
+                        <%--系统消息 详情--%>
+                        <c:if test="${inform.itype == '81'}">
+                            <a href="<%=path%>/informManager/systemInform.action"><input type="button" class="button" value="返回"/></a>
+                        </c:if>
+                        <%--活动消息 详情--%>
                         <c:if test="${inform.itype == '82'}">
-                            <input type="button" class="button" value="立即参加"/>
+                            <a href="<%=path%>/jsp/${inform.iurl}.jsp"><input type="button" class="button" value="前往活动页"/></a>
+                            <a href="<%=path%>/informManager/activeInform.action"><input type="button" class="button" value="返回"/></a>
                         </c:if>
-                        <c:if test="${msg != null}">
-                            <input type="button" class="button" value="回复"/>
+                        <%--我的留言 详情--%>
+                        <c:if test="${msg.mstate == '31' || msg.mstate == '32'}">
+                            <a href="<%=path%>/inform" <input type="button" class="button" value="回复"/>
+                            <a href="<%=path%>/informManager/messageInform.action"><input type="button" class="button" value="返回"/></a>
                         </c:if>
-                        <c:if test="${dating != null}">
+                        <%--我的约会 详情--%>
+                        <c:if test="${dating.dstate == '52'}">
                             <input type="button" class="button" value="回复并接受"/>
                             <input type="button" class="button" value="拒绝"/>
                         </c:if>
-                        <a href="#" onClick="javascript :history.back(-1);"><input type="button" class="button" value="返回"/></a>
+                        <c:if test="${dating.dstate == '52' || dating.dstate == '53' || dating.dstate == '54'}">
+                            <a href="<%=path%>/informManager/datingInform.action"><input type="button" class="button" value="返回"/></a>
+                        </c:if>
                     </div>
                 </div>
             </div>

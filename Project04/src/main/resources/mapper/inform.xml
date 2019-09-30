@@ -23,4 +23,5 @@
     <update id="readSysOrActive">
         update tblinform set istate = '31' where informid = #{informid}
     </update>
+
 </mapper>

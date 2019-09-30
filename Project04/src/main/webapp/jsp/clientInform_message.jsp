@@ -104,7 +104,12 @@
                             <td>${msg.mfromid}</td>
                             <td>${msg.mtime}</td>
                             <td>${msg.mcontext}</td>
-                            <td>${msg.mstate}</td>
+                            <c:if test="${msg.mstate == '31'}">
+                                <td><label style="color: green ; font-weight:bold">已读</label></td>
+                            </c:if>
+                            <c:if test="${msg.mstate == '32'}">
+                                <td><label style="color: red ; font-weight:bold">未读</label></td>
+                            </c:if>
                             <td><a href="<%=path%>/informManager/msgDetails.action?msgid=${msg.msgid}"> 查看详情</a></td>
                         </tr>
                     </c:forEach>

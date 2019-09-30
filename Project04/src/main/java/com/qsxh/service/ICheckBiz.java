@@ -16,4 +16,6 @@ public interface ICheckBiz {
     public void allPass(String[] userids);
     //后台注册审核 批量不通过
     public void allNoPass(String[] userids);
+    //后台注册审核 查看资料详情
+    public User dataDetails(String userid);
 }

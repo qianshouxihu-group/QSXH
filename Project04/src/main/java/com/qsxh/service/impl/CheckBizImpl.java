@@ -82,5 +82,11 @@ public class CheckBizImpl implements ICheckBiz {
             regCheckNoPass(userid);
         }
     }
+    //后台注册审核 查看资料详情
+    @Override
+    public User dataDetails(String userid) {
+        User user = userDao.dataDetails(userid);
+        return user;
+    }
 
 }

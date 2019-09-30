@@ -103,7 +103,15 @@
                             <td>${dating.dcontext}</td>
                             <td>${dating.dpay}</td>
                             <td>${dating.ddate}&nbsp;${dating.dtime}</td>
-                            <td>${dating.dstate}</td>
+                            <c:if test="${dating.dstate == '52'}">
+                                <td><label style="color: yellow ; font-weight:bold">待处理</label></td>
+                            </c:if>
+                            <c:if test="${dating.dstate == '53'}">
+                                <td><label style="color: green ; font-weight:bold">已接受</label></td>
+                            </c:if>
+                            <c:if test="${dating.dstate == '54'}">
+                                <td><label style="color: red ; font-weight:bold">已拒绝</label></td>
+                            </c:if>
                             <td><a href="<%=path%>/informManager/datingDetails.action?dateid=${dating.dateid}">查看详情</a></td>
                         </tr>
                     </c:forEach>
