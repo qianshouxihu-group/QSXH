@@ -17,7 +17,9 @@ public interface ChatUserDao {
     //获取聊天列表
     public List<TblUser> findUser(@Param("userid") String userid);
 
-    //用户下线
-    public Integer offLine(@Param("userid") String userid);
+    public Integer clearChat(@Param("userid") String userid);
+
+    //修改用户上下线状态
+    public Integer changeLine(@Param("userid") String userid,@Param("uonline") String uonline);
 
 }

@@ -2,10 +2,11 @@ package com.qsxh.controller;
 
 import com.google.gson.Gson;
 import com.qsxh.entity.TblChatUser;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.qsxh.service.ChatService;
 import org.springframework.stereotype.Component;
 import org.springframework.web.socket.*;
 
+import javax.annotation.Resource;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -14,8 +15,8 @@ import java.util.Map;
 @Component
 public class MyWebSocketHandler implements WebSocketHandler{
 
-    @Autowired
-//    private youandmeService youandmeService;
+    @Resource
+    private ChatService chatService;
 
     //当MyWebSocketHandler类被加载时就会创建该Map，随类而生
     public static final Map<String, WebSocketSession> userSocketSessionMap;
@@ -33,9 +34,14 @@ public class MyWebSocketHandler implements WebSocketHandler{
 
         System.out.println("--实现握手连接--"+userid);
 
+        //修改用户状态为上线
+        chatService.online(userid);
+
         if (userSocketSessionMap.get(userid) == null) {
             userSocketSessionMap.put(userid, webSocketSession);
         }
+
+
     }
 
     //发送信息前的处理
@@ -48,9 +54,33 @@ public class MyWebSocketHandler implements WebSocketHandler{
         System.out.println("收到来自客户端的信息"+message);
 
         //得到Socket通道中的数据并转化为Message对象
-        TblChatUser cm = new Gson().fromJson(message, TblChatUser.class);
+        TblChatUser chat = new Gson().fromJson(message, TblChatUser.class);
 
-        String toid = cm.getToid();
+        String toid = chat.getToid();
+        String type = chat.getType();
+
+        switch (type){
+            case "text":
+
+                break;
+            case "img":
+
+                break;
+            case "bg":
+
+                break;
+            case "apply":
+
+                break;
+            case "agree":
+
+                break;
+            case "refuse":
+
+                break;
+
+        }
+
 
         TextMessage tm = new TextMessage(message);
 
@@ -78,13 +108,16 @@ public class MyWebSocketHandler implements WebSocketHandler{
 
         System.out.println("WebSocket:"+wsid+"--close connection");
 
+        //数据库修改在线状态为离线
+        chatService.offLine(wsid);
+
         Iterator<Map.Entry<String,WebSocketSession>> iterator = userSocketSessionMap.entrySet().iterator();
         while(iterator.hasNext()){
             Map.Entry<String,WebSocketSession> entry = iterator.next();
 
             if(entry.getValue().getAttributes().get(wsid)==webSocketSession.getAttributes().get(wsid)){
                 userSocketSessionMap.remove(webSocketSession.getAttributes().get(wsid));
-                System.out.println("WebSocket in staticMap:" + webSocketSession.getAttributes().get(wsid) + "--emoved");
+                System.out.println("WebSocket in staticMap:" + webSocketSession.getAttributes().get(wsid) + "--removed");
             }
 
         }

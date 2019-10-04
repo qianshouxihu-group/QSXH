@@ -2,6 +2,7 @@ package com.qsxh.controller;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.qsxh.entity.TblRelation;
 import com.qsxh.entity.TblUser;
 import com.qsxh.entity.User;
 import com.qsxh.service.RelationService;
@@ -21,13 +22,15 @@ public class MyFollowAction {
     @Resource
     private RelationService relationService;
 
-    @RequestMapping("/getlist")
+    @RequestMapping("/getlist")//获得关注列表
     public ModelAndView findFollowed(HttpServletRequest request, @RequestParam(value = "page", defaultValue = "1") Integer page){
         ModelAndView mv = new ModelAndView();
 
+        //获得id
         User user = (User) request.getSession().getAttribute("user");
         String userid = user.getUserid();
 
+        //dao查找并分页
         PageHelper.startPage(page,2);
         List<TblUser> followlist = relationService.findFollowed(userid);
 
@@ -37,6 +40,56 @@ public class MyFollowAction {
 
         mv.setViewName("myfollowed");
         return mv;
+    }
+
+    @RequestMapping("/good")//点赞
+    public String giveGood(HttpServletRequest request,String followedid){
+        System.out.println("---进入点赞逻辑---");
+
+        //获得id
+        User user = (User) request.getSession().getAttribute("user");
+        String userid = user.getUserid();
+
+        //封装用户信息
+        TblRelation users = new TblRelation();
+        users.setFfromid(userid);
+        users.setFtoid(followedid);
+
+        boolean result = relationService.good(users);
+
+        return "forward:/MyFollowManager/getlist.action";
+    }
+
+    @RequestMapping("/chat")//发起聊天
+    public String chatApply(HttpServletRequest request,String followedid){
+
+
+        return "forward:/MyFollowManager/getlist.action";
+    }
+
+    @RequestMapping("/change")//更改关注状态
+    public String cancelFollow(HttpServletRequest request,String followedid){
+        System.out.println("---进入关注逻辑---");
+
+        //获得id
+        User user = (User) request.getSession().getAttribute("user");
+        String userid = user.getUserid();
+
+        //封装用户信息
+        TblRelation users = new TblRelation();
+        users.setFfromid(userid);
+        users.setFtoid(followedid);
+
+        boolean result = relationService.follow(users);
+
+        return "forward:/MyFollowManager/getlist.action";
+    }
+
+    @RequestMapping("/gift")//赠送礼物
+    public String sendGift(HttpServletRequest request,String followedid){
+
+
+        return "forward:/MyFollowManager/getlist.action";
     }
 
 

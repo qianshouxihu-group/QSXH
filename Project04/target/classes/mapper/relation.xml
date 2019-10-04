@@ -21,7 +21,7 @@
 
     <select id="findFollowed" resultType="com.qsxh.entity.TblUser">
         SELECT td.uage,tu.uname,tu.uonline,td.uheight,
-        td.conste,td.uincome,tr.ffollow,tr.fgood
+        td.conste,td.uincome,tr.ffollow,tr.fgood,tu.userid
         FROM tblrelation tr,tbluser tu,tbldata td
         WHERE tr.ffollow='71' AND tr.ffromid=#{userid}
         AND tr.ftoid=tu.userid AND tu.userid=td.userid

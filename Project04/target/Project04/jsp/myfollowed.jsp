@@ -13,7 +13,7 @@
     <meta name="Description" content="牵手西湖婚恋交友网"/>
     <link type="image/x-icon" rel=icon href="images/icon.png" />
     <link type="text/css" rel="stylesheet" href="css/style.css"/>
-    <link type="text/css" rel="stylesheet" href="<%=basePath%>css/chat.css"/>
+    <link type="text/css" rel="stylesheet" href="css/chat.css"/>
     <script type="text/javascript" src="js/jquery-1.8.3.min.js"></script>
     <script type="text/javascript" src="js/jquery.collapse.js" ></script>
 
@@ -24,8 +24,16 @@
         <div class="top-left">
         </div>
         <div class="top-right">
-            <a href="">注册</a> |
-            <a href="">登录</a>
+            <c:choose>
+                <c:when test="${ sessionScope.user!=null }">
+                    <a>${ sessionScope.user.uname },欢迎您！</a>|
+                    <a href="testManager/outLogin.action">注销</a>
+                </c:when>
+                <c:otherwise>
+                    <a href="">注册</a> |
+                    <a href="">登录</a>
+                </c:otherwise>
+            </c:choose>
         </div>
     </div>
     <div class="top-ban">
@@ -84,14 +92,16 @@
                 <%--<div class="tit">关注列表  >></div>--%>
                 <ul class="success">
                     <c:forEach items="${requestScope.pageInfo.list}" var="followuser">
+                        <form method="post">
                         <li>
+                            <input type="hidden" value="${followuser.userid}" name="followedid">
                             <div class="success-text">
                                 <a class="success-pic"><img src="images/test1.png"/></a>
                                 <c:if test="${followuser.uonline==11}">
                                     <a >用户名：${followuser.uname} &nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp; <a style="color: #eb6877;"> 我在线上 </a></a>
                                     <p>&nbsp;</p>
                                     <p>
-                                        <a href="" class="myfollow" style="color:#fff;">&nbsp; 发起聊天 &nbsp;</a>
+                                        <a href="javascript:void(0);" class="myfollow" style="color:#fff;" onclick="giveGood(this)">&nbsp; 发起聊天 &nbsp;</a>
                                         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                 </c:if>
                                 <c:if test="${followuser.uonline==12}">
@@ -101,52 +111,20 @@
                                         <a class="myfollow" style="background: #959595;color:#fff;">&nbsp; 发起聊天 &nbsp;</a>
                                         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                 </c:if>
-                                    <a href="" class="myfollow" style="color:#fff;">&nbsp; 取消关注 &nbsp;</a>
+                                    <a href="javascript:void(0);" class="myfollow" style="color:#fff;" onclick="cancelFollow(this)">&nbsp; 取消关注 &nbsp;</a>
                                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                        <c:if test="${followuser.fgood==62}">
-                                            <a href="" class="myfollow" style="color:#fff;">&nbsp; 喜欢 &nbsp;</a>
+                                        <c:if test="${followuser.fgood!=61}">
+                                            <a href="javascript:void(0);" class="myfollow" style="color:#fff;" onclick="giveGood(this)">&nbsp; 喜欢 &nbsp;</a>
                                         </c:if>
                                 </p>
                                 <p>&nbsp;</p>
                                 <p class="mem-text">&nbsp;${followuser.uage}&nbsp;岁&nbsp;|&nbsp;${followuser.uheight}&nbsp;CM&nbsp;|&nbsp;${followuser.conste}&nbsp;|&nbsp;月收入：&nbsp;${followuser.uincome}&nbsp;元</p>
-                                <p><a href="" class="cf60">[查看详情]</a></p>
+                                <p><a href="javascript:void(0);" class="cf60">[查看详情]</a></p>
                             </div>
                         </li>
+                        </form>
                     </c:forEach>
-                    <li>
-                        <div class="success-text">
-                            <a class="success-pic"><img src="images/test1.png"/></a>
-                            <a >用户名：沙雕 &nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp; <a style="color: #eb6877;"> 我在线上 </a></a>
-                            <p>&nbsp;</p>
-                            <p>
-                                <a href="" class="myfollow" style="color:#fff;">&nbsp; 发起聊天 &nbsp;</a>
-                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                <a href="" class="myfollow" style="color:#fff;">&nbsp; 取消关注 &nbsp;</a>
-                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                <a href="" class="myfollow" style="color:#fff;">&nbsp; 喜欢 &nbsp;</a>
-                            </p>
-                            <p>&nbsp;</p>
-                            <p class="mem-text">25岁  |  本科  |  165CM  |  有房</p>
-                            <p><a href="" class="cf60">[查看详情]</a></p>
-                        </div>
-                    </li>
-                    <li>
-                        <div class="success-text">
-                            <a class="success-pic"><img src="images/test1.png"/></a>
-                            <a> 用户名：沙雕 &nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp; <a style="color: #a0a0a0;"> 离线 </a></a>
-                            <p>&nbsp;</p>
-                            <p>
-                                <a class="myfollow" style="background: #959595;color:#fff;">&nbsp; 发起聊天 &nbsp;</a>
-                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                <a href="" class="myfollow" style="color:#fff;">&nbsp; 取消关注 &nbsp;</a>
-                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                <a href="" class="myfollow" style="color:#fff;">&nbsp; 喜欢 &nbsp;</a>
-                            </p>
-                            <p>&nbsp;</p>
-                            <p class="mem-text">25岁  |  本科  |  165CM  |  有房</p>
-                            <p><a href="" class="cf60">[查看详情]</a></p>
-                        </div>
-                    </li>
+
                 </ul>
             </div>
 
@@ -156,21 +134,22 @@
                     <a href="MyFollowManager/getlist.action?page=${pageInfo.pageNum-1}">上一页</a>
                 </c:if>
                 <c:forEach items="${pageInfo.navigatepageNums}" var="page">
-                    <c:if test="${page==(pageInfo.pageNum-5)}">
-                        <span>...</span>
-                    </c:if>
-                    <c:if test="${page<(pageInfo.pageNum+5) and page>(pageInfo.pageNum-5)}">
-                        <c:if test="${page==pageInfo.pageNum}">
-                            <a class="cur">${page}</a>
-                        </c:if>
-                        <c:if test="${page!=pageInfo.pageNum}">
-                            <a href="MyFollowManager/getlist.action?page=${page}">${page}</a>
+                    <c:if test="${page==pageInfo.firstPage and page>1}">
+                        <a href="MyFollowManager/getlist.action?page=1">1</a>
+                        <c:if test="${page!=2}">
+                            <span>...</span>
                         </c:if>
                     </c:if>
-                    <c:if test="${page==(pageInfo.pageNum+5)}">
-                        <span>...</span>
+                    <c:if test="${page==pageInfo.pageNum}">
+                        <a class="cur">${page}</a>
                     </c:if>
-                    <c:if test="${page>(pageInfo.pageNum+5) and page==pageInfo.pages}">
+                    <c:if test="${page!=pageInfo.pageNum}">
+                        <a href="MyFollowManager/getlist.action?page=${page}">${page}</a>
+                    </c:if>
+                    <c:if test="${page<pageInfo.pages and page==pageInfo.lastPage}">
+                        <c:if test="${page!=(pageInfo.pages-1)}">
+                            <span>...</span>
+                        </c:if>
                         <a href="MyFollowManager/getlist.action?page=${pageInfo.pages}">${pageInfo.pages}</a>
                     </c:if>
                 </c:forEach>
@@ -183,7 +162,7 @@
         </div><!--left-->
     </div>
     <div class="copy">
-        <p>Copyright©2019   厦门牵手西湖婚恋交友网   版权所有 </p>
+        <p>Copyright©2019   牵手西湖婚恋交友网   版权所有 </p>
         <p>地址：厦门市软件园二期观日路56号  电话：400-000-000  技术支持：<a target="_blank" href="http://www.cykjgroup.com/">传一科技</a></p>
     </div>
     <!--在线客服-->
@@ -219,6 +198,34 @@
             this.removeClass("open");
         }
     });
+
+    function giveGood(touser) {
+        goodurl = "MyFollowManager/good.action";
+        var toform = $(touser).parent().parent().parent().parent();
+        $(toform).attr('action',goodurl);
+        $(toform).submit();
+    }
+
+    function cancelFollow(touser) {
+        cancelurl = "MyFollowManager/change.action";
+        var toform = $(touser).parent().parent().parent().parent();
+        $(toform).attr('action',cancelurl);
+        $(toform).submit();
+    }
+
+    function chatApply(touser) {
+        chaturl = "MyFollowManager/chat.action";
+        var toform = $(touser).parent().parent().parent().parent();
+        $(toform).attr('action',chaturl);
+        $(toform).submit();
+    }
+
+    function getDetails(touser) {
+        detailurl = "MyFollowManager/chat.action";
+        var toform = $(touser).parent().parent().parent().parent();
+        $(toform).attr('action',detailurl);
+        $(toform).submit();
+    }
 
 </script>
 </body>
