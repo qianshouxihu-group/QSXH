@@ -10,6 +10,8 @@ import com.qsxh.service.IInformBiz;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 //我的消息业务
@@ -84,6 +86,25 @@ public class InformBizImpl implements IInformBiz {
         else
         {
             return false;
+        }
+    }
+
+    //我的留言 回复
+    @Override
+    public String addOneRecord(Message message) {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        String mtime = dateFormat.format(new Date());
+        message.setMtime(mtime);
+        message.setMfromid("1001");//先写死，后面从session取
+
+        Integer num = messageDao.addOneRecord(message);
+        if(num > 0 )
+        {
+            return "replySuccess";
+        }
+        else
+        {
+            return "replyFail";
         }
     }
 

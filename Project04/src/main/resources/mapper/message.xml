@@ -19,4 +19,9 @@
         update tblmessage set mstate = '31' where msgid = #{msgid}
     </update>
 
+    <!--回复 添加一条记录-->
+    <insert id="addOneRecord" parameterType="com.qsxh.entity.Message">
+        insert into tblmessage (mtime , mfromid , mtoid , mcontext , mstate , mtitle)
+         values (#{mtime} , #{mfromid} , #{mtoid} , #{mcontext} , '32' , #{mtitle})
+    </insert>
 </mapper>

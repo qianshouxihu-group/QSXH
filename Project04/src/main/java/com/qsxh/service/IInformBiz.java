@@ -23,6 +23,8 @@ public interface IInformBiz {
     public Message msgDetails(String msgid);
     //改状态为已读
     public boolean readMsg(String msgid);
+    //我的留言 回复
+    public String addOneRecord(Message message);
 
 
 

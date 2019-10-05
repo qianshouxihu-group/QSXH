@@ -10,9 +10,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.annotation.Resource;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 //我的消息功能
@@ -104,7 +107,7 @@ public class InformAction {
     }
 
     //我的留言 查看详情
-    @RequestMapping("msgDetails.action")
+    @RequestMapping("/msgDetails.action")
     public ModelAndView msgDetails(String msgid)
     {
         System.out.println("msgid:"+msgid);
@@ -119,7 +122,7 @@ public class InformAction {
     }
 
     //我的约会 查看详情
-    @RequestMapping("datingDetails.action")
+    @RequestMapping("/datingDetails.action")
     public ModelAndView datingDetails(String dateid)
     {
         System.out.println("dateid:"+dateid);
@@ -131,5 +134,17 @@ public class InformAction {
         mav.addObject("dating" , dating);
         mav.setViewName("clientInform_details");
         return mav;
+    }
+
+    //我的留言 回复
+    @RequestMapping("/reply.action")
+    @ResponseBody
+    public String reply(Message message)
+    {
+        System.out.println("进入action");
+        String result = informBiz.addOneRecord(message);
+
+        System.out.println("myTitle:"+message.getMtitle()+"myContext:"+message.getMcontext()+"toid:"+message.getMtoid());
+        return result;
     }
 }

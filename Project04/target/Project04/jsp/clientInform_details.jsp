@@ -13,8 +13,14 @@
     <meta name="Description" content="牵手西湖婚恋交友网"/>
     <link type="image/x-icon" rel=icon href="images/icon.png" />
     <link type="text/css" rel="stylesheet" href="css/style.css"/>
+    <script  src="js/jquery.min.js" type="text/javascript"></script>
+    <%--bootstrap--%>
     <link type="text/css" rel="stylesheet" href="css/bootstrap.min.css"/>
     <script type="text/javascript" src="js/bootstrap.min.js"></script>
+    <%--layui--%>
+    <link rel="stylesheet" href="layui/css/layui.css" media="all">
+    <script src="layui/layui.js"></script>
+
     <style>#detailsDiv{width:800px;height:auto;background-color:pink;
             box-shadow: 10px 10px 5px #888888;margin: 50px auto auto 50px;
             padding-left: 50px;}
@@ -55,7 +61,6 @@
         <div class="top-mid-box">
             <a href="" class="logo"><img src="<%=basePath%>images/logo.png"/></a>
             <div class="adv"><img src="<%=basePath%>images/adv.png"/></div>
-
         </div>
     </div>
 </div>
@@ -137,7 +142,7 @@
                         </c:if>
                         <%--我的留言 详情--%>
                         <c:if test="${msg.mstate == '31' || msg.mstate == '32'}">
-                            <input type="button" class="button" value="回复"/>
+                            <input type="button" class="button" value="回复" id="reply"/>
                             <a href="<%=path%>/informManager/messageInform.action"><input type="button" class="button" value="返回"/></a>
                         </c:if>
                         <%--我的约会 详情--%>
@@ -159,99 +164,317 @@
         <p>地址：厦门市软件园二期观日路56号  电话：400-8282-8888</p>
     </div>
 </div>
+<%--=======================================回复弹出层=========================================--%>
+<div class="layui-row" id="test" style="display: none;">
+    <div class="layui-col-md10">
+            <form class="layui-form" action="" method="post" id="replyOthers">
+                <input type="hidden" name="mtoid" value="${msg.mfromid}" ><%--toid--%>
+
+                <div class="layui-form-item">
+                    <label class="layui-form-label" style="padding-left:-50px;">标题:</label>
+                        <div class="layui-input-block">
+                            <input type="text" autofocus placeholder="请输入标题" lay-verify="myTitle"
+                                    name="mtitle" id="myTitle" class="layui-input">
+                        </div>
+                </div>
+
+                <div class="layui-form-item">
+                    <label class="layui-form-label" style="padding-left:-50px;">内容:</label>
+                        <div class="layui-input-block">
+                            <textarea cols="10" rows="3" placeholder="请输入内容" lay-verify="myContext"
+                                      name="mcontext" id="myContext" class="layui-textarea"
+                                      maxlength="100" style="resize: none;"></textarea>
+                        </div>
+                </div>
+
+                <div class="layui-form-item">
+                    <div class="layui-input-block" style="padding-left: 50px;">
+                        <button lay-submit="" lay-filter="suu" class="layui-btn layui-btn-normal tijiao">提交</button>
+                    </div>
+                </div> 
+            </form>
+    </div>
+</div>
+<!--=========================================回复弹出层开始=================================================-->
+<%--<div style="display: none;padding: 20px" id="replyDiv" >--%>
+<%--    <form class="layui-form " action="" lay-filter="dataFrm" id="dataForm">--%>
+<%--        <div class="layui-form-item">&lt;%&ndash;一行&ndash;%&gt;--%>
+<%--            <div class="layui-inline">&lt;%&ndash;一格&ndash;%&gt;--%>
+<%--                <label class="layui-form-label">标题:</label>--%>
+<%--                <div class="layui-input-inline">--%>
+<%--                    <input type="text" id="mtitle" name="mtitle"  lay-verify="required" autocomplete="off"--%>
+<%--                           class="layui-input">--%>
+<%--                </div>--%>
+<%--            </div>--%>
+<%--        </div>--%>
+<%--        <div class="layui-form-item">--%>
+<%--            <div class="layui-inline">--%>
+<%--                <label class="layui-form-label">内容:</label>--%>
+<%--                <div class="layui-input-inline">--%>
+<%--                    <textarea rows="5" cols="20" id="mcontext" name="mcontext" lay-verify="required" autocomplete="off"--%>
+<%--                              class="layui-textarea"></textarea>--%>
+<%--                </div>--%>
+<%--            </div>--%>
+<%--        </div>--%>
+<%--        <div class="layui-form-item">--%>
+<%--            <div class="layui-inline">--%>
+<%--                <label class="layui-form-label">身高:</label>--%>
+<%--                <div class="layui-input-inline">--%>
+<%--                    <input type="text" name="uheight" autocomplete="off"--%>
+<%--                           class="layui-input">--%>
+<%--                </div>--%>
+<%--            </div>--%>
+<%--            <div class="layui-inline">--%>
+<%--                <label class="layui-form-label">体重:</label>--%>
+<%--                <div class="layui-input-inline">--%>
+<%--                    <input type="text" name="uweight" autocomplete="off"--%>
+<%--                           class="layui-input">--%>
+<%--                </div>--%>
+<%--            </div>--%>
+<%--        </div>--%>
+<%--        <div class="layui-form-item">--%>
+<%--            <div class="layui-inline">--%>
+<%--                <label class="layui-form-label">婚姻状况:</label>--%>
+<%--                <div class="layui-input-block" style="width:150px">--%>
+<%--                    <select name="umerried"  lay-verify="required">--%>
+<%--                        <option value="未婚">未婚</option>--%>
+<%--                        <option value="离异">离异</option>--%>
+<%--                        <option value="丧偶">丧偶</option>--%>
+<%--                    </select>--%>
+<%--                </div>--%>
+<%--            </div>--%>
+<%--            <div class="layui-inline">--%>
+<%--                <label class="layui-form-label">月收入:</label>--%>
+<%--                <div class="layui-input-block" style="width:150px">--%>
+<%--                    <select name="uincome"  lay-verify="required">--%>
+<%--                        <option value="0-5000">0-5000</option>--%>
+<%--                        <option value="5000-10000">5000-10000</option>--%>
+<%--                        <option value="10000-15000">10000-15000</option>--%>
+<%--                        <option value="15000-20000">15000-20000</option>--%>
+<%--                        <option value="20000以上">20000以上</option>--%>
+<%--                    </select>--%>
+<%--                </div>--%>
+<%--            </div>--%>
+<%--        </div>--%>
+<%--        <div class="layui-form-item">--%>
+<%--            <div class="layui-inline">--%>
+<%--                <label class="layui-form-label">星座:</label>--%>
+<%--                <div class="layui-input-block" style="width:150px">--%>
+<%--                    <select name="conste"  lay-verify="required">--%>
+<%--                        <option value="白羊座">白羊座</option>--%>
+<%--                        <option value="金牛座">金牛座</option>--%>
+<%--                        <option value="双子座">双子座</option>--%>
+<%--                        <option value="巨蟹座">巨蟹座</option>--%>
+<%--                        <option value="狮子座">狮子座</option>--%>
+<%--                        <option value="处女座">处女座</option>--%>
+<%--                        <option value="天秤座">天秤座</option>--%>
+<%--                        <option value="天蝎座">天蝎座</option>--%>
+<%--                        <option value="射手座">射手座</option>--%>
+<%--                        <option value="魔羯座">魔羯座</option>--%>
+<%--                        <option value="水瓶座">水瓶座</option>--%>
+<%--                        <option value="双鱼座">双鱼座</option>--%>
+<%--                    </select>--%>
+<%--                </div>--%>
+<%--            </div>--%>
+<%--            <div class="layui-inline">--%>
+<%--                <label class="layui-form-label">血型:</label>--%>
+<%--                <div class="layui-input-block" style="width:150px">--%>
+<%--                    <select name="ublood"  lay-verify="required">--%>
+<%--                        <option value="A">A型</option>--%>
+<%--                        <option value="B">B型</option>--%>
+<%--                        <option value="AB">AB型</option>--%>
+<%--                        <option value="O">O型</option>--%>
+<%--                        <option value="其它">其它血型</option>--%>
+<%--                    </select>--%>
+<%--                </div>--%>
+
+<%--            </div>--%>
+
+<%--        </div>--%>
+<%--        <div class="layui-form-item">--%>
+<%--            <div class="layui-form-item">--%>
+<%--                <label class="layui-form-label">性别：</label>--%>
+<%--                <div class="layui-input-block">--%>
+<%--                    <input type="radio" name="usex" value="男" title="男">--%>
+<%--                    <input type="radio" name="usex" value="女" title="女">--%>
+<%--                </div>--%>
+<%--            </div>--%>
+<%--        </div>--%>
+<%--        <div class="layui-form-item">--%>
+<%--            <div class="layui-inline">--%>
+<%--                <label class="layui-form-label">出生日期:</label>--%>
+<%--                <div class="layui-input-inline">--%>
+<%--                    <input type="text" name="ubirthday" lay-verify="required" autocomplete="off"--%>
+<%--                           class="layui-input">--%>
+<%--                </div>--%>
+<%--            </div>--%>
+<%--        </div>--%>
+<%--        <div class="layui-form-item">--%>
+<%--            <div class="layui-form-item">--%>
+<%--                <label class="layui-form-label">学历</label>--%>
+<%--                <div class="layui-input-block" style="width:150px">--%>
+<%--                    <select name="uedu"  lay-verify="required">--%>
+<%--                        <option value="高中及以下">高中及以下</option>--%>
+<%--                        <option value="专科">专科</option>--%>
+<%--                        <option value="本科">本科</option>--%>
+<%--                        <option value="硕士">硕士</option>--%>
+<%--                        <option value="博士">博士</option>--%>
+<%--                    </select>--%>
+<%--                </div>--%>
+<%--            </div>--%>
+<%--            <div class="layui-inline">--%>
+<%--                <label class="layui-form-label">地址:</label>--%>
+<%--                <div class="layui-input-inline">--%>
+<%--                    <input type="text" name="uaddress" autocomplete="off"--%>
+<%--                           class="layui-input">--%>
+<%--                </div>--%>
+<%--            </div>--%>
+<%--        </div>--%>
+
+
+<%--        <div class="layui-form-item" style="text-align: center;">--%>
+<%--            <div class="layui-input-block">--%>
+<%--                <button type="button" class="layui-btn layui-btn-normal layui-btn-sm layui-icon layui-icon-release" lay-filter="doSubmit" lay-submit="">提交</button>--%>
+<%--                <button type="reset" class="layui-btn layui-btn-warm layui-btn-sm layui-icon layui-icon-refresh" >重置</button>--%>
+<%--            </div>--%>
+<%--        </div>--%>
+<%--    </form>--%>
+
+<%--</div>--%>
 </body>
-<%--<!-- layui表格插件 -->--%>
-<%--&lt;%&ndash;定义工具条&ndash;%&gt;--%>
-<%--<script id="barDemo" type="text/html">--%>
-<%--    <div class="layui-btn-container">--%>
-<%--        <button class="layui-btn layui-btn-sm" lay-event="del">删除</button>--%>
-<%--        <button class="layui-btn layui-btn-sm" lay-event="edit">启用禁用</button>--%>
-<%--        <button class="layui-btn layui-btn-sm" lay-event="resetPass">重置密码</button>--%>
-<%--    </div>--%>
-<%--</script>--%>
+<%--========================================回复AJAX===============================================--%>
+<script type="text/javascript">
+    layui.use(['layer','form'],function(){
+        var form=layui.form;
+        var layer=layui.layer;
+        $=layui.jquery;
 
-<%--<script>--%>
-<%--    layui.use('table', function() {--%>
-<%--        var table = layui.table;--%>
-<%--        table.render({--%>
-<%--            elem: '#layui_table_id'                  //定位表格--%>
-<%--            , url: '<%=path%>/msgManager/systemMsg.action'   //请求路径--%>
-<%--            , page: true                             //开启分页（初始值为1）--%>
-<%--            , limit:3                                //每页行数--%>
-<%--            , id: 'testReload'                       //查询同样走这个ajax，需要id--%>
-<%--            ,parseData: function (res) {             //解析数据--%>
-<%--                console.log("返回值" + res);--%>
-<%--                console.log("状态码" + res.code);--%>
-<%--                // console.log("消息" + res.msg);--%>
-<%--                console.log("条数" + res.count);--%>
-<%--                console.log("数据" + res.data);--%>
 
-<%--                return {--%>
-<%--                    "code": eval(res.code), //解析接口状态--%>
-<%--                    "msg": res.msg,         //解析提示文本--%>
-<%--                    "count": res.count,     //解析数据长度--%>
-<%--                    "data": res.data        //解析数据列表--%>
-<%--                };--%>
-<%--            }--%>
-<%--            , cols: [[                      //定义表头--%>
-<%--                {field: 'userid', title: '用户id', minWidth: 100}--%>
-<%--                , {field: 'uname', title: '用户名', minWidth: 80}--%>
-<%--                , {field: 'upass', title: '密码', minWidth: 80}--%>
-<%--                , {field: 'right', title: '操作', toolbar:'#barDemo' ,minWidth:270}//工具条--%>
-<%--            ]]--%>
-<%--        })--%>
 
-<%--        //触发查询按钮--%>
-<%--        var $ = layui.$, active = {--%>
-<%--            reload: function(){--%>
-<%--                alert("触发查询按钮");--%>
-<%--                var beginDate = $('#beginDate');--%>
-<%--                var endDate = $('#endDate');--%>
-<%--                var uid = $('#userid');--%>
-<%--                alert(beginDate.val()+endDate.val()+uid.val());--%>
-<%--                //执行重载--%>
-<%--                table.reload('testReload', {--%>
-<%--                    page: {--%>
-<%--                        curr: 1 //重新从第 1 页开始--%>
-<%--                    }--%>
-<%--                    ,where: {   //传参数--%>
-<%--                        beginDate : beginDate.val(),--%>
-<%--                        endDate : endDate.val(),--%>
-<%--                        uid : uid.val(),--%>
-<%--                    }--%>
-<%--                }, 'data');--%>
-<%--            }--%>
-<%--        };--%>
+        $("#reply").on('click',function(){
+            layer.open({
+                type:1,
+                title:"回复对方",
+                skin:"myclass",//自定样式
+                area:["600px","520px"],
+                resize:false,
+                content:$("#test").html(),
 
-<%--        $('.demoTable .layui-btn').on('click', function(){--%>
-<%--            alert("触发按钮");--%>
-<%--            var type = $(this).data('type');--%>
-<%--            active[type] ? active[type].call(this) : '';--%>
-<%--        })--%>
+                success: function(layero, index){},
+                yes:function(){
+                }
+            });
+            form.render();//动态渲染
 
-<%--        //监听行工具事件--%>
-<%--        table.on('tool(test)', function(obj){--%>
-<%--            alert("触发工具条按钮");--%>
-<%--            var data = obj.data;--%>
-<%--            console.log(obj);--%>
-<%--            if(obj.event === 'del'){--%>
-<%--                layer.confirm('真的删除行么', function(index){--%>
-<%--                    obj.del();--%>
-<%--                    layer.close(index);--%>
-<%--                });--%>
-<%--            } else if(obj.event === 'edit'){--%>
-<%--                layer.prompt({--%>
-<%--                    formType: 2--%>
-<%--                    ,value: data.userid--%>
-<%--                }, function(value, index){--%>
-<%--                    obj.update({--%>
-<%--                        username: value--%>
-<%--                    });--%>
-<%--                    layer.close(index);--%>
-<%--                });--%>
-<%--            }--%>
-<%--        });--%>
-<%--    });--%>
-<%--</script>--%>
+        });
+
+        //标题表单验证
+        form.verify({
+            myTitle: function(value){
+                if(value.length < 5){
+                    return '标题至少5个字符！';
+                }
+            }
+        });
+        //内容表单验证
+        form.verify({
+            myContext: function(value){
+                if(value.length == 0){
+                    return '请输入内容！';
+                }
+            }
+        });
+        //表单提交
+        form.on('submit(suu)', function(data){
+            $.ajax({
+                url:'<%=path%>/informManager/reply.action',
+                method:'post',
+                data:data.field,
+                dataType:'text',
+                success:function(res){
+                    if(res == 'replySuccess')
+                    {
+                        layer.msg("回复成功！");
+                    }
+                    else if(res == 'replyFail')
+                    {
+                        layer.msg("回复失败！");
+                    }
+                },
+
+                //     if(res.code='0'){
+                //         parent.closeIframe(res.msg);
+                //     }
+                //     else
+                //         alert(res.msg);
+                // },
+                error:function (data) {
+                    alert("未连接");
+                }
+            }) ;
+
+        });
+    });
+</script>
+
+<script type="text/javascript">
+    /*打开弹窗  发送回复AJAX*/
+    <%--function openReply(toid)--%>
+    <%--{--%>
+    <%--    layui.use(['layer','form'], function(){--%>
+    <%--    var layer = layui.layer;--%>
+    <%--    var url;--%>
+    <%--    var mainIndex;--%>
+    <%--    var form = layui.form;--%>
+    <%--        alert("回复给："+toid);--%>
+    <%--        mainIndex = layer.open({--%>
+    <%--            type:1,//1为div，2为jsp--%>
+    <%--            title:'回复',--%>
+    <%--            content:$("#replyDiv"),--%>
+    <%--            area:['800px','400px'],--%>
+    <%--            offset: 'auto',--%>
+    <%--            btn:['发送','取消'],--%>
+    <%--            shade:false,--%>
+    <%--            success:function(index){--%>
+    <%--                //清空表单数据--%>
+    <%--                $("#dataFrm")[0].reset();--%>
+    <%--                url="<%=path%>/informManager/reply.action";--%>
+    <%--            }--%>
+                <%--btn1:function(index , layero) {--%>
+                <%--    alert("发送");--%>
+                <%--    $.ajax({--%>
+
+                <%--        async: true,--%>
+                <%--        type: "post",--%>
+                <%--        url: "<%=path%>/informManager/reply.action",--%>
+                <%--        dataType: "json",--%>
+                <%--        data: {"mtoid": toid, "mtitle": $("#mtitle"), "mcontext": $("#mcontext")},--%>
+                <%--        success: function (dat) {--%>
+                <%--            layer.msg(dat);--%>
+                <%--            layer.msg("发送成功！");--%>
+                <%--            //关闭弹出层--%>
+                <%--            layer.close(mainIndex);--%>
+                <%--        },--%>
+                <%--        error:function (dat) {--%>
+                <%--            alert("error");--%>
+                <%--        }--%>
+
+                <%--    });--%>
+                <%--},--%>
+    //             btn2:function(index){
+    //                 layer.close(index);
+    //             }
+    //             success:function(index){
+    //                 //清空表单数据
+    //                 // $("#dataFrm")[0].reset();
+    //                 // url="user/addUser.action";
+    //             }
+    //
+    //         })
+    //     });
+    // }
+
+</script>
+
 </html>
 

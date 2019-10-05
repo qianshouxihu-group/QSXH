@@ -15,4 +15,6 @@ public interface MessageDao {
     public Message messageDetails(@Param("msgid") String msgid);
     //更改为已读
     public Integer readMessage(@Param("msgid") String msgid);
+    //回复 添加一条记录
+    public Integer addOneRecord(Message message);
 }
