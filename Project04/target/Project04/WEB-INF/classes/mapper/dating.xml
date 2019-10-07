@@ -32,4 +32,10 @@
         update tbldating set dstate = '54' where dateid = #{dateid}
     </update>
 
+    <!--和TA约会-->
+    <insert id="dating" parameterType="com.qsxh.entity.Dating">
+        insert into tbldating (ddate , dtime , dfromid , dtoid , dcontext , dstate , dpay , daddress)
+        values (#{ddate} , #{dtime} , #{dfromid} , #{dtoid} , #{dcontext} , '51' , #{dpay} , #{daddress})
+    </insert>
+
 </mapper>

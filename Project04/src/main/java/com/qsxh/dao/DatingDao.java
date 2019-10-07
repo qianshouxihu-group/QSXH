@@ -21,4 +21,6 @@ public interface DatingDao {
     public Integer acceptDating(Dating dating);
     //我的约会 拒绝
     public Integer rejectDating(String dateid);
+    //和TA约会
+    public Integer dating(Dating dating);
 }
