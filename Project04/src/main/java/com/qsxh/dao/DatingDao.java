@@ -15,4 +15,10 @@ public interface DatingDao {
     public Dating datingDetails(@Param("dateid") String dateid);
 //    //改状态为已读
 //    public Integer readDating(@Param("dateid") String dateid);
+    //我的约会 回复
+    public Integer replyDating(Dating dating);
+    //我的约会 接受
+    public Integer acceptDating(Dating dating);
+    //我的约会 拒绝
+    public Integer rejectDating(String dateid);
 }

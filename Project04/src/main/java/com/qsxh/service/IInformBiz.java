@@ -34,4 +34,8 @@ public interface IInformBiz {
     public Dating datingDetails(String dateid);
 //    //改状态为已读
 //    public boolean readDating(String dateid);
+    //我的约会 回复并接受
+    public String replyAndAccept(Dating dating);
+    //我的约会 拒绝
+    public String reject(String dateid);
 }

@@ -6,14 +6,30 @@
 
     <!--我的约会列表-->
     <select id="datingInform" resultType="com.qsxh.entity.Dating">
-        select * from tbldating
-        where (dtoid = #{userid} or dfromid = #{userid}) and dstate != '51'
+        select d.* , u.uname from tbldating d , tbluser u
+        where (dtoid = #{userid} or dfromid = #{userid}) and dstate != '51' and d.dfromid = u.userid
         ORDER BY ddate desc , dtime desc
     </select>
 
     <!--查看约会详情-->
     <select id="datingDetails" resultType="com.qsxh.entity.Dating">
-        select * from tbldating where dateid = #{dateid}
+        select d.* , u.uname from tbldating d , tbluser u
+        where dateid = #{dateid} and d.dfromid = u.userid
     </select>
+
+    <!--回复约会-->
+    <update id="replyDating">
+        update tbldating set dreturn = #{dreturn} where dateid = #{dateid}
+    </update>
+
+    <!--接受约会-->
+    <update id="acceptDating">
+        update tbldating set dstate = '53' where dateid = #{dateid}
+    </update>
+
+    <!--拒绝约会-->
+    <update id="rejectDating">
+        update tbldating set dstate = '54' where dateid = #{dateid}
+    </update>
 
 </mapper>

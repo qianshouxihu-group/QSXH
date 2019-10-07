@@ -8,6 +8,7 @@ import com.qsxh.entity.Inform;
 import com.qsxh.entity.Message;
 import com.qsxh.service.IInformBiz;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.text.SimpleDateFormat;
@@ -113,6 +114,34 @@ public class InformBizImpl implements IInformBiz {
     public Dating datingDetails(String dateid) {
         Dating dating = datingDao.datingDetails(dateid);
         return dating;
+    }
+    //我的约会 回复并接受
+    @Override
+    @Transactional
+    public String replyAndAccept(Dating dating) {
+        Integer num1 = datingDao.replyDating(dating);
+        Integer num2 = datingDao.acceptDating(dating);
+        if (num1 > 0 && num2 >0)
+        {
+            return "success";
+        }
+        else
+        {
+            return "fail";
+        }
+    }
+    //我的约会 拒绝
+    @Override
+    public String reject(String dateid) {
+        Integer num = datingDao.rejectDating(dateid);
+        if (num > 0)
+        {
+            return "success";
+        }
+        else
+        {
+            return "fail";
+        }
     }
 
 }

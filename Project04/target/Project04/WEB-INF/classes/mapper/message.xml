@@ -6,12 +6,15 @@
 
     <!--我的留言-->
     <select id="messageInform" resultType="com.qsxh.entity.Message">
-        select * from tblmessage where mtoid = #{userid} ORDER BY mtime desc
+        select m.* , u.uname from tblmessage m , tbluser u
+        where mtoid = #{userid} and m.mfromid = u.userid
+        ORDER BY mtime desc
     </select>
 
     <!--查看详情-->
     <select id="messageDetails" resultType="com.qsxh.entity.Message">
-        select * from tblmessage where msgid = #{msgid}
+        select m.* , u.uname from tblmessage m , tbluser u
+        where msgid = #{msgid} and m.mfromid = u.userid
     </select>
 
     <!--更改为已读-->

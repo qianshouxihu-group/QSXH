@@ -8,6 +8,7 @@ import com.qsxh.entity.Message;
 import com.qsxh.service.IInformBiz;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -91,7 +92,7 @@ public class InformAction {
         return mav;
     }
 
-    //系统消息 查看详情
+    //系统消息+活动消息 查看详情
     @RequestMapping("/sysDetails.action")
     @Transactional
     public ModelAndView sysDetails(String informid)
@@ -145,6 +146,29 @@ public class InformAction {
         String result = informBiz.addOneRecord(message);
 
         System.out.println("myTitle:"+message.getMtitle()+"myContext:"+message.getMcontext()+"toid:"+message.getMtoid());
+        return result;
+    }
+
+    //我的约会 回复并接受
+    @RequestMapping("/replyAndAccept.action")
+    @ResponseBody
+    public String replyAndAccept(Dating dating)
+    {
+        System.out.println("进入replyAndAccept");
+        String result = informBiz.replyAndAccept(dating);
+
+        System.out.println("dreturn:" + dating.getDreturn() + "dateid:" + dating.getDateid());
+
+        return result;
+    }
+
+    //我的约会 拒绝
+    @RequestMapping("/reject.action")
+    @ResponseBody
+    public String reject(String dateid)
+    {
+        System.out.println("dateid:"+dateid);
+        String result = informBiz.reject(dateid);
         return result;
     }
 }

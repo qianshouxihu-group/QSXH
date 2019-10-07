@@ -11,11 +11,12 @@ public class Dating {
     private String dpay;//买单方式
     private String daddress;//地点
     private String dreturn;//被约人回复
+    private String uname;//发送人名字
 
     public Dating() {
     }
 
-    public Dating(Integer dateid, String ddate, String dtime, String dfromid, String dtoid, String dcontext, String dstate, String dpay, String daddress, String dreturn) {
+    public Dating(Integer dateid, String ddate, String dtime, String dfromid, String dtoid, String dcontext, String dstate, String dpay, String daddress, String dreturn, String uname) {
         this.dateid = dateid;
         this.ddate = ddate;
         this.dtime = dtime;
@@ -26,6 +27,7 @@ public class Dating {
         this.dpay = dpay;
         this.daddress = daddress;
         this.dreturn = dreturn;
+        this.uname = uname;
     }
 
     public Integer getDateid() {
@@ -106,5 +108,13 @@ public class Dating {
 
     public void setDreturn(String dreturn) {
         this.dreturn = dreturn;
+    }
+
+    public String getUname() {
+        return uname;
+    }
+
+    public void setUname(String uname) {
+        this.uname = uname;
     }
 }
