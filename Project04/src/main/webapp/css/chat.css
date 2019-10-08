@@ -1,9 +1,31 @@
-﻿.myfollow{background:#eb6877;
+﻿.my-notice{
+    display: inline-block;
+    height: auto;
+    min-width: 10px;
+    padding: 3px 5px;
+    font-size: 12px;
+    font-weight: 700;
+    line-height: 1;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    border-radius: 10px;
+    margin-right: -10px;
+    margin-top: auto;
+    color: #fff;
+    background: #8c85e6;
+    bottom: 20px;
+    right: auto;
+}
+
+.myfollow{
+    background:#eb6877;
     color:#fff;
     -moz-border-radius:15px;
     -webkit-border-radius:15px;
     border-radius: 15px;
-    padding: 5px 8px;}
+    padding: 5px 8px;
+}
 
 .chatContainer,.chatContainer div, .chatContainer ul, .chatContainer li, .chatContainer p{
     -webkit-box-sizing: border-box;
@@ -73,7 +95,7 @@
 .chatBtn{
     width: 50px;
     height: 50px;
-    background: #01bef0;
+    background: #eb6877;
     color: #fff;
     line-height: 50px;
     text-align: center;
@@ -86,7 +108,7 @@
     overflow: hidden;
 }
 .chatBtn:hover{
-    background: #01b3df;
+    background: #cd505e;
     box-shadow: none;
 }
 .chatBtn>i{
@@ -110,7 +132,7 @@
 .chatBox-head{
     width: 100%;
     height: 75px;
-    background: #01aee0;
+    background: #ef7f8b;
     position: absolute;
     top: 0;
     left: 0;
@@ -147,7 +169,7 @@
 }
 
 .chat-return:hover{
-    background: #0188b7;
+    background: #cd505e;
 }
 .chat-close{
     float: right;
@@ -159,7 +181,7 @@
     text-align: center;
 }
 .chat-close:hover{
-    background: #0188b7;
+    background: #cd505e;
 }
 .chat-people{
     float: left;
@@ -341,7 +363,7 @@
     text-align: right;
 }
 .clearfloat .right .chat-message{
-    background: #8c85e6;
+    background: #cd505e;
     color: #fff;
     text-align: left;
     min-height: 36px;
@@ -353,7 +375,7 @@
     right: -6px;
     border-top: 10px solid transparent;
     border-bottom: 10px solid transparent;
-    border-left: 10px solid #8c85e6;
+    border-left: 10px solid #cd505e;
 }
 
 .clearfloat .chat-avatars{

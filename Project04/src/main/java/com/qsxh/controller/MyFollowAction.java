@@ -97,8 +97,18 @@ public class MyFollowAction {
 
     @RequestMapping("/gift")//赠送礼物
     public String sendGift(HttpServletRequest request,String followedid){
+        System.out.println("---进入赠送礼物逻辑---");
 
+        //获得id
+        User user = (User) request.getSession().getAttribute("user");
+        String userid = user.getUserid();
 
+        //封装用户信息
+        TblRelation users = new TblRelation();
+        users.setFfromid(userid);
+        users.setFtoid(followedid);
+
+        boolean result = relationService.sendGift(users);
 
         return "forward:/MyFollowManager/getlist.action";
     }

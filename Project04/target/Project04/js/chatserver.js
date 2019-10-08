@@ -77,6 +77,9 @@
                     sendMessage(messages.content,messages.fromid,'refuse');
                 }
 			}
+			else if (messages.type == 'img'){
+				showReceiveImage(messages.content, messages.time);
+			}
 			else if(messages.type == 'agree'){
 				alert(messages.content + '同意了您的聊天请求');
 				showChatList();
@@ -85,7 +88,7 @@
 				alert(messages.content + '拒绝了您的聊天请求');
 			}
 			else if(messages.type == 0 ||messages.type == -1 || messages.type == 'text'){
-                showReceiveMessage(messages.content, messages.fromid, messages.toid,messages.type,messages.time);
+                showReceiveMessage(messages.content, messages.time);
             }
 
 		}
@@ -104,18 +107,11 @@
 		}
 
 		//将消息显示在网页上
-		function showReceiveMessage(content, from, to, type, time) {
-			var times = time.split(' ');
-			var now = getDateFull();
-			var nows = now.split(' ');
-			var showTime = times[1];
-			if(nows[0]!=times[0]){
-				showTime = time;
-			}
+		function showReceiveMessage(content, time) {
 
 			$(".chatBox-content-demo").append("<div class=\"clearfloat\"><div class=\"author-name\">\n" +
 				"<small class=\"chat-date\">"+
-				getDateFull() + "</small></div><div class=\"left\">" +
+				time + "</small></div><div class=\"left\">" +
 				"<div class=\"chat-avatars\"><img src=" +
 				"\"img/icon01.png\"" + " alt=\"头像\"></div><div class=\"chat-message\">" +
 				content + "</div></div></div>");
@@ -124,6 +120,23 @@
 			$(document).ready(function () {
 				$("#chatBox-content-demo").scrollTop($("#chatBox-content-demo")[0].scrollHeight);
 			});
+		}
+
+		//展示收到的图片
+		function showReceiveImage(url,time) {
+
+			$(".chatBox-content-demo").append("<div class=\"clearfloat\"><div class=\"author-name\">\n" +
+				"<small class=\"chat-date\">"+
+				time + "</small></div><div class=\"left\">" +
+				"<div class=\"chat-avatars\"><img src=" +
+				"\"img/icon01.png\"" + " alt=\"头像\"></div><div class=\"chat-message\"><img src=\""+
+				url+"\" alt=\"\"></div></div></div>");
+
+			//聊天框默认最底部
+			$(document).ready(function () {
+				$("#chatBox-content-demo").scrollTop($("#chatBox-content-demo")[0].scrollHeight);
+			});
+
 		}
 
         //补0函数

@@ -53,7 +53,7 @@
         <a href="">智能匹配</a>
         <a href="">会员服务 </a>
         <a href="">活动专题 </a>
-        <a href="">我的消息 </a>
+        <a href="">我的消息 &nbsp; <div class="my-notice">12</div></a>
         <a href="">个人中心</a>
     </div>
 </div>
@@ -370,7 +370,7 @@
     });
 
     function giveGood(touser) {
-        goodurl = "MyFollowManager/good.action";
+        goodurl = "MyFollowManager/gift.action";
         var toform = $(touser).parent().parent().parent().parent();
         $(toform).attr('action',goodurl);
         $(toform).submit();

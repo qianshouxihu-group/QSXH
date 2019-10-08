@@ -45,6 +45,10 @@
         actionControl();
     })
 
+    $(".chat-close").click(function () {
+        $(".chatBox").toggle(10);
+    })
+
     var totalNum = $(".chat-message-num").html();
     if (totalNum == "") {
         $(".chat-message-num").css("padding", 0);
@@ -62,10 +66,6 @@
                 $(this).css("padding", 0);
             }
         });
-
-        $(".chat-close").click(function () {
-            $(".chatBox").toggle(10);
-        })
 
         // 进聊天页面
         $(".chat-list-people").each(function () {
@@ -95,7 +95,7 @@
         //返回列表
         $(".chat-return").click(function () {
             if (!confirm('将清空聊天记录，是否返回？')) {
-                return;
+                return false;
             }
             $(".chatBox-head-one").toggle(1);
             $(".chatBox-head-two").toggle(1);
@@ -166,20 +166,8 @@
         if (!pic.files || !pic.files[0]) {
             return;
         }
-        var reader = new FileReader();
-        reader.onload = function (evt) {
-            var images = evt.target.result;
-            $(".chatBox-content-demo").append("<div class=\"clearfloat\">" +
-                "<div class=\"author-name\"><small class=\"chat-date\">2017-12-02 14:26:58</small> </div> " +
-                "<div class=\"right\"> <div class=\"chat-message\"><img src=" + images + "></div> " +
-                "<div class=\"chat-avatars\"><img src=\"images/icon01.png\" alt=\"头像\" /></div> </div> </div>");
+        var uploadResult = uploadFile(pic);
 
-            //聊天框默认最底部
-            $(document).ready(function () {
-                $("#chatBox-content-demo").scrollTop($("#chatBox-content-demo")[0].scrollHeight);
-            });
-        };
-        reader.readAsDataURL(pic.files[0]);
 
     }
 
@@ -202,6 +190,7 @@
         return chatListData;
     }
 
+    //展示列表信息
     function showChatList() {
         var userList = getChatList();
         var listData = "";
@@ -218,4 +207,48 @@
                 "</div>";
         }
         $(".chatBox-list").html(listData);
+    }
+
+    //文件上传
+    function uploadFile(pic){
+        //创建一个FormData对象：用一些键值对来模拟一系列表单控件：
+        // 即把form中所有表单元素的name与value组装成一个queryString
+        var form = new FormData();
+        var fileObj = pic.files[0];
+        form.append("img",fileObj);
+
+        $.ajax({
+            type:"post",
+            data:form,
+            url:"MyUpload/imgFile.action",
+            contentType: false,
+                //必须false才会自动加上正确的Content-Type
+                /*
+                必须false才会避开jQuery对 formdata 的默认处理
+                XMLHttpRequest会对 formdata 进行正确的处理
+                */
+            processData: false,
+            success:function(data){
+                alert('图片上传返回信息---'+data);
+                if (data!='no'){
+                    var reader = new FileReader();
+                    reader.onload = function (evt) {
+                        var images = evt.target.result;
+                        $(".chatBox-content-demo").append("<div class=\"clearfloat\">" +
+                            "<div class=\"author-name\"><small class=\"chat-date\">2017-12-02 14:26:58</small> </div> " +
+                            "<div class=\"right\"> <div class=\"chat-message\"><img src=" + images + "></div> " +
+                            "<div class=\"chat-avatars\"><img src=\"images/icon01.png\" alt=\"头像\" /></div> </div> </div>");
+
+                        //发送信息
+                        sendMessage(data,toid,'img');
+
+                        //聊天框默认最底部
+                        $(document).ready(function () {
+                            $("#chatBox-content-demo").scrollTop($("#chatBox-content-demo")[0].scrollHeight);
+                        });
+                    };
+                    reader.readAsDataURL(pic.files[0]);
+                }
+            }
+        });
     }

@@ -136,13 +136,15 @@ public class RelationServiceImpl implements RelationService {
         String agold = nowGold + "";
         int goldNum = accountDao.changegold(agold,userid);
 
+        System.out.println("金币扣款成功，金币余额---"+agold);
+
         DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
         String date = df.format(new Date());
 
         //增加金币消费记录
         Account account = new Account();
         account.setAdate(date);
-        account.setAgold(agold);
+        account.setAgold(payGold+"");
         account.setAtype(param.getAtype());
         account.setUserid(userid);
         account.setRmb("");
