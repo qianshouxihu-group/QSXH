@@ -3,6 +3,11 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.qsxh.dao.MessageDao">
+    <!--留言未读数-->
+    <select id="unreadMsgInform"  resultType="java.lang.Integer">
+        select count(*) from tblmessage
+        where mtoid = #{userid} and mstate = '32'
+    </select>
 
     <!--我的留言-->
     <select id="messageInform" resultType="com.qsxh.entity.Message">

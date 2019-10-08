@@ -19,7 +19,7 @@
       </div>
 
       <!--总未读消息数（没有时为空“”）-->
-      <div class="chat-message-num"></div>
+      <div class="chat-message-num">8</div>
 
       <!--聊天列表-->
       <div class="chatBox" ref="chatBox">

@@ -3,11 +3,17 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.qsxh.dao.DatingDao">
-
+    <!--约会未处理数-->
+    <select id="unreadDatingInform"  resultType="java.lang.Integer">
+        select count(*) from tbldating
+        where dtoid = #{userid} and dstate = '52'
+    </select>
     <!--我的约会列表-->
     <select id="datingInform" resultType="com.qsxh.entity.Dating">
         select d.* , u.uname from tbldating d , tbluser u
-        where (dtoid = #{userid} or dfromid = #{userid}) and dstate != '51' and d.dfromid = u.userid
+        where (dfromid = #{userid} or dtoid = #{userid})
+        and (dstate = '52' or dstate = '53' or dstate = '54' or (dstate = '55' and dfromid = #{userid}) or (dstate = '51' and dfromid = #{userid}))
+        and d.dfromid = u.userid
         ORDER BY ddate desc , dtime desc
     </select>
 
@@ -37,5 +43,51 @@
         insert into tbldating (ddate , dtime , dfromid , dtoid , dcontext , dstate , dpay , daddress)
         values (#{ddate} , #{dtime} , #{dfromid} , #{dtoid} , #{dcontext} , '51' , #{dpay} , #{daddress})
     </insert>
+
+    <!--后台约会审核 列表-->
+    <select id="datingCheckList" parameterType="com.qsxh.entity.Dating" resultType="com.qsxh.entity.Dating">
+        select * from tbldating where dstate = '51'
+        <if test=" !(''.equals(dfromid)) and null!= dfromid">
+            and dfromid like '%${dfromid}%'
+        </if>
+        <if test=" !(''.equals(dtoid)) and null!= dtoid">
+            and dtoid like '%${dtoid}%'
+        </if>
+        <if test=" !(''.equals(begindate)) and null!= begindate ">
+            and ddate &gt;= #{begindate}
+        </if>
+        <if test=" !(''.equals(enddate)) and null!= enddate">
+            and ddate &lt;= #{enddate}
+        </if>
+        ORDER BY ddate , dtime
+        limit #{page},#{limit}
+    </select>
+
+    <!--后台约会审核 记录数-->
+    <select id="datingCheckCount" parameterType="com.qsxh.entity.Dating" resultType="java.lang.Integer">
+        select count(*) from tbldating where dstate = '51'
+        <if test=" !(''.equals(dfromid)) and null!= dfromid">
+            and dfromid like '%${dfromid}%'
+        </if>
+        <if test=" !(''.equals(dtoid)) and null!= dtoid">
+            and dtoid like '%${dtoid}%'
+        </if>
+        <if test=" !(''.equals(begindate)) and null!= begindate ">
+            and ddate &gt;= #{begindate}
+        </if>
+        <if test=" !(''.equals(enddate)) and null!= enddate">
+            and ddate &lt;= #{enddate}
+        </if>
+    </select>
+
+    <!--后台约会审核 通过-->
+    <update id="datingCheckPass">
+        update tbldating set dstate = '52' where dateid = #{dateid}
+    </update>
+
+    <!--后台约会审核 不通过-->
+    <update id="datingCheckNoPass">
+        update tbldating set dstate = '55' where dateid = #{dateid}
+    </update>
 
 </mapper>

@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -24,6 +25,21 @@ public class InformBizImpl implements IInformBiz {
     private MessageDao messageDao ;//留言dao层
     @Resource
     private DatingDao datingDao;//约会dao层
+
+    //消息未读数
+    @Override
+    public List<Integer> unreadCount(String userid) {
+        Integer count1 = informDao.unreadSysInform(userid);
+        Integer count2 = informDao.unreadActiveInform(userid);
+        Integer count3 = messageDao.unreadMsgInform(userid);
+        Integer count4 = datingDao.unreadDatingInform(userid);
+        List<Integer> list = new ArrayList<>();
+        list.add(count1);
+        list.add(count2);
+        list.add(count3);
+        list.add(count4);
+        return list;
+    }
 
     //系统消息
     @Override

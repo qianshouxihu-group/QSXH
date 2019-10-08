@@ -11,12 +11,21 @@ public class Dating {
     private String dpay;//买单方式
     private String daddress;//地点
     private String dreturn;//被约人回复
+
     private String uname;//发送人名字
+
+    private int page;//layui分页当前页
+    private int limit;//layui分页每页几条
+    private String begindate;//查询条件 起始时间
+    private String enddate;//查询条件 终止时间
+
+    private String[] dateids;//批量操作
+    private String[] dfromids;//批量操作
 
     public Dating() {
     }
 
-    public Dating(Integer dateid, String ddate, String dtime, String dfromid, String dtoid, String dcontext, String dstate, String dpay, String daddress, String dreturn, String uname) {
+    public Dating(Integer dateid, String ddate, String dtime, String dfromid, String dtoid, String dcontext, String dstate, String dpay, String daddress, String dreturn, String uname, int page, int limit, String begindate, String enddate, String[] dateids, String[] dfromids) {
         this.dateid = dateid;
         this.ddate = ddate;
         this.dtime = dtime;
@@ -28,6 +37,12 @@ public class Dating {
         this.daddress = daddress;
         this.dreturn = dreturn;
         this.uname = uname;
+        this.page = page;
+        this.limit = limit;
+        this.begindate = begindate;
+        this.enddate = enddate;
+        this.dateids = dateids;
+        this.dfromids = dfromids;
     }
 
     public Integer getDateid() {
@@ -116,5 +131,53 @@ public class Dating {
 
     public void setUname(String uname) {
         this.uname = uname;
+    }
+
+    public int getPage() {
+        return page;
+    }
+
+    public void setPage(int page) {
+        this.page = page;
+    }
+
+    public int getLimit() {
+        return limit;
+    }
+
+    public void setLimit(int limit) {
+        this.limit = limit;
+    }
+
+    public String getBegindate() {
+        return begindate;
+    }
+
+    public void setBegindate(String begindate) {
+        this.begindate = begindate;
+    }
+
+    public String getEnddate() {
+        return enddate;
+    }
+
+    public void setEnddate(String enddate) {
+        this.enddate = enddate;
+    }
+
+    public String[] getDateids() {
+        return dateids;
+    }
+
+    public void setDateids(String[] dateids) {
+        this.dateids = dateids;
+    }
+
+    public String[] getDfromids() {
+        return dfromids;
+    }
+
+    public void setDfromids(String[] dfromids) {
+        this.dfromids = dfromids;
     }
 }

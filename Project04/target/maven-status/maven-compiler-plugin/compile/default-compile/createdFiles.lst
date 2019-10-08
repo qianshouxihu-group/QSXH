@@ -1,8 +1,11 @@
 com\qsxh\service\UserBiz.class
 com\qsxh\dao\MatchUserDao.class
+com\qsxh\service\IDatingBiz.class
 com\qsxh\controller\TestAction.class
+com\qsxh\service\impl\DatingBizImpl.class
 com\qsxh\dao\TestDao.class
 com\qsxh\service\IInformBiz.class
+com\qsxh\AopLog\SystemLogAspect.class
 com\qsxh\entity\TblRelation.class
 com\qsxh\service\ICheckBiz.class
 com\qsxh\dao\InformDao.class
@@ -12,6 +15,7 @@ com\qsxh\service\ChatService.class
 com\qsxh\service\IPersonalService.class
 com\qsxh\service\AccountService.class
 com\qsxh\utiles\AgeUtils.class
+com\qsxh\controller\DatingAction.class
 com\qsxh\entity\UserAndData.class
 com\qsxh\entity\TblUser.class
 com\qsxh\dao\AdminDao.class
@@ -39,11 +43,13 @@ com\qsxh\entity\User.class
 com\qsxh\service\impl\AccountServiceImp.class
 com\qsxh\entity\Role.class
 com\qsxh\dao\RoleDao.class
+com\qsxh\AopLog\SystemLog.class
 com\qsxh\controller\RoleAction.class
 com\qsxh\service\impl\AdminBizImpl.class
 com\qsxh\entity\TblChatUser.class
 com\qsxh\controller\VipUserAction.class
 com\qsxh\controller\MatchUserAction.class
+com\qsxh\AopLog\Test.class
 com\qsxh\controller\AdminAction.class
 com\qsxh\service\impl\RelationServiceImpl.class
 com\qsxh\service\impl\UserServiceImp.class
@@ -51,6 +57,7 @@ com\qsxh\service\impl\RoleBizImpl.class
 com\qsxh\entity\Param.class
 com\qsxh\entity\Inform.class
 com\qsxh\service\impl\ChatServiceImpl.class
+com\qsxh\AopLog\Log.class
 com\qsxh\controller\AccountAction.class
 com\qsxh\dao\PersonalDao.class
 com\qsxh\service\IAdminBiz.class

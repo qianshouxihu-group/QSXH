@@ -1,5 +1,6 @@
 package com.qsxh.controller;
 
+import com.qsxh.entity.Dating;
 import com.qsxh.entity.User;
 import com.qsxh.service.ICheckBiz;
 import com.qsxh.service.UserBiz;
@@ -17,9 +18,11 @@ import java.util.Map;
 @Controller
 @RequestMapping("/checkManager")
 public class CheckAction {
+
     @Resource
     private ICheckBiz checkBiz;
 
+    /*---------------------------------注册审核--------------------------------------*/
     //注册审核列表
     @RequestMapping(value="/regCheckList")
     @ResponseBody
@@ -82,5 +85,72 @@ public class CheckAction {
         System.out.println("查看资料详情："+userid);
         User user = checkBiz.dataDetails(userid);
         return user;
+    }
+
+    /*---------------------------------约会审核--------------------------------------*/
+    //约会审核列表
+    @RequestMapping(value="/datingCheckList")
+    @ResponseBody
+    public Map<String , Object> datingCheckList(Dating dating)
+    {
+        int page = dating.getPage();
+        int limit = dating.getLimit();
+        System.out.println("第几页："+page+"一页几行："+limit);
+
+        Map<String , Object> map = new HashMap<>();
+        map = checkBiz.datingCheckListAndCount(dating);
+
+        return map;
+    }
+
+    //约会审核 通过
+    @RequestMapping("/datingPass.action")
+    @ResponseBody
+    public String datingPass(String dateid , String dfromid){
+        System.out.println("通过："+dateid+dfromid);
+        //修改该约会为审核通过，并系统发送一条信息给该用户，提示其审核通过
+        String result = checkBiz.datingCheckPass(dateid , dfromid);
+        return result;
+    }
+
+    //约会审核 不通过
+    @RequestMapping("/datingNopass.action")
+    @ResponseBody
+    public String datingNopass(String dateid , String dfromid)
+    {
+        System.out.println("不通过："+dateid+dfromid);
+        //修改该约会为审核通过，并系统发送一条信息给该用户，提示其审核未通过
+        String result = checkBiz.datingCheckNoPass(dateid , dfromid);
+        return result;
+    }
+
+    //约会审核 批量通过
+    @RequestMapping("/datingAllPass.action")
+    @ResponseBody
+    public String datingAllPass(String dateids , String dfromids)
+    {
+        System.out.println("批量通过："+dateids+"==="+dfromids);
+        checkBiz.datingAllPass(dateids , dfromids);
+        return "passSuccess";
+    }
+
+    //约会审核 批量不通过
+    @RequestMapping("/datingAllNoPass.action")
+    @ResponseBody
+    public String datingAllNoPass(String dateids , String dfromids)
+    {
+        System.out.println("批量不通过："+dateids+"==="+dfromids);
+        checkBiz.datingAllNoPass(dateids , dfromids);
+        return "noPassSuccess";
+    }
+
+    //注册审核 查看资料详情
+    @RequestMapping("/datingDetails.action")
+    @ResponseBody
+    public Dating datingDetails(String dateid)
+    {
+        System.out.println("查看资料详情："+dateid);
+        Dating dating = checkBiz.datingDetails(dateid);
+        return dating;
     }
 }

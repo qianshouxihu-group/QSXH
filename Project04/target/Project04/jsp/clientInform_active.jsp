@@ -14,6 +14,7 @@
     <link type="image/x-icon" rel=icon href="images/icon.png" />
     <link type="text/css" rel="stylesheet" href="css/style.css"/>
     <link type="text/css" rel="stylesheet" href="css/bootstrap.min.css"/>
+    <link type="text/css" rel="stylesheet" href="css/chat.css"/>
     <script type="text/javascript" src="js/bootstrap.min.js"></script>
     <style>td {white-space:nowrap;overflow:hidden;text-overflow: ellipsis;}</style>
 
@@ -43,7 +44,7 @@
         <a href="">智能匹配</a>
         <a href="">我的关注</a>
         <a href="">个人中心</a>
-        <a href="">我的消息</a>
+        <a href="">我的消息&nbsp;<div class="my-notice">${countList.get(0)+countList.get(1)+countList.get(2)+countList.get(3)}</div></a>
         <a href="">会员服务</a>
         <a href="">活动专题</a>
     </div>
@@ -54,10 +55,26 @@
         <div class="login-right">
             <div class="list-main1-title">我的消息</div>
             <div class="col c2"><!--menu-->
-                <div class="list-top"><a href="<%=path%>/informManager/systemInform.action"><label>系统消息</label></a></div>
-                <div class="list-top"><a href="<%=path%>/informManager/activeInform.action"><label style="color: red;">活动消息</label></a></div>
-                <div class="list-top"><a href="<%=path%>/informManager/messageInform.action"><label>我的留言</label></a></div>
-                <div class="list-top"><a href="<%=path%>/informManager/datingInform.action"><label>我的约会</label></a></div>
+                <div class="list-top">
+                    <a href="<%=path%>/informManager/systemInform.action">
+                        <label>系统消息</label>&nbsp;<div class="my-notice">${countList.get(0)}</div>
+                    </a>
+                </div>
+                <div class="list-top">
+                    <a href="<%=path%>/informManager/activeInform.action">
+                        <label style="color: red;">活动消息</label>&nbsp;<div class="my-notice">${countList.get(1)}</div>
+                    </a>
+                </div>
+                <div class="list-top">
+                    <a href="<%=path%>/informManager/messageInform.action">
+                        <label>我的留言</label>&nbsp;<div class="my-notice">${countList.get(2)}</div>
+                    </a>
+                </div>
+                <div class="list-top">
+                    <a href="<%=path%>/informManager/datingInform.action">
+                        <label>我的约会</label>&nbsp;<div class="my-notice">${countList.get(3)}</div>
+                    </a>
+                </div>
             </div>
 
         </div><!--menu-->
@@ -135,98 +152,5 @@
     </div>
 </div>
 </body>
-<%--<!-- layui表格插件 -->--%>
-<%--&lt;%&ndash;定义工具条&ndash;%&gt;--%>
-<%--<script id="barDemo" type="text/html">--%>
-<%--    <div class="layui-btn-container">--%>
-<%--        <button class="layui-btn layui-btn-sm" lay-event="del">删除</button>--%>
-<%--        <button class="layui-btn layui-btn-sm" lay-event="edit">启用禁用</button>--%>
-<%--        <button class="layui-btn layui-btn-sm" lay-event="resetPass">重置密码</button>--%>
-<%--    </div>--%>
-<%--</script>--%>
-
-<%--<script>--%>
-<%--    layui.use('table', function() {--%>
-<%--        var table = layui.table;--%>
-<%--        table.render({--%>
-<%--            elem: '#layui_table_id'                  //定位表格--%>
-<%--            , url: '<%=path%>/msgManager/systemMsg.action'   //请求路径--%>
-<%--            , page: true                             //开启分页（初始值为1）--%>
-<%--            , limit:3                                //每页行数--%>
-<%--            , id: 'testReload'                       //查询同样走这个ajax，需要id--%>
-<%--            ,parseData: function (res) {             //解析数据--%>
-<%--                console.log("返回值" + res);--%>
-<%--                console.log("状态码" + res.code);--%>
-<%--                // console.log("消息" + res.msg);--%>
-<%--                console.log("条数" + res.count);--%>
-<%--                console.log("数据" + res.data);--%>
-
-<%--                return {--%>
-<%--                    "code": eval(res.code), //解析接口状态--%>
-<%--                    "msg": res.msg,         //解析提示文本--%>
-<%--                    "count": res.count,     //解析数据长度--%>
-<%--                    "data": res.data        //解析数据列表--%>
-<%--                };--%>
-<%--            }--%>
-<%--            , cols: [[                      //定义表头--%>
-<%--                {field: 'userid', title: '用户id', minWidth: 100}--%>
-<%--                , {field: 'uname', title: '用户名', minWidth: 80}--%>
-<%--                , {field: 'upass', title: '密码', minWidth: 80}--%>
-<%--                , {field: 'right', title: '操作', toolbar:'#barDemo' ,minWidth:270}//工具条--%>
-<%--            ]]--%>
-<%--        })--%>
-
-<%--        //触发查询按钮--%>
-<%--        var $ = layui.$, active = {--%>
-<%--            reload: function(){--%>
-<%--                alert("触发查询按钮");--%>
-<%--                var beginDate = $('#beginDate');--%>
-<%--                var endDate = $('#endDate');--%>
-<%--                var uid = $('#userid');--%>
-<%--                alert(beginDate.val()+endDate.val()+uid.val());--%>
-<%--                //执行重载--%>
-<%--                table.reload('testReload', {--%>
-<%--                    page: {--%>
-<%--                        curr: 1 //重新从第 1 页开始--%>
-<%--                    }--%>
-<%--                    ,where: {   //传参数--%>
-<%--                        beginDate : beginDate.val(),--%>
-<%--                        endDate : endDate.val(),--%>
-<%--                        uid : uid.val(),--%>
-<%--                    }--%>
-<%--                }, 'data');--%>
-<%--            }--%>
-<%--        };--%>
-
-<%--        $('.demoTable .layui-btn').on('click', function(){--%>
-<%--            alert("触发按钮");--%>
-<%--            var type = $(this).data('type');--%>
-<%--            active[type] ? active[type].call(this) : '';--%>
-<%--        })--%>
-
-<%--        //监听行工具事件--%>
-<%--        table.on('tool(test)', function(obj){--%>
-<%--            alert("触发工具条按钮");--%>
-<%--            var data = obj.data;--%>
-<%--            console.log(obj);--%>
-<%--            if(obj.event === 'del'){--%>
-<%--                layer.confirm('真的删除行么', function(index){--%>
-<%--                    obj.del();--%>
-<%--                    layer.close(index);--%>
-<%--                });--%>
-<%--            } else if(obj.event === 'edit'){--%>
-<%--                layer.prompt({--%>
-<%--                    formType: 2--%>
-<%--                    ,value: data.userid--%>
-<%--                }, function(value, index){--%>
-<%--                    obj.update({--%>
-<%--                        username: value--%>
-<%--                    });--%>
-<%--                    layer.close(index);--%>
-<%--                });--%>
-<%--            }--%>
-<%--        });--%>
-<%--    });--%>
-<%--</script>--%>
 </html>
 

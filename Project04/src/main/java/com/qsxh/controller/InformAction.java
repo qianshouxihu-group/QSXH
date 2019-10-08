@@ -26,6 +26,14 @@ public class InformAction {
     @Resource
     private IInformBiz informBiz;//消息业务处理对象
 
+    //获取未读条数
+//    @RequestMapping("/unreadCount")
+    public List<Integer> unreadCount(String userid)
+    {
+        List<Integer> list = informBiz.unreadCount(userid);//session取userid
+        return list;
+    }
+    @ResponseBody
     //系统消息
     @RequestMapping("/systemInform.action")
     public ModelAndView systemInform(@RequestParam(value = "page" , defaultValue = "1") Integer page)
@@ -39,6 +47,9 @@ public class InformAction {
         PageInfo pageInfo = new PageInfo(list , 5);
         //pageInfo存入request
         mav.addObject("pageInfo", pageInfo);
+        //获取所有消息的未读数量
+        List<Integer> countList = unreadCount("1001");
+        mav.addObject("countList" , countList);
         //跳转消息页面
         mav.setViewName("clientInform_system");
         return mav;
@@ -55,6 +66,9 @@ public class InformAction {
         PageInfo pageInfo = new PageInfo(list , 5);
         //pageInfo存入request
         mav.addObject("pageInfo", pageInfo);
+        //获取所有消息的未读数量
+        List<Integer> countList = unreadCount("1001");
+        mav.addObject("countList" , countList);
         //跳转消息页面
         mav.setViewName("clientInform_active");
         return mav;

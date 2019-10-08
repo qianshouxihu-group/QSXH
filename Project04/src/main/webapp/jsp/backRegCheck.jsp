@@ -74,8 +74,6 @@
 
     <%--=================================资料弹窗=================================--%>
 
-
-<!-- 添加和修改的弹出层开始 -->
 <div style="display: none;padding: 20px" id="detailsDiv" >
     <form class="layui-form " action="" lay-filter="dataFrm" id="dataFrm">
         <div class="layui-form-item">
@@ -210,12 +208,12 @@
         </div>
 
 
-        <div class="layui-form-item" style="text-align: center;">
-            <div class="layui-input-block">
-                <button type="button" class="layui-btn layui-btn-normal layui-btn-sm layui-icon layui-icon-release" lay-filter="doSubmit" lay-submit="">提交</button>
-                <button type="reset" class="layui-btn layui-btn-warm layui-btn-sm layui-icon layui-icon-refresh" >重置</button>
-            </div>
-        </div>
+<%--        <div class="layui-form-item" style="text-align: center;">--%>
+<%--            <div class="layui-input-block">--%>
+<%--                <button type="button" class="layui-btn layui-btn-normal layui-btn-sm layui-icon layui-icon-release" lay-filter="doSubmit" lay-submit="">提交</button>--%>
+<%--                <button type="reset" class="layui-btn layui-btn-warm layui-btn-sm layui-icon layui-icon-refresh" >重置</button>--%>
+<%--            </div>--%>
+<%--        </div>--%>
     </form>
 
 </div>
@@ -241,7 +239,6 @@
             $("#enddate").val("");
             $("#userid").val("");
             $("#uname").val("");
-            // $("#uedu").val("");
             form.render();
         });
     });
@@ -316,7 +313,7 @@
                  {type: 'checkbox', fixed: 'left'}
                 ,{field: 'userid', title: 'ID', fixed: 'left'}
                 ,{field: 'uname', title: '姓名'}
-                ,{field: 'usex', title: '性别'}
+                // ,{field: 'usex', title: '性别'}
                 ,{field: 'ubirthday', title: '出生日期'}
                 ,{field: 'uedu', title: '学历'}
                 ,{field: 'uaddress', title: '地址'}
@@ -544,9 +541,9 @@
                 dataType: "text",
                 data: {"userid":userid},
                 success: function (dat) {
-                    if(dat=="nopassSuccess"){
+                    if(dat=="noPassSuccess"){
                         layer.msg("不通过成功！");
-                    }else if (dat=="nopassFail") {
+                    }else if (dat=="noPassFail") {
                         layer.msg("不通过失败");
                     }else if (dat=="passSuccess") {
                         layer.msg("通过成功");

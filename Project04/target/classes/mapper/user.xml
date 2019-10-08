@@ -31,7 +31,7 @@
 
     <!--后台注册审核 列表-->
     <select id="regCheckList" resultType="com.qsxh.entity.User">
-        select * from tbluser where roleid = '6'
+        select u.* , d.* from tbluser u , tbldata d where roleid = '6' and u.userid = d.userid
         <if test=" !(''.equals(begindate)) and null!= begindate ">
             and regdate &gt;= #{begindate}
         </if>
@@ -44,6 +44,7 @@
         <if test=" !(''.equals(uname)) and null!= uname">
             and uname like '%${uname}%'
         </if>
+        ORDER BY regdate
         limit #{page},#{limit}
     </select>
 

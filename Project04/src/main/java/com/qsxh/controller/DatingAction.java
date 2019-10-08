@@ -1,5 +1,6 @@
 package com.qsxh.controller;
 
+import com.mysql.cj.Session;
 import com.qsxh.entity.Dating;
 import com.qsxh.service.IDatingBiz;
 import org.springframework.stereotype.Controller;
@@ -21,6 +22,8 @@ public class DatingAction {
     public String dating(Dating dating)
     {
         System.out.println("进入约会action");
+        //session取userid，放入dating
+
         System.out.println(dating.getDdate()+dating.getDtime()+dating.getDaddress()+dating.getDcontext()+
         dating.getDpay());
         String result = datingBiz.dating(dating);

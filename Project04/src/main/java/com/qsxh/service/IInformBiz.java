@@ -7,6 +7,9 @@ import com.qsxh.entity.Message;
 import java.util.List;
 
 public interface IInformBiz {
+    //消息未读数
+    public List<Integer> unreadCount(String userid);
+
     //系统消息
     public List<Inform> systemInform(String userid);
     //活动消息
@@ -25,7 +28,6 @@ public interface IInformBiz {
     public boolean readMsg(String msgid);
     //我的留言 回复
     public String addOneRecord(Message message);
-
 
 
     //我的约会

@@ -79,6 +79,12 @@
                             <td>${dating.dcontext}</td>
                             <td>${dating.dpay}</td>
                             <td>${dating.ddate}&nbsp;${dating.dtime}</td>
+                            <c:if test="${dating.dstate == '51'}">
+                                <td><label style="color: yellow ; font-weight:bold">待审核</label></td>
+                            </c:if>
+                            <c:if test="${dating.dstate == '55'}">
+                                <td><label style="color: red ; font-weight:bold">审核未通过</label></td>
+                            </c:if>
                             <c:if test="${dating.dstate == '52'}">
                                 <td><label style="color: yellow ; font-weight:bold">待处理</label></td>
                             </c:if>

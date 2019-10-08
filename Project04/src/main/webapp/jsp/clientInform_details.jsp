@@ -98,7 +98,7 @@
                         <tr>
                             <c:if test="${dating != null || msg != null}">
                                 <td>
-                                    <h4>发送人：${dating.uname}${msg.uname}</h4>
+                                    <h4>发送人：${msg.uname}${dating.uname}</h4>
                                 </td>
                             </c:if>
                         </tr>
@@ -158,6 +158,11 @@
                                     <h4>状态：已参加</h4>
                                 </td>
                             </c:if>
+                            <c:if test="${dating.dstate == '51'}">
+                                <td>
+                                    <h4>状态：待审核</h4>
+                                </td>
+                            </c:if>
                             <c:if test="${dating.dstate == '52'}">
                                 <td>
                                     <h4>状态：待处理</h4>
@@ -171,6 +176,11 @@
                             <c:if test="${dating.dstate == '54'}">
                                 <td>
                                     <h4>状态：已拒绝</h4>
+                                </td>
+                            </c:if>
+                            <c:if test="${dating.dstate == '55'}">
+                                <td>
+                                    <h4>状态：审核未通过</h4>
                                 </td>
                             </c:if>
                         </tr>
@@ -211,10 +221,12 @@
                 </c:if>
                 <%--我的约会--%>
                 <c:if test="${dating.dstate == '52'}">
-                    <input type="button" class="button" value="回复并接受" id="replyAndAccept"/>
-                    <input type="button" class="button" value="拒绝" id="reject"/>
+                    <c:if test="${dating.dfromid != '1001'}"><%--<c:if test="${dating.dfromid != sessionScope.user.userid}">--%><%--本人发起的约会不应出现接受拒绝按钮--%>
+                        <input type="button" class="button" value="回复并接受" id="replyAndAccept"/>
+                        <input type="button" class="button" value="拒绝" id="reject"/>
+                    </c:if>
                 </c:if>
-                <c:if test="${dating.dstate == '52' || dating.dstate == '53' || dating.dstate == '54'}">
+                <c:if test="${dating.dstate == '51' || dating.dstate == '52' || dating.dstate == '53' || dating.dstate == '54' || dating.dstate == '55'}">
                     <a href="<%=path%>/informManager/datingInform.action"><input type="button" class="button" value="返回"/></a>
                 </c:if>
             </div>
@@ -337,6 +349,10 @@
                 if(value.length == 0){
                     return '请输入内容！';
                 }
+                else if(value.length < 10)
+                {
+                    return '内容不可少于10字！';
+                }
             }
         });
         //留言回复表单提交
@@ -381,7 +397,7 @@
                     success: function (res) {
                         if (res == 'success') {
                             alert("回复并接受成功！");
-                            location.href = "<%=path%>/informManager/datingInform.action";
+                            window.location.href = "<%=path%>/informManager/datingInform.action";
                         } else if (res == 'fail') {
                             alert("回复并接受失败！");
                         }
