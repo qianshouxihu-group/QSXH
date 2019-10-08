@@ -22,4 +22,16 @@ public interface RelationDao {
     //查找已关注列表
     public List<TblUser> findFollowed(@Param("userid") String userid);
 
+
+
+
+
+    //-----------以下其实本来应该放在userDao-------------------
+
+    //查找魅力值
+    public String findCharm(@Param("userid") String userid);
+
+    //修改魅力值
+    public Integer changeCharm(@Param("userid") String userid,@Param("ucharm") String ucharm);
+
 }

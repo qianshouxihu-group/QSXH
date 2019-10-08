@@ -15,6 +15,7 @@ public class TblUser {
     private String uheight;
     private String conste;
     private String uincome;
+    private String ucharm;
 
     //无参构造
     public TblUser() {
@@ -30,6 +31,14 @@ public class TblUser {
         this.ustate = ustate;
         this.uonline = uonline;
         this.regdate = regdate;
+    }
+
+    public String getUcharm() {
+        return ucharm;
+    }
+
+    public void setUcharm(String ucharm) {
+        this.ucharm = ucharm;
     }
 
     public String getUage() {

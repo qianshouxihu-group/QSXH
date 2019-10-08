@@ -6,8 +6,17 @@ public class TblRelation {
     private String ftoid;
     private String fgood;
     private String ffollow;
+    private String giftno;
 
     public TblRelation(){}
+
+    public String getGiftno() {
+        return giftno;
+    }
+
+    public void setGiftno(String giftno) {
+        this.giftno = giftno;
+    }
 
     public String getFfromid() {
         return ffromid;

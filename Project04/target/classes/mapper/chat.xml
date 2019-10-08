@@ -4,18 +4,28 @@
 
 <mapper namespace="com.qsxh.dao.ChatUserDao">
 
+    <!--查找聊天列表-->
     <select id="findUser" resultType="com.qsxh.entity.TblUser">
         SELECT tu.userid,tu.uname,tu.uimgurl,tu.uonline
         FROM tblchatuser tcu,tbluser tu
-        WHERE tcu.fromid = #{userid} AND tcu.toid=tu.userid
+        WHERE (tcu.fromid = #{userid} AND tcu.toid=tu.userid)
+        OR (tcu.toid = #{userid} AND tcu.fromid=tu.userid)
+        GROUP BY tu.userid
     </select>
 
+    <!-- 添加到聊天列表-->
     <insert id="addChat" parameterType="com.qsxh.entity.TblChatUser">
-        INSERT INTO tblchatuser (fromid, toid) VALUES (#{fromid}, #{toid})
+        INSERT INTO tblchatuser (fromid, toid) VALUES (#{toid}, #{fromid})
     </insert>
 
-    <delete id="offLine">
+    <!-- 清空聊天列表-->
+    <delete id="clearChat">
         DELETE FROM tblchatuser WHERE toid=#{userid} OR fromid=#{userid};
     </delete>
+
+    <!-- 修改用户上下线-->
+    <update id="changeLine" >
+        UPDATE tbluser SET uonline=#{uonline} WHERE userid=#{userid};
+    </update>
 
 </mapper>

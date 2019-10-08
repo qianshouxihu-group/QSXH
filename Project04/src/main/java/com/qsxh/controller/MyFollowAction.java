@@ -5,10 +5,12 @@ import com.github.pagehelper.PageInfo;
 import com.qsxh.entity.TblRelation;
 import com.qsxh.entity.TblUser;
 import com.qsxh.entity.User;
+import com.qsxh.service.ChatService;
 import com.qsxh.service.RelationService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.annotation.Resource;
@@ -21,6 +23,8 @@ public class MyFollowAction {
 
     @Resource
     private RelationService relationService;
+    @Resource
+    private ChatService chatService;
 
     @RequestMapping("/getlist")//获得关注列表
     public ModelAndView findFollowed(HttpServletRequest request, @RequestParam(value = "page", defaultValue = "1") Integer page){
@@ -29,6 +33,9 @@ public class MyFollowAction {
         //获得id
         User user = (User) request.getSession().getAttribute("user");
         String userid = user.getUserid();
+
+        List<TblUser> chatList = chatService.findUser(userid);
+        request.getSession().setAttribute("chatlist",chatList);
 
         //dao查找并分页
         PageHelper.startPage(page,2);
@@ -60,11 +67,14 @@ public class MyFollowAction {
         return "forward:/MyFollowManager/getlist.action";
     }
 
-    @RequestMapping("/chat")//发起聊天
-    public String chatApply(HttpServletRequest request,String followedid){
+    @RequestMapping("/chat")//获得聊天列表
+    @ResponseBody
+    public List<TblUser> chatList(@RequestParam String userid){
 
+        System.out.println("userid = [" + userid + "]");
+        List<TblUser> chatList = chatService.findUser(userid);
 
-        return "forward:/MyFollowManager/getlist.action";
+        return chatList;
     }
 
     @RequestMapping("/change")//更改关注状态
@@ -87,6 +97,7 @@ public class MyFollowAction {
 
     @RequestMapping("/gift")//赠送礼物
     public String sendGift(HttpServletRequest request,String followedid){
+
 
 
         return "forward:/MyFollowManager/getlist.action";

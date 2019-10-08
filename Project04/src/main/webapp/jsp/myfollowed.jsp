@@ -2,6 +2,7 @@
 <%
     String path = request.getContextPath();
     String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
+    String chatPath = request.getServerName()+":"+request.getServerPort()+path+"/";
 %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <html>
@@ -13,6 +14,7 @@
     <meta name="Description" content="牵手西湖婚恋交友网"/>
     <link type="image/x-icon" rel=icon href="images/icon.png" />
     <link type="text/css" rel="stylesheet" href="css/style.css"/>
+    <link rel="stylesheet" type="text/css" href="font_Icon/iconfont.css">
     <link type="text/css" rel="stylesheet" href="css/chat.css"/>
     <script type="text/javascript" src="js/jquery-1.8.3.min.js"></script>
     <script type="text/javascript" src="js/jquery.collapse.js" ></script>
@@ -101,7 +103,7 @@
                                     <a >用户名：${followuser.uname} &nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp; <a style="color: #eb6877;"> 我在线上 </a></a>
                                     <p>&nbsp;</p>
                                     <p>
-                                        <a href="javascript:void(0);" class="myfollow" style="color:#fff;" onclick="giveGood(this)">&nbsp; 发起聊天 &nbsp;</a>
+                                        <a href="javascript:void(0);" class="myfollow" style="color:#fff;" onclick="chatApply(this)">&nbsp; 发起聊天 &nbsp;</a>
                                         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                 </c:if>
                                 <c:if test="${followuser.uonline==12}">
@@ -121,6 +123,7 @@
                                 <p class="mem-text">&nbsp;${followuser.uage}&nbsp;岁&nbsp;|&nbsp;${followuser.uheight}&nbsp;CM&nbsp;|&nbsp;${followuser.conste}&nbsp;|&nbsp;月收入：&nbsp;${followuser.uincome}&nbsp;元</p>
                                 <p><a href="javascript:void(0);" class="cf60">[查看详情]</a></p>
                             </div>
+                            <input type="hidden" value="${followuser.uname}">
                         </li>
                         </form>
                     </c:forEach>
@@ -184,9 +187,176 @@
             </div>
         </div>
     </div>
+
+    <div class="chatContainer">
+        <div class="chatBtn">
+            <i class="iconfont icon-xiaoxi1"></i>
+        </div>
+
+        <!--总未读消息数（没有时为空“”）-->
+        <div class="chat-message-num"></div>
+
+        <!--聊天列表-->
+        <div class="chatBox" ref="chatBox">
+            <div class="chatBox-head">
+                <div class="chatBox-head-one">
+                    聊天列表
+                    <div class="chat-close" style="margin: 10px 10px 0 0;font-size: 14px">关闭</div>
+                </div>
+
+                <!--聊天窗口-->
+                <div class="chatBox-head-two">
+                    <div class="chat-return">返回</div>
+                    <div class="chat-people">
+                        <div class="ChatInfoHead">
+                            <img src="" alt="头像">
+                        </div>
+                        <div class="ChatInfoName">这是用户的名字</div>
+                    </div>
+                    <div class="chat-close">关闭</div>
+                </div>
+
+            </div>
+            <div class="chatBox-info">
+
+                <!--用户列表-->
+                <div class="chatBox-list" ref="chatBoxlist">
+                    <c:forEach items="${sessionScope.chatlist}" var="chatuser">
+                        <input type="hidden" value="${chatuser.userid}" id="${chatuser.userid}">
+                        <div class="chat-list-people">
+                            <div><img src="images/icon01.png" alt="头像"></div>
+                            <div class="chat-name">
+                                <p>${chatuser.uname}</p>
+                            </div>
+                            <div class="message-num"></div>
+                        </div>
+                    </c:forEach>
+
+                    <div class="chat-list-people">
+                        <div><img src="images/icon01.png" alt="头像"></div>
+                        <div class="chat-name">
+                            <p>琴酒</p>
+                        </div>
+                        <div class="message-num"></div>
+                    </div>
+                </div>
+
+                <!--聊天界面-->
+                <div class="chatBox-kuang" ref="chatBoxkuang">
+                    <div class="chatBox-content">
+                        <div class="chatBox-content-demo" id="chatBox-content-demo">
+
+                            <!--收到消息 left-->
+                            <div class="clearfloat">
+                                <div class="author-name">
+                                    <small class="chat-date">time</small>
+                                </div>
+                                <div class="left">
+                                    <div class="chat-avatars"><img src="images/icon01.png" alt="头像"></div>
+                                    <div class="chat-message">
+                                        给你看张图
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!--收到图片 left-->
+                            <div class="clearfloat">
+                                <div class="author-name">
+                                    <small class="chat-date">2017-12-02 14:26:58</small>
+                                </div>
+                                <div class="left">
+                                    <div class="chat-avatars"><img src="images/icon01.png" alt="头像"></div>
+                                    <div class="chat-message">
+                                        <img src="images/1.png" alt="">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!--发送消息 right-->
+                            <div class="clearfloat">
+                                <div class="author-name">
+                                    <small class="chat-date">2017-12-02 14:26:58</small>
+                                </div>
+                                <div class="right">
+                                    <div class="chat-message">嗯，适合做壁纸</div>
+                                    <div class="chat-avatars"><img src="images/icon02.png" alt="头像"></div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <!--聊天工具栏-->
+                    <div class="chatBox-send">
+                        <div class="div-textarea" contenteditable="true"></div>
+                        <div>
+                            <button id="chat-biaoqing" class="btn-default-styles">
+                                <i class="iconfont icon-biaoqing"></i>
+                            </button>
+                            <label id="chat-tuxiang" title="发送图片" for="inputImage" class="btn-default-styles">
+                                <input type="file" onchange="selectImg(this)" accept="image/jpg,image/jpeg,image/png"
+                                       name="file" id="inputImage" class="hidden">
+                                <i class="iconfont icon-tuxiang"></i>
+                            </label>
+                            <button id="chat-fasong" class="btn-default-styles"><i class="iconfont icon-fasong"></i>
+                            </button>
+                        </div>
+                        <div class="biaoqing-photo">
+                            <ul>
+                                <li><span class="emoji-picker-image" style="background-position: -9px -18px;"></span></li>
+                                <li><span class="emoji-picker-image" style="background-position: -40px -18px;"></span></li>
+                                <li><span class="emoji-picker-image" style="background-position: -71px -18px;"></span></li>
+                                <li><span class="emoji-picker-image" style="background-position: -102px -18px;"></span></li>
+                                <li><span class="emoji-picker-image" style="background-position: -133px -18px;"></span></li>
+                                <li><span class="emoji-picker-image" style="background-position: -164px -18px;"></span></li>
+                                <li><span class="emoji-picker-image" style="background-position: -9px -52px;"></span></li>
+                                <li><span class="emoji-picker-image" style="background-position: -40px -52px;"></span></li>
+                                <li><span class="emoji-picker-image" style="background-position: -71px -52px;"></span></li>
+                                <li><span class="emoji-picker-image" style="background-position: -102px -52px;"></span></li>
+                                <li><span class="emoji-picker-image" style="background-position: -133px -52px;"></span></li>
+                                <li><span class="emoji-picker-image" style="background-position: -164px -52px;"></span></li>
+                                <li><span class="emoji-picker-image" style="background-position: -9px -86px;"></span></li>
+                                <li><span class="emoji-picker-image" style="background-position: -40px -86px;"></span></li>
+                                <li><span class="emoji-picker-image" style="background-position: -71px -86px;"></span></li>
+                                <li><span class="emoji-picker-image" style="background-position: -102px -86px;"></span></li>
+                                <li><span class="emoji-picker-image" style="background-position: -133px -86px;"></span></li>
+                                <li><span class="emoji-picker-image" style="background-position: -164px -86px;"></span></li>
+                                <li><span class="emoji-picker-image" style="background-position: -9px -120px;"></span></li>
+                                <li><span class="emoji-picker-image" style="background-position: -40px -120px;"></span></li>
+                                <li><span class="emoji-picker-image" style="background-position: -71px -120px;"></span></li>
+                                <li><span class="emoji-picker-image" style="background-position: -102px -120px;"></span>
+                                </li>
+                                <li><span class="emoji-picker-image" style="background-position: -133px -120px;"></span>
+                                </li>
+                                <li><span class="emoji-picker-image" style="background-position: -164px -120px;"></span>
+                                </li>
+                                <li><span class="emoji-picker-image" style="background-position: -9px -154px;"></span></li>
+                                <li><span class="emoji-picker-image" style="background-position: -40px -154px;"></span></li>
+                                <li><span class="emoji-picker-image" style="background-position: -71px -154px;"></span></li>
+                                <li><span class="emoji-picker-image" style="background-position: -102px -154px;"></span>
+                                </li>
+                                <li><span class="emoji-picker-image" style="background-position: -133px -154px;"></span>
+                                </li>
+                                <li><span class="emoji-picker-image" style="background-position: -164px -154px;"></span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
 </div>
 
+<script src="js/chat.js"></script>
+<script src="js/chatserver.js"></script>
 <script>
+
+    //聊天窗口样式
+    screenFuc();
+
     $(".css3-animated-example").collapse({
         accordion: true,
         open: function() {
@@ -214,10 +384,15 @@
     }
 
     function chatApply(touser) {
-        chaturl = "MyFollowManager/chat.action";
-        var toform = $(touser).parent().parent().parent().parent();
-        $(toform).attr('action',chaturl);
-        $(toform).submit();
+        var toid = $(touser).parent().parent().prev().val();
+        var uname = $(touser).parent().parent().next().val();
+        var chatid = '#'+toid;
+        if (toid==$(chatid).val()){
+            alert('对方已在聊天列表中！');
+        }
+        else if (confirm('是否发起聊天？')){
+            sendMessage(uname,toid,'apply');
+        }
     }
 
     function getDetails(touser) {
@@ -226,6 +401,10 @@
         $(toform).attr('action',detailurl);
         $(toform).submit();
     }
+
+    $(".chatBox").hide();
+    getParam('${sessionScope.user.userid}','<%=basePath%>');
+    getConfig('${sessionScope.user.userid}','<%=chatPath%>');
 
 </script>
 </body>

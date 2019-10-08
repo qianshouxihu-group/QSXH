@@ -73,7 +73,7 @@ public class MyWebSocketHandler implements WebSocketHandler{
 
                 break;
             case "agree":
-
+                chatService.addChat(chat);
                 break;
             case "refuse":
 
@@ -115,9 +115,9 @@ public class MyWebSocketHandler implements WebSocketHandler{
         while(iterator.hasNext()){
             Map.Entry<String,WebSocketSession> entry = iterator.next();
 
-            if(entry.getValue().getAttributes().get(wsid)==webSocketSession.getAttributes().get(wsid)){
-                userSocketSessionMap.remove(webSocketSession.getAttributes().get(wsid));
-                System.out.println("WebSocket in staticMap:" + webSocketSession.getAttributes().get(wsid) + "--removed");
+            if(entry.getValue().getAttributes().get("wsid")==webSocketSession.getAttributes().get("wsid")){
+                userSocketSessionMap.remove(webSocketSession.getAttributes().get("wsid"));
+                System.out.println("WebSocket in staticMap:" + wsid + "--removed");
             }
 
         }
@@ -137,6 +137,7 @@ public class MyWebSocketHandler implements WebSocketHandler{
 
         if (session != null && session.isOpen()) {
             session.sendMessage(message);
+
         }
     }
 }
