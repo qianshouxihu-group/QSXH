@@ -84,7 +84,76 @@
 </div>
 
     <%--=================================详情弹窗=================================--%>
+<div style="display: none;padding: 20px" id="detailsDiv" >
+    <form class="layui-form " action="" lay-filter="dataFrm" id="dataFrm">
+        <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label">日期:</label>
+                <div class="layui-input-block" style="width:150px">
+                    <input type="text" name="ddate" readonly="readonly" autocomplete="off"
+                           class="layui-input">
+                </div>
+            </div>
+            <div class="layui-inline">
+                <label class="layui-form-label">时间:</label>
+                <div class="layui-input-block" style="width:150px">
+                    <input type="text" name="dtime" readonly="readonly" autocomplete="off"
+                           class="layui-input">
+                </div>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label">发起人ID：</label>
+                <div class="layui-input-block">
+                    <input type="text" name="dfromid" readonly="readonly" autocomplete="off"
+                           class="layui-input">
+                </div>
+            </div>
+            <div class="layui-inline">
+                <label class="layui-form-label">接受人ID:</label>
+                <div class="layui-input-block">
+                    <input type="text" name="dtoid" readonly="readonly" autocomplete="off"
+                           class="layui-input">
+                </div>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label">内容：</label>
+                <div class="layui-input-block" style="width:150px">
+                    <input type="text" name="dcontext" readonly="readonly" autocomplete="off"
+                           class="layui-input">
+                </div>
+            </div>
+            <div class="layui-inline">
+                <label class="layui-form-label">地点:</label>
+                <div class="layui-input-block">
+                    <input type="text" name="daddress" readonly="readonly" autocomplete="off"
+                           class="layui-input">
+                </div>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label">付账方式：</label>
+                <div class="layui-input-block" style="width:150px">
+                    <input type="text" name="dpay" readonly="readonly" autocomplete="off"
+                           class="layui-input">
+                </div>
+            </div>
+            <div class="layui-inline">
+                <label class="layui-form-label">状态：</label>
+                <div class="layui-input-block">
+                    <input type="text" name="dstate" readonly="readonly" autocomplete="off"
+                           class="layui-input">
+                </div>
+            </div>
+        </div>
 
+    </form>
+
+</div>
 
 </body>
 <%--===========================行操作按钮================================--%>
@@ -274,10 +343,7 @@
                 type: "post",
                 url: url,
                 dataType: "text",
-                data: {
-                    dateids:dateids,
-                    dfromids:dfromids
-                },
+                data: {dateids:dateids ,dfromids:dfromids},
                 success: function (dat) {
                     if(dat=="passSuccess"){
                         layer.msg("批量通过成功！");
@@ -311,7 +377,7 @@
             $.ajax({
                 async: true,
                 type: "post",
-                url: "<%=path%>checkManager/datingDataDetails.action",
+                url: "<%=path%>checkManager/datingDetails.action",
                 dataType: "json",
                 data: {"dateid":data.dateid},
                 success: function (redata) {

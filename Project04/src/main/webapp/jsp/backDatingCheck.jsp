@@ -84,7 +84,76 @@
 </div>
 
     <%--=================================详情弹窗=================================--%>
+<div style="display: none;padding: 20px" id="detailsDiv" >
+    <form class="layui-form " action="" lay-filter="dataFrm" id="dataFrm">
+        <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label">日期:</label>
+                <div class="layui-input-block" style="width:150px">
+                    <input type="text" name="ddate" readonly="readonly" autocomplete="off"
+                           class="layui-input">
+                </div>
+            </div>
+            <div class="layui-inline">
+                <label class="layui-form-label">时间:</label>
+                <div class="layui-input-block" style="width:150px">
+                    <input type="text" name="dtime" readonly="readonly" autocomplete="off"
+                           class="layui-input">
+                </div>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label">发起人ID：</label>
+                <div class="layui-input-block">
+                    <input type="text" name="dfromid" readonly="readonly" autocomplete="off"
+                           class="layui-input">
+                </div>
+            </div>
+            <div class="layui-inline">
+                <label class="layui-form-label">接受人ID:</label>
+                <div class="layui-input-block">
+                    <input type="text" name="dtoid" readonly="readonly" autocomplete="off"
+                           class="layui-input">
+                </div>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label">内容：</label>
+                <div class="layui-input-block" style="width:150px">
+                    <input type="text" name="dcontext" readonly="readonly" autocomplete="off"
+                           class="layui-input">
+                </div>
+            </div>
+            <div class="layui-inline">
+                <label class="layui-form-label">地点:</label>
+                <div class="layui-input-block">
+                    <input type="text" name="daddress" readonly="readonly" autocomplete="off"
+                           class="layui-input">
+                </div>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label">付账方式：</label>
+                <div class="layui-input-block" style="width:150px">
+                    <input type="text" name="dpay" readonly="readonly" autocomplete="off"
+                           class="layui-input">
+                </div>
+            </div>
+            <div class="layui-inline">
+                <label class="layui-form-label">状态：</label>
+                <div class="layui-input-block">
+                    <input type="text" name="dstate" readonly="readonly" autocomplete="off"
+                           class="layui-input">
+                </div>
+            </div>
+        </div>
 
+    </form>
+
+</div>
 
 </body>
 <%--===========================行操作按钮================================--%>
@@ -109,7 +178,6 @@
             form.render();
         });
     });
-
 
     layui.use('laydate', function(){
         var laydate = layui.laydate;
@@ -274,10 +342,7 @@
                 type: "post",
                 url: url,
                 dataType: "text",
-                data: {
-                    dateids:dateids,
-                    dfromids:dfromids
-                },
+                data: {dateids:dateids ,dfromids:dfromids},
                 success: function (dat) {
                     if(dat=="passSuccess"){
                         layer.msg("批量通过成功！");
@@ -311,7 +376,7 @@
             $.ajax({
                 async: true,
                 type: "post",
-                url: "<%=path%>checkManager/datingDataDetails.action",
+                url: "<%=path%>checkManager/datingDetails.action",
                 dataType: "json",
                 data: {"dateid":data.dateid},
                 success: function (redata) {
@@ -329,59 +394,6 @@
                         }
                     });
 
-                },
-                error: function (dat) {
-                    layer.msg('断开');
-                }
-            })
-
-        }
-
-        //打开修改页面
-        function openUpdateUser(data){
-            mainIndex=layer.open({
-                type:1,
-                title:'修改用户',
-                content:$("#saveOrUpdateDiv"),
-                area:['800px','400px'],
-                success:function(index){
-                    form.val("dataFrm",data);
-                    url="<%=path%>admin/updateUser.action";
-                }
-            });
-        }
-        //保存
-        form.on("submit(doSubmit)",function(obj){
-            //序列化表单数据
-            var params=$("#dataFrm").serialize();
-            gosave(url,params);
-        });
-        //ajax发送保存后的的数据
-        function gosave(url,params) {
-            $.ajax({
-                async: true,
-                type: "post",
-                url: url,
-                dataType: "text",
-                data: params,
-                success: function (dat) {
-                    if(dat==2){//更新两个表返回2
-                        layer.msg("修改成功");
-                    }else{
-                        layer.msg("修改失败");
-                    }
-                    //关闭弹出层
-                    layer.close(mainIndex);
-                    //执行重载
-                    table.reload('docReload', {
-                        where: {
-                            begindate: begindate.value,
-                            enddate: enddate.value,
-                            userid: userid.value,
-                            uname: uname.value,
-                            uedu: uedu.value,
-                        }
-                    }, 'data');
                 },
                 error: function (dat) {
                     layer.msg('断开');

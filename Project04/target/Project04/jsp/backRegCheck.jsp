@@ -80,128 +80,126 @@
             <div class="layui-inline">
                 <label class="layui-form-label">ID:</label>
                 <div class="layui-input-inline">
-                    <input type="text" name="userid"  lay-verify="required" readonly="readonly" autocomplete="off"
+                    <input type="text" name="userid" readonly="readonly" autocomplete="off"<%--autocomplete自动完成--%>
                            class="layui-input">
                 </div>
             </div>
             <div class="layui-inline">
-                <label class="layui-form-label">用户名:</label>
+                <label class="layui-form-label">姓名:</label>
                 <div class="layui-input-inline">
-                    <input type="text" name="uname" autocomplete="off"
+                    <input type="text" name="uname" readonly="readonly" autocomplete="off"
                            class="layui-input">
                 </div>
             </div>
         </div>
         <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label">性别:</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="usex" readonly="readonly" autocomplete="off"
+                           class="layui-input">
+                </div>
+            </div>
+            <div class="layui-inline">
+                <label class="layui-form-label">年龄:</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="uage" readonly="readonly" autocomplete="off"
+                           class="layui-input">
+                </div>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label">生日:</label>
+                <div class="layui-input-block" style="width:150px">
+                    <input type="text" name="ubirthday" readonly="readonly" autocomplete="off"
+                           class="layui-input">
+                </div>
+            </div>
             <div class="layui-inline">
                 <label class="layui-form-label">身高:</label>
-                <div class="layui-input-inline">
-                    <input type="text" name="uheight" autocomplete="off"
+                <div class="layui-input-block" style="width:150px">
+                    <input type="text" name="uheight" readonly="readonly" autocomplete="off"
                            class="layui-input">
                 </div>
             </div>
+        </div>
+        <div class="layui-form-item">
             <div class="layui-inline">
                 <label class="layui-form-label">体重:</label>
-                <div class="layui-input-inline">
-                    <input type="text" name="uweight" autocomplete="off"
+                <div class="layui-input-block" style="width:150px">
+                    <input type="text" name="uweight" readonly="readonly" autocomplete="off"
+                           class="layui-input">
+                </div>
+            </div>
+            <div class="layui-inline">
+                <label class="layui-form-label">签名:</label>
+                <div class="layui-input-block" style="width:150px">
+                    <input type="text" name="uinstro" readonly="readonly" autocomplete="off"
                            class="layui-input">
                 </div>
             </div>
         </div>
         <div class="layui-form-item">
             <div class="layui-inline">
-                <label class="layui-form-label">婚姻状况:</label>
-                <div class="layui-input-block" style="width:150px">
-                    <select name="umerried"  lay-verify="required">
-                        <option value="未婚">未婚</option>
-                        <option value="离异">离异</option>
-                        <option value="丧偶">丧偶</option>
-                    </select>
-                </div>
-            </div>
-            <div class="layui-inline">
-                <label class="layui-form-label">月收入:</label>
-                <div class="layui-input-block" style="width:150px">
-                    <select name="uincome"  lay-verify="required">
-                        <option value="0-5000">0-5000</option>
-                        <option value="5000-10000">5000-10000</option>
-                        <option value="10000-15000">10000-15000</option>
-                        <option value="15000-20000">15000-20000</option>
-                        <option value="20000以上">20000以上</option>
-                    </select>
-                </div>
-            </div>
-        </div>
-        <div class="layui-form-item">
-            <div class="layui-inline">
-                <label class="layui-form-label">星座:</label>
-                <div class="layui-input-block" style="width:150px">
-                    <select name="conste"  lay-verify="required">
-                        <option value="白羊座">白羊座</option>
-                        <option value="金牛座">金牛座</option>
-                        <option value="双子座">双子座</option>
-                        <option value="巨蟹座">巨蟹座</option>
-                        <option value="狮子座">狮子座</option>
-                        <option value="处女座">处女座</option>
-                        <option value="天秤座">天秤座</option>
-                        <option value="天蝎座">天蝎座</option>
-                        <option value="射手座">射手座</option>
-                        <option value="魔羯座">魔羯座</option>
-                        <option value="水瓶座">水瓶座</option>
-                        <option value="双鱼座">双鱼座</option>
-                    </select>
-                </div>
-            </div>
-            <div class="layui-inline">
-                <label class="layui-form-label">血型:</label>
-                <div class="layui-input-block" style="width:150px">
-                    <select name="ublood"  lay-verify="required">
-                        <option value="A">A型</option>
-                        <option value="B">B型</option>
-                        <option value="AB">AB型</option>
-                        <option value="O">O型</option>
-                        <option value="其它">其它血型</option>
-                    </select>
-                </div>
-
-            </div>
-
-        </div>
-        <div class="layui-form-item">
-            <div class="layui-form-item">
-                <label class="layui-form-label">性别：</label>
+                <label class="layui-form-label">收入：</label>
                 <div class="layui-input-block">
-                    <input type="radio" name="usex" value="男" title="男">
-                    <input type="radio" name="usex" value="女" title="女">
+                    <input type="text" name="uincome" readonly="readonly" autocomplete="off"
+                           class="layui-input">
                 </div>
             </div>
-        </div>
-        <div class="layui-form-item">
             <div class="layui-inline">
-                <label class="layui-form-label">出生日期:</label>
-                <div class="layui-input-inline">
-                    <input type="text" name="ubirthday" lay-verify="required" autocomplete="off"
+                <label class="layui-form-label">工作:</label>
+                <div class="layui-input-block">
+                    <input type="text" name="uwork" readonly="readonly" autocomplete="off"
                            class="layui-input">
                 </div>
             </div>
         </div>
         <div class="layui-form-item">
-            <div class="layui-form-item">
-                <label class="layui-form-label">学历</label>
+            <div class="layui-inline">
+                <label class="layui-form-label">职位：</label>
                 <div class="layui-input-block" style="width:150px">
-                    <select name="uedu"  lay-verify="required">
-                        <option value="高中及以下">高中及以下</option>
-                        <option value="专科">专科</option>
-                        <option value="本科">本科</option>
-                        <option value="硕士">硕士</option>
-                        <option value="博士">博士</option>
-                    </select>
+                    <input type="text" name="positions" readonly="readonly" autocomplete="off"
+                           class="layui-input">
                 </div>
             </div>
             <div class="layui-inline">
-                <label class="layui-form-label">地址:</label>
-                <div class="layui-input-inline">
-                    <input type="text" name="uaddress" autocomplete="off"
+                <label class="layui-form-label">专业:</label>
+                <div class="layui-input-block">
+                    <input type="text" name="major" readonly="readonly" autocomplete="off"
+                           class="layui-input">
+                </div>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label">有无房：</label>
+                <div class="layui-input-block" style="width:150px">
+                    <input type="text" name="uhouse" readonly="readonly" autocomplete="off"
+                           class="layui-input">
+                </div>
+            </div>
+            <div class="layui-inline">
+                <label class="layui-form-label">有无车:</label>
+                <div class="layui-input-block">
+                    <input type="text" name="ucar" readonly="readonly" autocomplete="off"
+                           class="layui-input">
+                </div>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label">是否要孩子:</label>
+                <div class="layui-input-block" style="width:150px">
+                    <input type="text" name="uchild" readonly="readonly" autocomplete="off"
+                           class="layui-input">
+                </div>
+            </div>
+            <div class="layui-inline">
+                <label class="layui-form-label">婚姻计划:</label>
+                <div class="layui-input-block">
+                    <input type="text" name="uwedding" readonly="readonly" autocomplete="off"
                            class="layui-input">
                 </div>
             </div>

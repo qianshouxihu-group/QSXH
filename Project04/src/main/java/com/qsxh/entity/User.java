@@ -18,6 +18,15 @@ public class User {
     private String uheight;
     private String uweight;
     private String uedu;
+    private String uage;
+    private String uinstro;
+    private String uwork;
+    private String positions;
+    private String major;
+    private String ucar;
+    private String uhouse;
+    private String uchild;
+    private String uwedding;
 
     private String umerried;
     private String ublood;
@@ -271,5 +280,77 @@ public class User {
 
     public void setUedu(String uedu) {
         this.uedu = uedu;
+    }
+
+    public String getUage() {
+        return uage;
+    }
+
+    public void setUage(String uage) {
+        this.uage = uage;
+    }
+
+    public String getUinstro() {
+        return uinstro;
+    }
+
+    public void setUinstro(String uinstro) {
+        this.uinstro = uinstro;
+    }
+
+    public String getUwork() {
+        return uwork;
+    }
+
+    public void setUwork(String uwork) {
+        this.uwork = uwork;
+    }
+
+    public String getPositions() {
+        return positions;
+    }
+
+    public void setPositions(String positions) {
+        this.positions = positions;
+    }
+
+    public String getMajor() {
+        return major;
+    }
+
+    public void setMajor(String major) {
+        this.major = major;
+    }
+
+    public String getUcar() {
+        return ucar;
+    }
+
+    public void setUcar(String ucar) {
+        this.ucar = ucar;
+    }
+
+    public String getUhouse() {
+        return uhouse;
+    }
+
+    public void setUhouse(String uhouse) {
+        this.uhouse = uhouse;
+    }
+
+    public String getUchild() {
+        return uchild;
+    }
+
+    public void setUchild(String uchild) {
+        this.uchild = uchild;
+    }
+
+    public String getUwedding() {
+        return uwedding;
+    }
+
+    public void setUwedding(String uwedding) {
+        this.uwedding = uwedding;
     }
 }

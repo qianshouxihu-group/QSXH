@@ -39,10 +39,10 @@
             and regdate &lt;= #{enddate}
         </if>
         <if test=" !(''.equals(userid)) and null!= userid">
-            and userid like '%${userid}%'
+            and u.userid like '%${userid}%'
         </if>
         <if test=" !(''.equals(uname)) and null!= uname">
-            and uname like '%${uname}%'
+            and u.uname like '%${uname}%'
         </if>
         ORDER BY regdate
         limit #{page},#{limit}

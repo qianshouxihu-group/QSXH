@@ -231,6 +231,7 @@ public class CheckBizImpl implements ICheckBiz {
     //后台约会审核 查看约会详情
     @Override
     public Dating datingDetails(String dateid) {
-        return null;
+        Dating dating = datingDao.datingDetails(dateid);
+        return dating;
     }
 }
