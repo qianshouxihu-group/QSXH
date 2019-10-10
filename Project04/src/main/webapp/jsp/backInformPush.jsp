@@ -26,43 +26,32 @@
 <fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
     <legend>查询条件</legend>
 </fieldset>
-<%--============================条件查询================================--%>
+<%--============================查询条件================================--%>
 <div class="layui-form">
     <div class="demoTable">
         <div class="layui-form-item">
-
             <div class="layui-inline">
-                <label class="layui-form-label">发起人id：</label>
-                <div class="layui-input-inline" id="dfromiddiv">
-                    <input type="text" name="dfromid" id="dfromid" <%--lay-verify="date"--%>
-                           placeholder="请输入发起人id" autocomplete="off" class="layui-input">
+                <label class="layui-form-label">注册日期：</label>
+                <div class="layui-input-inline" id="begindatediv">
+                    <input type="text" name="begindate" id="begindate" lay-verify="date" placeholder="yyyy-MM-dd" autocomplete="off" class="layui-input">
                 </div>
             </div>
-
             <div class="layui-inline">
-                <label class="layui-form-label">接受人id：</label>
-                <div class="layui-input-inline "  id="dtoiddiv" >
-                    <input type="text" name="dtoid" id="dtoid" <%--lay-verify="date"--%>
-                           placeholder="请输入接受人id" autocomplete="off" class="layui-input">
+                <label class="layui-form-label">至</label>
+                <div class="layui-input-inline "  id="enddatediv" >
+                    <input type="text" name="enddate" id="enddate" lay-verify="date" placeholder="yyyy-MM-dd" autocomplete="off" class="layui-input">
                 </div>
             </div>
         </div>
         <div class="layui-form-item">
-            <div class="layui-inline">
-                <label class="layui-form-label">约会日期：</label>
-                <div class="layui-input-inline" id="begindatediv">
-                    <input type="text" name="begindate" id="begindate" lay-verify="date"
-                           placeholder="请选择起始日期" autocomplete="off" class="layui-input">
-                </div>
+            <label class="layui-form-label">ID</label>
+            <div class="layui-input-inline">
+                <input type="text" name="userid" id="userid"  class="layui-input" >
             </div>
-            <div class="layui-inline">
-                <label class="layui-form-label">至:</label>
-                <div class="layui-input-inline "  id="enddatediv" >
-                    <input type="text" name="enddate" id="enddate" lay-verify="date"
-                           placeholder="请选择终止日期" autocomplete="off" class="layui-input">
-                </div>
+            <label class="layui-form-label">姓名</label>
+            <div class="layui-input-inline">
+                <input type="text" name="uname" id="uname"  class="layui-input" >
             </div>
-
         </div>
         <div class="layui-form-item">
             <div class="layui-input-block layui-show-xs-block">
@@ -74,8 +63,8 @@
     <!-- ==============================数据表格开始============================ -->
     <div class="layui-card-body"  >
         <div style="display: none;" id="userToolBar">
-            <button type="button" class="layui-btn layui-btn-sm" lay-event="allPass">批量通过</button>
-            <button class="layui-btn layui-btn-sm layui-btn-danger" lay-event="allNoPass">批量不通过</button>
+            <button type="button" class="layui-btn layui-btn-sm" lay-event="newPush">新增推送</button>
+<%--            <button class="layui-btn layui-btn-sm layui-btn-danger" lay-event="allNoPass">批量不通过</button>--%>
         </div>
         <table class="layui-table" lay-filter="test" id="demo" align="center">
         </table>
@@ -83,84 +72,157 @@
     <!-- 数据表格结束 -->
 </div>
 
-    <%--=================================详情弹窗=================================--%>
+    <%--=================================资料弹窗=================================--%>
+
 <div style="display: none;padding: 20px" id="detailsDiv" >
     <form class="layui-form " action="" lay-filter="dataFrm" id="dataFrm">
         <div class="layui-form-item">
             <div class="layui-inline">
-                <label class="layui-form-label">日期:</label>
-                <div class="layui-input-block" style="width:150px">
-                    <input type="text" name="ddate" readonly="readonly" autocomplete="off"
+                <label class="layui-form-label">ID:</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="userid" readonly="readonly" autocomplete="off"<%--autocomplete自动完成--%>
                            class="layui-input">
                 </div>
             </div>
             <div class="layui-inline">
-                <label class="layui-form-label">时间:</label>
-                <div class="layui-input-block" style="width:150px">
-                    <input type="text" name="dtime" readonly="readonly" autocomplete="off"
-                           class="layui-input">
-                </div>
-            </div>
-        </div>
-        <div class="layui-form-item">
-            <div class="layui-inline">
-                <label class="layui-form-label">发起人ID：</label>
-                <div class="layui-input-block">
-                    <input type="text" name="dfromid" readonly="readonly" autocomplete="off"
-                           class="layui-input">
-                </div>
-            </div>
-            <div class="layui-inline">
-                <label class="layui-form-label">接受人ID:</label>
-                <div class="layui-input-block">
-                    <input type="text" name="dtoid" readonly="readonly" autocomplete="off"
+                <label class="layui-form-label">姓名:</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="uname" readonly="readonly" autocomplete="off"
                            class="layui-input">
                 </div>
             </div>
         </div>
         <div class="layui-form-item">
             <div class="layui-inline">
-                <label class="layui-form-label">内容：</label>
-                <div class="layui-input-block" style="width:150px">
-                    <input type="text" name="dcontext" readonly="readonly" autocomplete="off"
+                <label class="layui-form-label">性别:</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="usex" readonly="readonly" autocomplete="off"
                            class="layui-input">
                 </div>
             </div>
             <div class="layui-inline">
-                <label class="layui-form-label">地点:</label>
-                <div class="layui-input-block">
-                    <input type="text" name="daddress" readonly="readonly" autocomplete="off"
+                <label class="layui-form-label">年龄:</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="uage" readonly="readonly" autocomplete="off"
                            class="layui-input">
                 </div>
             </div>
         </div>
         <div class="layui-form-item">
             <div class="layui-inline">
-                <label class="layui-form-label">付账方式：</label>
+                <label class="layui-form-label">生日:</label>
                 <div class="layui-input-block" style="width:150px">
-                    <input type="text" name="dpay" readonly="readonly" autocomplete="off"
+                    <input type="text" name="ubirthday" readonly="readonly" autocomplete="off"
                            class="layui-input">
                 </div>
             </div>
             <div class="layui-inline">
-                <label class="layui-form-label">状态：</label>
+                <label class="layui-form-label">身高:</label>
+                <div class="layui-input-block" style="width:150px">
+                    <input type="text" name="uheight" readonly="readonly" autocomplete="off"
+                           class="layui-input">
+                </div>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label">体重:</label>
+                <div class="layui-input-block" style="width:150px">
+                    <input type="text" name="uweight" readonly="readonly" autocomplete="off"
+                           class="layui-input">
+                </div>
+            </div>
+            <div class="layui-inline">
+                <label class="layui-form-label">签名:</label>
+                <div class="layui-input-block" style="width:150px">
+                    <input type="text" name="uinstro" readonly="readonly" autocomplete="off"
+                           class="layui-input">
+                </div>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label">收入：</label>
                 <div class="layui-input-block">
-                    <input type="text" name="dstate" readonly="readonly" autocomplete="off"
+                    <input type="text" name="uincome" readonly="readonly" autocomplete="off"
+                           class="layui-input">
+                </div>
+            </div>
+            <div class="layui-inline">
+                <label class="layui-form-label">工作:</label>
+                <div class="layui-input-block">
+                    <input type="text" name="uwork" readonly="readonly" autocomplete="off"
+                           class="layui-input">
+                </div>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label">职位：</label>
+                <div class="layui-input-block" style="width:150px">
+                    <input type="text" name="positions" readonly="readonly" autocomplete="off"
+                           class="layui-input">
+                </div>
+            </div>
+            <div class="layui-inline">
+                <label class="layui-form-label">专业:</label>
+                <div class="layui-input-block">
+                    <input type="text" name="major" readonly="readonly" autocomplete="off"
+                           class="layui-input">
+                </div>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label">有无房：</label>
+                <div class="layui-input-block" style="width:150px">
+                    <input type="text" name="uhouse" readonly="readonly" autocomplete="off"
+                           class="layui-input">
+                </div>
+            </div>
+            <div class="layui-inline">
+                <label class="layui-form-label">有无车:</label>
+                <div class="layui-input-block">
+                    <input type="text" name="ucar" readonly="readonly" autocomplete="off"
+                           class="layui-input">
+                </div>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label">是否要孩子:</label>
+                <div class="layui-input-block" style="width:150px">
+                    <input type="text" name="uchild" readonly="readonly" autocomplete="off"
+                           class="layui-input">
+                </div>
+            </div>
+            <div class="layui-inline">
+                <label class="layui-form-label">婚姻计划:</label>
+                <div class="layui-input-block">
+                    <input type="text" name="uwedding" readonly="readonly" autocomplete="off"
                            class="layui-input">
                 </div>
             </div>
         </div>
 
+
+<%--        <div class="layui-form-item" style="text-align: center;">--%>
+<%--            <div class="layui-input-block">--%>
+<%--                <button type="button" class="layui-btn layui-btn-normal layui-btn-sm layui-icon layui-icon-release" lay-filter="doSubmit" lay-submit="">提交</button>--%>
+<%--                <button type="reset" class="layui-btn layui-btn-warm layui-btn-sm layui-icon layui-icon-refresh" >重置</button>--%>
+<%--            </div>--%>
+<%--        </div>--%>
     </form>
 
 </div>
+<!-- 添加和修改的弹出层结束 -->
 
 </body>
 <%--===========================行操作按钮================================--%>
 <script id="barDemo" type="text/html">
     <div class="layui-btn-container">
-        <button class="layui-btn layui-btn-sm" lay-event="pass">通过</button>
-        <button class="layui-btn layui-btn-sm layui-btn-danger" lay-event="nopass">不通过</button>
+<%--        <button class="layui-btn layui-btn-sm" lay-event="pass">通过</button>--%>
+<%--        <button class="layui-btn layui-btn-sm layui-btn-danger" lay-event="nopass">不通过</button>--%>
         <button class="layui-btn layui-btn-sm layui-btn-warm" lay-event="details">查看详情</button>
     </div>
 </script>
@@ -171,13 +233,14 @@
         var form = layui.form; //只有执行了这一步，部分表单元素才会自动修饰成功
         //重置查询条件
         $("#conditionreset").click(function () {
-            $("#dfromid").val("");
-            $("#dtoid").val("");
             $("#begindate").val("");
             $("#enddate").val("");
+            $("#userid").val("");
+            $("#uname").val("");
             form.render();
         });
     });
+
 
     layui.use('laydate', function(){
         var laydate = layui.laydate;
@@ -187,8 +250,7 @@
             ,done:function(value){
                 //移除已经存在的日期
                 $("#enddate").remove();
-                $("#enddatediv").append('<input type="text" name="enddate" id="enddate" lay-verify="date"\n' +
-                    '                           placeholder="请选择终止日期" autocomplete="off" class="layui-input">');
+                $("#enddatediv").append('<input type="text" name="enddate" id="enddate" lay-verify="date" placeholder="yyyy-MM-dd" autocomplete="off" class="layui-input">');
                 alert(value);
                 if (value=='') {
                     value='1900-01-01';
@@ -207,8 +269,7 @@
             ,done:function(value){
                 //移除已经存在的日期
                 $("#begindate").remove();
-                $("#begindatediv").append('<input type="text" name="begindate" id="begindate" lay-verify="date"\n' +
-                    '                           placeholder="请选择起始日期" autocomplete="off" class="layui-input">');
+                $("#begindatediv").append('<input type="text" name="begindate" id="begindate" lay-verify="date" placeholder="yyyy-MM-dd" autocomplete="off" class="layui-input">');
                 alert(value);
                 if (value=='') {
                     value='2100-01-01';
@@ -235,7 +296,7 @@
             ,limit: 5 //每页默认显示的数量
             ,toolbar:"#userToolBar"
             ,id: 'docReload'
-            ,url: '<%=path%>checkManager/datingCheckList.action' //数据接口
+            ,url: '<%=path%>informPushManager/informList.action' //数据接口
             ,page: true //开启分页
             ,parseData: function (res) {
 
@@ -247,13 +308,14 @@
                 };
             }
             ,cols: [[ //表头
-                 {type: 'checkbox', fixed: 'left'}
-                ,{field: 'dfromid', title: '发起人', fixed: 'left'}
-                ,{field: 'dtoid', title: '接受人'}
-                ,{field: 'ddate', title: '约会日期'}
-                ,{field: 'dtime', title: '约会时间'}
-                ,{field: 'dcontext', title: '内容'}
-                ,{field: 'daddress', title: '约会地址'}
+                 // {type: 'checkbox', fixed: 'left'}
+                ,{field: 'informid', title: 'ID', fixed: 'left'}
+                ,{field: 'ititle', title: '标题'}
+                ,{field: 'icontext', title: '内容'}
+                ,{field: 'itype', title: '类型'}
+                ,{field: 'itime', title: '时间'}
+                // ,{field: 'itoid', title: '接收人'}
+                ,{field: 'iurl', title: 'url'}
                 ,{field: 'right', title: '操作', toolbar: '#barDemo', minWidth: 270}
             ]]
         });
@@ -261,20 +323,22 @@
         /*=================================触发查询按钮=====================================*/
         var $ = layui.$, active = {
             reload: function(){
-                var dfromid = $('#dfromid');
-                var dtoid = $('#dtoid');
                 var begindate = $('#begindate');
                 var enddate = $('#enddate');
+                var userid = $('#userid');
+                var uname = $('#uname');
+                // var uedu = $('#uedu');
                 //执行重载
                 table.reload('docReload', {
                     page: {
                         curr: 1 //重新从第 1 页开始
                     }
                     ,where: {
-                        dfromid: dfromid.val(),
-                        dtoid: dtoid.val(),
                         begindate: begindate.val(),
                         enddate: enddate.val(),
+                        userid: userid.val(),
+                        uname: uname.val(),
+                        // uedu: uedu.val(),
                     }
                 }, 'data');
             }
@@ -293,20 +357,16 @@
                     var checkStatus = table.checkStatus(obj.config.id);
                     var data = checkStatus.data;
                     var params="";
-                    var params2="";
                     $.each(data,function(i,item){
                         if(i==0){
-                            params+="dateids="+item.dateid;
-                            params2+="dfromids="+item.dfromid;
+                            params+="userids="+item.userid;
                         }else{
-                            params+="dateids="+item.dateid;
-                            params2+="dfromids="+item.dfromid;
+                            params+="&userids="+item.userid;
                         }
                     });
                     alert(params);
-                    alert(params2);
                     layer.confirm('确定全部通过吗？', function(index){
-                        allCheck("<%=path%>checkManager/datingAllPass.action",params , params2);
+                        allCheck("<%=path%>checkManager/allPass.action",params);
                         layer.close(index);
                     });
 
@@ -316,33 +376,29 @@
                     var checkStatus = table.checkStatus(obj.config.id);
                     var data = checkStatus.data;
                     var params="";
-                    var params2="";
                     $.each(data,function(i,item){
                         if(i==0){
-                            params+="dateids="+item.dateid;
-                            params2+="dfromids="+item.dfromid;
+                            params+="userids="+item.userid;
                         }else{
-                            params+="dateids="+item.dateid;
-                            params2+="dfromids="+item.dfromid;
+                            params+="&userids="+item.userid;
                         }
                     });
                     alert(params);
-                    alert(params2);
                     layer.confirm('确定全部不通过吗？', function(index){
-                        allCheck("<%=path%>checkManager/datingAllNoPass.action",params , params2);
+                        allCheck("<%=path%>checkManager/allNoPass.action",params);
                         layer.close(index);
                     });
                     break;
             };
         })
         /*================================批量操作AJAX=================================*/
-        function allCheck(url,dateids,dfromids) {
+        function allCheck(url,userids) {
             $.ajax({
                 async: true,
                 type: "post",
                 url: url,
                 dataType: "text",
-                data: {dateids:dateids ,dfromids:dfromids},
+                data: userids,
                 success: function (dat) {
                     if(dat=="passSuccess"){
                         layer.msg("批量通过成功！");
@@ -356,10 +412,11 @@
                     //执行重载
                     table.reload('docReload', {
                         where: {
-                            dfromid: dfromid.value,
-                            dtoid: dtoid.value,
                             begindate: begindate.value,
                             enddate: enddate.value,
+                            userid: userid.value,
+                            uname: uname.value,
+                            // uedu: uedu.value,
                         }
                     }, 'data');
                 },
@@ -376,14 +433,14 @@
             $.ajax({
                 async: true,
                 type: "post",
-                url: "<%=path%>checkManager/datingDetails.action",
+                url: "<%=path%>checkManager/dataDetails.action",
                 dataType: "json",
-                data: {"dateid":data.dateid},
+                data: {"userid":data.userid},
                 success: function (redata) {
-                    alert(redata.ddateid+"===="+redata.dcontext);
+                    alert(redata.uname+"===="+redata.usex);
                     mainIndex=layer.open({
                         type:1,
-                        title:'约会详情',
+                        title:'资料详情',
                         content:$("#detailsDiv"),
                         area:['800px','400px'],
                         success:function(index){
@@ -401,33 +458,76 @@
             })
 
         }
-        /*==========================监听行工具事件=======================*/
-        table.on('tool(test)', function(obj) {
-            var data = obj.data;
-            alert(data.dateid);
-            if (obj.event === 'nopass') {
-                layer.confirm('确定不通过吗？', function (index) {
-                    fal("<%=path%>checkManager/datingNopass.action",data.dateid , data.dfromid);
-                    layer.close(index);
-                });
-            }else if (obj.event === 'pass') {
-                layer.confirm('确定通过吗？', function (index) {
-                    fal("<%=path%>checkManager/datingPass.action",data.dateid , data.dfromid);
-                    layer.close(index);
-                });
-            }else if (obj.event === 'details'){
-                openDetails(data);
-            }
-        });
 
-        /*==========================行工具 通过不通过查看资料AJAX========================*/
-        function fal(url,dateid,dfromid) {
+        //打开修改页面
+        function openUpdateUser(data){
+            mainIndex=layer.open({
+                type:1,
+                title:'修改用户',
+                content:$("#saveOrUpdateDiv"),
+                area:['800px','400px'],
+                success:function(index){
+                    form.val("dataFrm",data);
+                    url="<%=path%>admin/updateUser.action";
+                }
+            });
+        }
+        //保存
+        form.on("submit(doSubmit)",function(obj){
+            //序列化表单数据
+            var params=$("#dataFrm").serialize();
+            gosave(url,params);
+        });
+        //ajax发送保存后的的数据
+        function gosave(url,params) {
             $.ajax({
                 async: true,
                 type: "post",
                 url: url,
                 dataType: "text",
-                data: {"dateid":dateid , "dfromid":dfromid},
+                data: params,
+                success: function (dat) {
+                    if(dat==2){//更新两个表返回2
+                        layer.msg("修改成功");
+                    }else{
+                        layer.msg("修改失败");
+                    }
+                    //关闭弹出层
+                    layer.close(mainIndex);
+                    //执行重载
+                    table.reload('docReload', {
+                        where: {
+                            begindate: begindate.value,
+                            enddate: enddate.value,
+                            userid: userid.value,
+                            uname: uname.value,
+                            uedu: uedu.value,
+                        }
+                    }, 'data');
+                },
+                error: function (dat) {
+                    layer.msg('断开');
+                }
+            })
+
+        }
+        /*==========================监听行工具事件=======================*/
+        table.on('tool(test)', function(obj) {
+            var data = obj.data;
+            alert(data.userid);
+            if (obj.event === 'details'){
+                openDetails(data);
+            }
+        });
+
+        /*==========================行工具 通过不通过查看资料AJAX========================*/
+        function fal(url,userid) {
+            $.ajax({
+                async: true,
+                type: "post",
+                url: url,
+                dataType: "text",
+                data: {"userid":userid},
                 success: function (dat) {
                     if(dat=="noPassSuccess"){
                         layer.msg("不通过成功！");
@@ -441,10 +541,11 @@
                     //执行重载
                     table.reload('docReload', {
                         where: {
-                            dfromid: dfromid.value,
-                            dtoid: dtoid.value,
                             begindate: begindate.value,
                             enddate: enddate.value,
+                            userid: userid.value,
+                            uname: uname.value,
+                            // uedu: uedu.value,
                         }
                     }, 'data');
                 },

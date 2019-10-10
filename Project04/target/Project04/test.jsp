@@ -20,8 +20,10 @@
     <a href="<%=path%>/informManager/systemInform.action">我的消息</a>
     <a href="<%=path%>/jsp/backRegCheck.jsp">后台注册审核</a>
     <a href="<%=path%>/jsp/backDatingCheck.jsp">后台约会审核</a>
+    <a href="<%=path%>/jsp/backInformPush.jsp">后台消息推送</a>
     <input type="button" id="leaveMessage" value="给TA留言"/>
     <input type="button" id="dating" value="和TA约会"/>
+
 
 </form>
 

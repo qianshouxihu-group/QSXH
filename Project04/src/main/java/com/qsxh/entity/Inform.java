@@ -10,10 +10,13 @@ public class Inform {
     private String iurl;
     private String istate;
 
+    private int page;
+    private int limit;
+
     public Inform() {
     }
 
-    public Inform(Integer informid, String itime, String ititle, String icontext, String itype, String itoid, String iurl, String istate) {
+    public Inform(Integer informid, String itime, String ititle, String icontext, String itype, String itoid, String iurl, String istate, int page, int limit) {
         this.informid = informid;
         this.itime = itime;
         this.ititle = ititle;
@@ -22,6 +25,8 @@ public class Inform {
         this.itoid = itoid;
         this.iurl = iurl;
         this.istate = istate;
+        this.page = page;
+        this.limit = limit;
     }
 
     public Integer getInformid() {
@@ -86,5 +91,21 @@ public class Inform {
 
     public void setIstate(String istate) {
         this.istate = istate;
+    }
+
+    public int getPage() {
+        return page;
+    }
+
+    public void setPage(int page) {
+        this.page = page;
+    }
+
+    public int getLimit() {
+        return limit;
+    }
+
+    public void setLimit(int limit) {
+        this.limit = limit;
     }
 }

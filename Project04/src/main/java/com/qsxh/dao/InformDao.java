@@ -23,4 +23,10 @@ public interface InformDao {
     public Integer readSysOrActive(@Param("informid") String informid);
     //发送系统消息
     public Integer sendSystemInform(Inform inform);
+
+
+    //历史推送消息 列表
+    public List<Inform> informList(Inform inform);
+    //历史推送消息 记录数
+    public Integer informCount(Inform inform);
 }

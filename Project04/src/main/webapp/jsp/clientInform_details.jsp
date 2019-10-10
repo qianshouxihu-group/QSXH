@@ -83,10 +83,26 @@
         <div class="login-right">
             <div class="list-main1-title">我的消息</div>
             <div class="col c2"><!--menu-->
-                <div class="list-top"><a href="<%=path%>/informManager/systemInform.action"><label>系统消息</label></a></div>
-                <div class="list-top"><a href="<%=path%>/informManager/activeInform.action"><label>活动消息</label></a></div>
-                <div class="list-top"><a href="<%=path%>/informManager/messageInform.action"><label>我的留言</label></a></div>
-                <div class="list-top"><a href="<%=path%>/informManager/datingInform.action"><label>我的约会</label></a></div>
+                <div class="list-top">
+                    <a href="<%=path%>/informManager/systemInform.action">
+                        <label>系统消息</label>&nbsp;<div class="my-notice">${countList.get(0)}</div>
+                    </a>
+                </div>
+                <div class="list-top">
+                    <a href="<%=path%>/informManager/activeInform.action">
+                        <label>活动消息</label>&nbsp;<div class="my-notice">${countList.get(1)}</div>
+                    </a>
+                </div>
+                <div class="list-top">
+                    <a href="<%=path%>/informManager/messageInform.action">
+                        <label>我的留言</label>&nbsp;<div class="my-notice">${countList.get(2)}</div>
+                    </a>
+                </div>
+                <div class="list-top">
+                    <a href="<%=path%>/informManager/datingInform.action">
+                        <label>我的约会</label>&nbsp;<div class="my-notice">${countList.get(3)}</div>
+                    </a>
+                </div>
             </div>
         </div>
         <div style="float: right ; width: 85% ;" id="tableAndPageInfo">
