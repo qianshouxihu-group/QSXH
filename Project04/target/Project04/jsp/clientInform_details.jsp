@@ -121,9 +121,17 @@
                     <table class="table table-hover" id="table1" style="table-layout: fixed ;">
                         <%--发送人--%>
                         <tr>
-                            <c:if test="${dating != null || msg != null}">
+                            <c:if test="${msg != null}">
                                 <td>
-                                    <h4>发送人：${msg.uname}${dating.uname}</h4>
+                                    <h4>发送人：${msg.uname}</h4>
+                                </td>
+                            </c:if>
+                            <c:if test="${dating != null}">
+                                <td>
+                                    <h4>发送人：${dating.uname}</h4>
+                                </td>
+                                <td>
+                                    <h4>接收人：${dating.uname2}</h4>
                                 </td>
                             </c:if>
                         </tr>

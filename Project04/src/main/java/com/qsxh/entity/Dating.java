@@ -13,6 +13,7 @@ public class Dating {
     private String dreturn;//被约人回复
 
     private String uname;//发送人名字
+    private String uname2;//接收人名字
 
     private int page;//layui分页当前页
     private int limit;//layui分页每页几条
@@ -179,5 +180,13 @@ public class Dating {
 
     public void setDfromids(String[] dfromids) {
         this.dfromids = dfromids;
+    }
+
+    public String getUname2() {
+        return uname2;
+    }
+
+    public void setUname2(String uname2) {
+        this.uname2 = uname2;
     }
 }

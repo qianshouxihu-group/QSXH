@@ -92,6 +92,7 @@
                 <table class="table table-hover" id="table1" style="table-layout: fixed;">
                         <tr>
                             <th>发起人</th>
+                            <th>接收人</th>
                             <th>内容</th>
                             <th>付账形式</th>
                             <th>时间</th>
@@ -101,6 +102,7 @@
                     <c:forEach items="${pageInfo.list}" var="dating" varStatus="id">
                         <tr>
                             <td>${dating.uname}</td>
+                            <td>${dating.uname2}</td>
                             <td>${dating.dcontext}</td>
                             <td>${dating.dpay}</td>
                             <td>${dating.ddate}&nbsp;${dating.dtime}</td>

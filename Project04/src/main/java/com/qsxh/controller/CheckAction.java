@@ -3,15 +3,12 @@ package com.qsxh.controller;
 import com.qsxh.entity.Dating;
 import com.qsxh.entity.User;
 import com.qsxh.service.ICheckBiz;
-import com.qsxh.service.UserBiz;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.ModelAndView;
 
 import javax.annotation.Resource;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 //后台审核
@@ -144,7 +141,7 @@ public class CheckAction {
         return "noPassSuccess";
     }
 
-    //注册审核 查看资料详情
+    //约会审核 查看资料详情
     @RequestMapping("/datingDetails.action")
     @ResponseBody
     public Dating datingDetails(String dateid)

@@ -10,17 +10,20 @@
     </select>
     <!--我的约会列表-->
     <select id="datingInform" resultType="com.qsxh.entity.Dating">
-        select d.* , u.uname from tbldating d , tbluser u
+        select d.* , u.uname ,u2.uname as uname2 from tbldating d , tbluser u , tbluser u2
         where (dfromid = #{userid} or dtoid = #{userid})
         and (dstate = '52' or dstate = '53' or dstate = '54' or (dstate = '55' and dfromid = #{userid}) or (dstate = '51' and dfromid = #{userid}))
         and d.dfromid = u.userid
+        and d.dtoid = u2.userid
         ORDER BY ddate desc , dtime desc
     </select>
 
     <!--查看约会详情-->
     <select id="datingDetails" resultType="com.qsxh.entity.Dating">
-        select d.* , u.uname from tbldating d , tbluser u
-        where dateid = #{dateid} and d.dfromid = u.userid
+        select d.* , u.uname , u2.uname as uname2 from tbldating d , tbluser u , tbluser u2
+        where dateid = #{dateid}
+        and d.dfromid = u.userid
+        and d.dtoid = u2.userid
     </select>
 
     <!--回复约会-->

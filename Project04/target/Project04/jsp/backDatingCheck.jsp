@@ -134,22 +134,6 @@
                 </div>
             </div>
         </div>
-        <div class="layui-form-item">
-            <div class="layui-inline">
-                <label class="layui-form-label">付账方式：</label>
-                <div class="layui-input-block" style="width:150px">
-                    <input type="text" name="dpay" readonly="readonly" autocomplete="off"
-                           class="layui-input">
-                </div>
-            </div>
-            <div class="layui-inline">
-                <label class="layui-form-label">状态：</label>
-                <div class="layui-input-block">
-                    <input type="text" name="dstate" readonly="readonly" autocomplete="off"
-                           class="layui-input">
-                </div>
-            </div>
-        </div>
 
     </form>
 
