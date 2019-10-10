@@ -8,11 +8,15 @@ import com.qsxh.entity.Message;
 import com.qsxh.service.IInformBiz;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.annotation.Resource;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 //我的消息功能
@@ -22,10 +26,19 @@ public class InformAction {
     @Resource
     private IInformBiz informBiz;//消息业务处理对象
 
+    //获取未读条数
+//    @RequestMapping("/unreadCount")
+    public List<Integer> unreadCount(String userid)
+    {
+        List<Integer> list = informBiz.unreadCount(userid);//session取userid
+        return list;
+    }
+    @ResponseBody
     //系统消息
     @RequestMapping("/systemInform.action")
     public ModelAndView systemInform(@RequestParam(value = "page" , defaultValue = "1") Integer page)
     {
+        System.out.println("页数："+page);
         PageHelper.startPage(page , 3);//(当前页，每页条数)
         List<Inform> list = informBiz.systemInform("1001");//这边的user需要从session里面取~~~~~~~~~~~~~~~~~
 
@@ -34,6 +47,9 @@ public class InformAction {
         PageInfo pageInfo = new PageInfo(list , 5);
         //pageInfo存入request
         mav.addObject("pageInfo", pageInfo);
+        //获取所有消息的未读数量
+        List<Integer> countList = unreadCount("1001");
+        mav.addObject("countList" , countList);
         //跳转消息页面
         mav.setViewName("clientInform_system");
         return mav;
@@ -50,6 +66,9 @@ public class InformAction {
         PageInfo pageInfo = new PageInfo(list , 5);
         //pageInfo存入request
         mav.addObject("pageInfo", pageInfo);
+        //获取所有消息的未读数量
+        List<Integer> countList = unreadCount("1001");
+        mav.addObject("countList" , countList);
         //跳转消息页面
         mav.setViewName("clientInform_active");
         return mav;
@@ -87,7 +106,7 @@ public class InformAction {
         return mav;
     }
 
-    //系统消息 查看详情
+    //系统消息+活动消息 查看详情
     @RequestMapping("/sysDetails.action")
     @Transactional
     public ModelAndView sysDetails(String informid)
@@ -103,7 +122,7 @@ public class InformAction {
     }
 
     //我的留言 查看详情
-    @RequestMapping("msgDetails.action")
+    @RequestMapping("/msgDetails.action")
     public ModelAndView msgDetails(String msgid)
     {
         System.out.println("msgid:"+msgid);
@@ -118,7 +137,7 @@ public class InformAction {
     }
 
     //我的约会 查看详情
-    @RequestMapping("datingDetails.action")
+    @RequestMapping("/datingDetails.action")
     public ModelAndView datingDetails(String dateid)
     {
         System.out.println("dateid:"+dateid);
@@ -130,5 +149,40 @@ public class InformAction {
         mav.addObject("dating" , dating);
         mav.setViewName("clientInform_details");
         return mav;
+    }
+
+    //我的留言 回复
+    @RequestMapping("/reply.action")
+    @ResponseBody
+    public String reply(Message message)
+    {
+        System.out.println("进入action");
+        String result = informBiz.addOneRecord(message);
+
+        System.out.println("myTitle:"+message.getMtitle()+"myContext:"+message.getMcontext()+"toid:"+message.getMtoid());
+        return result;
+    }
+
+    //我的约会 回复并接受
+    @RequestMapping("/replyAndAccept.action")
+    @ResponseBody
+    public String replyAndAccept(Dating dating)
+    {
+        System.out.println("进入replyAndAccept");
+        String result = informBiz.replyAndAccept(dating);
+
+        System.out.println("dreturn:" + dating.getDreturn() + "dateid:" + dating.getDateid());
+
+        return result;
+    }
+
+    //我的约会 拒绝
+    @RequestMapping("/reject.action")
+    @ResponseBody
+    public String reject(String dateid)
+    {
+        System.out.println("dateid:"+dateid);
+        String result = informBiz.reject(dateid);
+        return result;
     }
 }

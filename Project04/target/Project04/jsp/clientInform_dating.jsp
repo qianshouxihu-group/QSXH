@@ -54,38 +54,30 @@
         <div class="login-right">
             <div class="list-main1-title">我的消息</div>
             <div class="col c2"><!--menu-->
-                <div class="list-top"><a href="<%=path%>/informManager/systemInform.action">系统消息</a></div>
-                <div class="list-top"><a href="<%=path%>/informManager/activeInform.action">活动消息</a></div>
-                <div class="list-top"><a href="<%=path%>/informManager/messageInform.action">我的留言</a></div>
-                <div class="list-top"><a href="<%=path%>/informManager/datingInform.action">我的约会</a></div>
-                <!-- 模板的伸缩菜单 -->
-                <!--                   <div class="css3-animated-example">
-                                     <h3 class="cur">详情资料</h3>
-                                      <div>
-                                        <div class="content">
-                                        <p><a href="">生活方式</a></p>
-                                        <p><a href="">工作学习</a></p>
-                                        <p><a href="">关于婚姻</a></p>
-                                        </div>
-                                      </div>
-                                  </div> -->
-                <!-- <div class="list-top"><a href="">关于举报</a></div>	 -->
-                <!--                 <div class="css3-animated-example">
-                                   <h3 style=" border-bottom: 0;">系统设置</h3>
-                                      <div>
-                                        <div class="content">
-                                        <p><a href="">密码修改</a></p>
-                                        <p><a href="">更换手机</a></p>
-                                        </div>
-                                      </div>-->
+                <div class="list-top">
+                    <a href="<%=path%>/informManager/systemInform.action">
+                        <label>系统消息</label>&nbsp;<div class="my-notice">${countList.get(0)}</div>
+                    </a>
+                </div>
+                <div class="list-top">
+                    <a href="<%=path%>/informManager/activeInform.action">
+                        <label>活动消息</label>&nbsp;<div class="my-notice">${countList.get(1)}</div>
+                    </a>
+                </div>
+                <div class="list-top">
+                    <a href="<%=path%>/informManager/messageInform.action">
+                        <label>我的留言</label>&nbsp;<div class="my-notice">${countList.get(2)}</div>
+                    </a>
+                </div>
+                <div class="list-top">
+                    <a href="<%=path%>/informManager/datingInform.action">
+                        <label style="color: red;">我的约会</label>&nbsp;<div class="my-notice">${countList.get(3)}</div>
+                    </a>
+                </div>
             </div>
 
         </div><!--menu-->
-<%--        <!-- layui表格本体 -->--%>
-<%--        <div class="layui-card-body" align="center" >--%>
-<%--            <table class="layui-table" lay-filter="test" id="utable" align="center">--%>
-<%--            </table>--%>
-<%--        </div>--%>
+        <%--===============================消息列表=======================================--%>
         <div style="float: right ; width: 85% ;" id="tableAndPageInfo">
             <div style="height: 200px;" id="table">
                 <table class="table table-hover" id="table1" style="table-layout: fixed;">
@@ -99,50 +91,68 @@
                         </tr>
                     <c:forEach items="${pageInfo.list}" var="dating" varStatus="id">
                         <tr>
-                            <td>${dating.dfromid}</td>
+                            <td>${dating.uname}</td>
                             <td>${dating.dcontext}</td>
                             <td>${dating.dpay}</td>
                             <td>${dating.ddate}&nbsp;${dating.dtime}</td>
-                            <td>${dating.dstate}</td>
+                            <c:if test="${dating.dstate == '51'}">
+                                <td><label style="color: yellow ; font-weight:bold">待审核</label></td>
+                            </c:if>
+                            <c:if test="${dating.dstate == '55'}">
+                                <td><label style="color: red ; font-weight:bold">审核未通过</label></td>
+                            </c:if>
+                            <c:if test="${dating.dstate == '52'}">
+                                <td><label style="color: yellow ; font-weight:bold">待处理</label></td>
+                            </c:if>
+                            <c:if test="${dating.dstate == '53'}">
+                                <td><label style="color: green ; font-weight:bold">已接受</label></td>
+                            </c:if>
+                            <c:if test="${dating.dstate == '54'}">
+                                <td><label style="color: red ; font-weight:bold">已拒绝</label></td>
+                            </c:if>
                             <td><a href="<%=path%>/informManager/datingDetails.action?dateid=${dating.dateid}">查看详情</a></td>
                         </tr>
                     </c:forEach>
                 </table>
             </div>
 
-        <%--页码信息--%>
-        <div class="row">
-            <div class="col-md-6">
-                第${pageInfo.pageNum}页，共${pageInfo.pages}页，共${pageInfo.total}条记录
+            <%--============================================分页==========================================--%>
+            <div class="row">
+                <div class="col-md-6">
+                    第${pageInfo.pageNum}页，共${pageInfo.pages}页，共${pageInfo.total}条记录
+                </div>
             </div>
-            <div class="col-md-6 offset-md-4">
-                <nav aria-label="Page navigation example">
-                    <ul class="pagination pagination-sm">
-                        <li class="page-item"><a class="page-link" href="<%=path%>/informManager/datingInform.action?page=1">首页</a></li>
-                        <c:if test="${pageInfo.hasPreviousPage}">
-                            <li class="page-item"><a class="page-link"
-                                                     href="<%=path%>/informManager/datingInform.action?page=${pageInfo.pageNum-1}">上一页</a></li>
+            <div class="page">
+                <a href="<%=path%>/informManager/datingInform.action?page=1">首页</a>
+                <c:if test="${pageInfo.hasPreviousPage}">
+                    <a href="<%=path%>/informManager/datingInform.action?page=${pageInfo.pageNum-1}">上一页</a>
+                </c:if>
+                <c:forEach items="${pageInfo.navigatepageNums}" var="page">
+                    <c:if test="${page==pageInfo.firstPage and page>1}">
+                        <a href="<%=path%>/informManager/datingInform.action?page=1">1</a>
+                        <c:if test="${page!=2}">
+                            <span>...</span>
                         </c:if>
-                        <c:forEach items="${pageInfo.navigatepageNums}" var="page">
-                            <c:if test="${page==pageInfo.pageNum}">
-                                <li class="page-item active"><a class="page-link" href="#">${page}</a></li>
-                            </c:if>
-                            <c:if test="${page!=pageInfo.pageNum}">
-                                <li class="page-item"><a class="page-link"
-                                                         href="<%=path%>/informManager/datingInform.action?page=${page}">${page}</a></li>
-                            </c:if>
-                        </c:forEach>
-                        <c:if test="${pageInfo.hasNextPage}">
-                            <li class="page-item"><a class="page-link"
-                                                     href="<%=path%>/informManager/datingInform.action?page=${pageInfo.pageNum+1}">下一页</a></li>
+                    </c:if>
+                    <c:if test="${page==pageInfo.pageNum}">
+                        <a class="cur">${page}</a>
+                    </c:if>
+                    <c:if test="${page!=pageInfo.pageNum}">
+                        <a href="<%=path%>/informManager/datingInform.action?page=${page}">${page}</a>
+                    </c:if>
+                    <c:if test="${page<pageInfo.pages and page==pageInfo.lastPage}">
+                        <c:if test="${page!=(pageInfo.pages-1)}">
+                            <span>...</span>
                         </c:if>
-                        <li class="page-item"><a class="page-link" href="<%=path%>/informManager/datingInform.action?page=${pageInfo.pages}">末页</a>
-                        </li>
-                    </ul>
-                </nav>
+                        <a href="<%=path%>/informManager/datingInform.action?page=${pageInfo.pages}">${pageInfo.pages}</a>
+                    </c:if>
+                </c:forEach>
+                <c:if test="${pageInfo.hasNextPage}">
+                    <a href="<%=path%>/informManager/datingInform.action?page=${pageInfo.pageNum+1}">下一页</a>
+                </c:if>
+                <a href="<%=path%>/informManager/datingInform.action?page=${pageInfo.pages}">末页</a>
             </div>
-        </div>
-
+            <%--===================================================================================--%>
     </div>
     </div>
 </div>

@@ -20,7 +20,18 @@ public interface UserDao {
     public Integer addHisHabit(@Param("userid") String userid);
     //前台注册 插入tblcplimit
     public Integer addHisCplimit(@Param("userid") String userid);
+    //后台注册审核 列表
+    public List<User> regCheckList(User user);
+    //后台注册审核 记录数
+    public Integer regCheckCount(User user);
+    //后台注册审核 通过
+    public Integer regCheckPass(@Param("userid") String userid);
+    //后台注册审核 不通过
+    public Integer regCheckNoPass(@Param("userid") String userid);
+    //后台注册审核 查看资料详情
+    public User dataDetails(@Param("userid") String userid);
 
+    /*============cjc=============*/
     //获取聊天列表
     public List<TblUser> findUser(@Param("userid") String userid);
 

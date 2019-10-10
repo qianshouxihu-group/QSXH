@@ -8,11 +8,12 @@ public class Message {
     private String mcontext;
     private String mstate;
     private String mtitle;
+    private String uname;
 
     public Message() {
     }
 
-    public Message(Integer msgid, String mtime, String mfromid, String mtoid, String mcontext, String mstate, String mtitle) {
+    public Message(Integer msgid, String mtime, String mfromid, String mtoid, String mcontext, String mstate, String mtitle, String uname) {
         this.msgid = msgid;
         this.mtime = mtime;
         this.mfromid = mfromid;
@@ -20,6 +21,7 @@ public class Message {
         this.mcontext = mcontext;
         this.mstate = mstate;
         this.mtitle = mtitle;
+        this.uname = uname;
     }
 
     public Integer getMsgid() {
@@ -76,5 +78,13 @@ public class Message {
 
     public void setMtitle(String mtitle) {
         this.mtitle = mtitle;
+    }
+
+    public String getUname() {
+        return uname;
+    }
+
+    public void setUname(String uname) {
+        this.uname = uname;
     }
 }
