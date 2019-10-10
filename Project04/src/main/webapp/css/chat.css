@@ -1,4 +1,17 @@
-﻿.my-notice{
+﻿.online, .offline, .me {
+    margin-right: 3px;
+    font-size: 10px;
+}
+
+.online {
+    color: #86BB71;
+}
+
+.offline {
+    color: #E38968;
+}
+
+.my-notice{
     display: inline-block;
     height: auto;
     min-width: 10px;
@@ -13,7 +26,7 @@
     margin-right: -10px;
     margin-top: auto;
     color: #fff;
-    background: #8c85e6;
+    background: #0ea4c9;
     bottom: 20px;
     right: auto;
 }
@@ -43,8 +56,8 @@
 /* 滚动条滑块 */
 ::-webkit-scrollbar-thumb {
     border-radius:10px;
-    background:#8C85E6;
-    -webkit-box-shadow:#8C85E6;
+    background:#cd505e;
+    -webkit-box-shadow:#cd505e;
 }
 ::-webkit-scrollbar-thumb:window-inactive {
     background: rgba(175, 190, 255, 0.4);
@@ -100,7 +113,7 @@
     line-height: 50px;
     text-align: center;
     border-radius: 50%;
-    box-shadow: 2px 2px 2px #d4d4d4;
+    box-shadow: 2px 2px 2px #ffffff;
     cursor: pointer;
     position: absolute;
     bottom: 0;
@@ -125,7 +138,7 @@
     right: 70px;
 
     overflow: hidden;
-    border: solid 1px #d5d5d5;
+    border: solid 1px #ffffff;
     box-shadow: 1px 1px 2px #c0c0c0;
     z-index: 1005;
 }
@@ -183,6 +196,22 @@
 .chat-close:hover{
     background: #cd505e;
 }
+
+.chat-delete{
+    float: right;
+    width: 55px;
+    height: 55px;
+    line-height: 55px;
+    border-radius: 10px;
+    cursor: pointer;
+    text-align: center;
+    color: #721c24;
+}
+.chat-delete:hover{
+    color: #fff;
+    background: #cd505e;
+}
+
 .chat-people{
     float: left;
 }
@@ -252,7 +281,7 @@
 
 
 .chat-name{
-    width: 230px;
+    width: 180px;
 }
 .chat-name>p{
     margin: 0;
@@ -262,6 +291,11 @@
 }
 .chat-name>p:nth-of-type(1){
     line-height: 55px;
+}
+
+.gift-send{
+    float:right;
+    margin-top: 3px;
 }
 .chat-list-people>div.message-num{
     display: inline-block;

@@ -14,11 +14,11 @@
     <meta name="Description" content="牵手西湖婚恋交友网"/>
     <link type="image/x-icon" rel=icon href="images/icon.png" />
     <link type="text/css" rel="stylesheet" href="css/style.css"/>
-    <link rel="stylesheet" type="text/css" href="font_Icon/iconfont.css">
+    <link type="text/css" rel="stylesheet" href="css/font-awesome.min.css">
+    <link type="text/css" rel="stylesheet" href="font_Icon/iconfont.css">
     <link type="text/css" rel="stylesheet" href="css/chat.css"/>
     <script type="text/javascript" src="js/jquery-1.8.3.min.js"></script>
     <script type="text/javascript" src="js/jquery.collapse.js" ></script>
-
 </head>
 <body>
 <div class="head">
@@ -213,6 +213,7 @@
                         </div>
                         <div class="ChatInfoName">这是用户的名字</div>
                     </div>
+
                     <div class="chat-close">关闭</div>
                 </div>
 
@@ -237,7 +238,8 @@
                         <div class="chat-name">
                             <p>琴酒</p>
                         </div>
-                        <div class="message-num"></div>
+                        <i class="fa fa-circle online">&nbsp;&nbsp;在线</i>
+                        <div class="chat-delete">删除</div>
                     </div>
                 </div>
 
@@ -370,7 +372,7 @@
     });
 
     function giveGood(touser) {
-        goodurl = "MyFollowManager/gift.action";
+        goodurl = "MyFollowManager/good.action";
         var toform = $(touser).parent().parent().parent().parent();
         $(toform).attr('action',goodurl);
         $(toform).submit();

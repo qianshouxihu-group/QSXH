@@ -125,7 +125,7 @@
 		//展示收到的图片
 		function showReceiveImage(url,time) {
 
-			$(".chatBox-content-demo").append("<div class=\"clearfloat\"><div class=\"author-name\">\n" +
+			$(".chatBox-content-demo").append("<div class=\"clearfloat\"><div class=\"author-name\">" +
 				"<small class=\"chat-date\">"+
 				time + "</small></div><div class=\"left\">" +
 				"<div class=\"chat-avatars\"><img src=" +

@@ -30,7 +30,7 @@ public class UploadUtil {
             String uuid =  UUID.randomUUID().toString().replace("-","");
             String newFileName = uuid + "_" + oldName;
 
-            String url = "upload/"+newFileName;
+            String url = "temp/"+newFileName;
 
             //文件传输，parent文件
             file.transferTo(new File(parent, newFileName));

@@ -43,6 +43,7 @@ public class UserAction extends ActionSupport {
         User user = us.userLogin(uname,password);
         HttpSession session = request.getSession();
         System.out.println("账号名"+uname+"   "+"密码"+password);
+        System.out.println("登的"+user.getUname());
         if(null!= user)
         {
           session.setAttribute("user", user);

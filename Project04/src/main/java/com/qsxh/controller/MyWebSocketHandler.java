@@ -44,7 +44,7 @@ public class MyWebSocketHandler implements WebSocketHandler{
 
     }
 
-    //发送信息前的处理
+    //收到信息后的处理
     public void handleMessage(WebSocketSession webSocketSession, WebSocketMessage<?> webSocketMessage) throws Exception {
 
         //判断信息是否为空

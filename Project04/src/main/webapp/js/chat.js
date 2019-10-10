@@ -37,6 +37,8 @@
         screenFuc();
     })();
 
+    var clock = 1;
+
     //打开/关闭聊天框
     $(".chatBtn").click(function () {
         $(".chatBox").toggle(10);
@@ -71,7 +73,14 @@
         $(".chat-list-people").each(function () {
             $(this).click(function () {
 
+                var offline = $(this).next().val();
+                if (offline=="12"){
+                    alert('对方不在线！')
+                    return false;
+                }
                 toid = $(this).prev().val();
+
+                clock = 1;
 
                 var n = $(this).index();
                 $(".chatBox-head-one").toggle();
@@ -82,6 +91,18 @@
                 //传名字
                 $(".ChatInfoName").text($(this).children(".chat-name").children("p").eq(0).html());
 
+                //加载送礼图标
+                giftText="<div class='gift-send'><a href='javascript:void(0);' title='赠送礼物'><img  src='images/gift.png' alt='赠送礼物'></a></div>";
+                $(".ChatInfoName").append(giftText);
+
+                //赠送礼物
+                $(".gift-send").click(function(){
+                    gifturl = "MyFollowManager/gift.action?toid="+toid;
+                    if (confirm('将扣除100金币，确认赠送礼物？')){
+                        location.href=gifturl;
+                    }
+                });
+
                 //传头像
                 $(".ChatInfoHead>img").attr("src", $(this).children().eq(0).children("img").attr("src"));
 
@@ -89,22 +110,25 @@
                 $(document).ready(function () {
                     $("#chatBox-content-demo").scrollTop($("#chatBox-content-demo")[0].scrollHeight);
                 });
+
             })
         });
 
         //返回列表
+        $(".chat-return").off("click");
         $(".chat-return").click(function () {
-            if (!confirm('将清空聊天记录，是否返回？')) {
-                return false;
+            if (confirm('将清空聊天记录，是否返回？')) {
+                $(".chatBox-head-one").toggle(1);
+                $(".chatBox-head-two").toggle(1);
+                $(".chatBox-list").fadeToggle(1);
+                $(".chatBox-kuang").fadeToggle(1);
+                $(".chatBox-content-demo").html('');
             }
-            $(".chatBox-head-one").toggle(1);
-            $(".chatBox-head-two").toggle(1);
-            $(".chatBox-list").fadeToggle(1);
-            $(".chatBox-kuang").fadeToggle(1);
-            $(".chatBox-content-demo").html('');
+
         });
 
         //发送信息
+        $("#chat-fasong").off("click");
         $("#chat-fasong").click(function () {
             var textContent = $(".div-textarea").html().replace(/[\n\r]/g, '<br>')
             if (textContent != "") {
@@ -128,17 +152,23 @@
         });
 
         //发送表情
+        $("#chat-biaoqing").off("click");
         $("#chat-biaoqing").click(function () {
             $(".biaoqing-photo").toggle();
         });
+
+        $(document).off("click");
         $(document).click(function () {
             $(".biaoqing-photo").css("display", "none");
         });
+
         $("#chat-biaoqing").click(function (event) {
             event.stopPropagation();//阻止事件
         });
 
+
         $(".emoji-picker-image").each(function () {
+            $(this).off("click");
             $(this).click(function () {
                 var bq = $(this).parent().html();
                 console.log(bq)
@@ -164,10 +194,14 @@
     //发送图片
     function selectImg(pic) {
         if (!pic.files || !pic.files[0]) {
-            return;
+            return false;
         }
         var uploadResult = uploadFile(pic);
 
+        //聊天框默认最底部
+        $(document).ready(function () {
+            $("#chatBox-content-demo").scrollTop($("#chatBox-content-demo")[0].scrollHeight);
+        });
 
     }
 
@@ -194,17 +228,25 @@
     function showChatList() {
         var userList = getChatList();
         var listData = "";
+        var online = "";
         for (i = 0; i < userList.length; i++) {
             var chatUser = userList[i];
+            if (chatUser.uonline=="12") {
+                online = "<i class='fa fa-circle offline'>&nbsp;&nbsp;离线</i>";
+            }
+            else {
+                online = "<i class='fa fa-circle online'>&nbsp;&nbsp;在线</i>";
+            }
             listData = listData +
-                "<input type=\"hidden\" value=\"" +
+                "<input type='hidden' value=\"" +
                 chatUser.userid +"\" id=\"" + chatUser.userid + "\">" +
-                "<div class=\"chat-list-people\">" +
+                "<div class='chat-list-people'>" +
                 "<div><img src=\"" +
-                "images/icon01.png" + "\" alt=\"头像\"></div>" +
+                "images/icon01.png" + "\" alt='头像'></div>" +
                 "<div class=\"chat-name\">" +
                 "<p>"+ chatUser.uname + "</p></div>" +
-                "</div>";
+                online + "<div class='chat-delete'>删除</div></div>"+
+                "<input type='hidden' value=\""+chatUser.uonline+"\">";
         }
         $(".chatBox-list").html(listData);
     }
@@ -242,10 +284,6 @@
                         //发送信息
                         sendMessage(data,toid,'img');
 
-                        //聊天框默认最底部
-                        $(document).ready(function () {
-                            $("#chatBox-content-demo").scrollTop($("#chatBox-content-demo")[0].scrollHeight);
-                        });
                     };
                     reader.readAsDataURL(pic.files[0]);
                 }

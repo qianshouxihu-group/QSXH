@@ -7,6 +7,8 @@ import com.qsxh.entity.TblUser;
 import com.qsxh.entity.User;
 import com.qsxh.service.ChatService;
 import com.qsxh.service.RelationService;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -53,6 +55,10 @@ public class MyFollowAction {
     public String giveGood(HttpServletRequest request,String followedid){
         System.out.println("---进入点赞逻辑---");
 
+        ApplicationContext ct = new ClassPathXmlApplicationContext(
+                "spring-base.xml");
+        relationService = (RelationService) ct.getBean("linaProxy");
+
         //获得id
         User user = (User) request.getSession().getAttribute("user");
         String userid = user.getUserid();
@@ -73,6 +79,10 @@ public class MyFollowAction {
 
         System.out.println("userid = [" + userid + "]");
         List<TblUser> chatList = chatService.findUser(userid);
+
+        for (int i=0;i<chatList.size();i++){
+            System.out.println(chatList.get(i).getUonline());
+        }
 
         return chatList;
     }
@@ -96,7 +106,7 @@ public class MyFollowAction {
     }
 
     @RequestMapping("/gift")//赠送礼物
-    public String sendGift(HttpServletRequest request,String followedid){
+    public String sendGift(HttpServletRequest request,String toid){
         System.out.println("---进入赠送礼物逻辑---");
 
         //获得id
@@ -106,7 +116,9 @@ public class MyFollowAction {
         //封装用户信息
         TblRelation users = new TblRelation();
         users.setFfromid(userid);
-        users.setFtoid(followedid);
+        users.setFtoid(toid);
+
+        System.out.println(userid+"---"+toid);
 
         boolean result = relationService.sendGift(users);
 

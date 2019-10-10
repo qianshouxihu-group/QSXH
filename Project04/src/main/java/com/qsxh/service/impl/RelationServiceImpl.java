@@ -15,7 +15,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
-@Service("/relation")
+@Service("relationService")
 public class RelationServiceImpl implements RelationService {
 
     @Resource

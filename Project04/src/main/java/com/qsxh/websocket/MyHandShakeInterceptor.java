@@ -1,6 +1,7 @@
 package com.qsxh.websocket;
 
 import com.qsxh.entity.User;
+import com.qsxh.utiles.FileDeleteUtil;
 import org.springframework.http.server.ServerHttpRequest;
 import org.springframework.http.server.ServerHttpResponse;
 import org.springframework.http.server.ServletServerHttpRequest;
@@ -19,6 +20,10 @@ public class MyHandShakeInterceptor implements HandshakeInterceptor {
 
             ServletServerHttpRequest servletRequest = (ServletServerHttpRequest) serverHttpRequest;
             HttpSession session = servletRequest.getServletRequest().getSession(false);
+
+            //清空图片缓存文件夹
+            String path = session.getServletContext().getRealPath("/temp");
+            FileDeleteUtil.clearFolder(path);
 
             // 标记用户
             User tblUser = (User) session.getAttribute("user");

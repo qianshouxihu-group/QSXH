@@ -67,4 +67,25 @@
     <!--使用事务注解，需要添加transactional注解属性-->
     <tx:annotation-driven transaction-manager="transactionManager"/>
 
+    <!--一、基于代理的AOP -->
+    <bean id="lina" class="com.qsxh.service.impl.RelationServiceImpl"/>
+    <!--  定义增强-->
+    <bean id ="sleepHelper" class="com.qsxh.utiles.SleepHelper"/>
+    <!-- 定义切点  匹配所有的sleep方法-->
+    <bean id ="sleepPointcut" class="org.springframework.aop.support.JdkRegexpMethodPointcut">
+        <property name="pattern" value=".*good"></property>
+    </bean>
+    <!-- 切面  通知+切点结合 -->
+    <bean id="sleepHelperAdvisor" class="org.springframework.aop.support.DefaultPointcutAdvisor">
+        <property name="advice" ref="sleepHelper"/>
+        <property name="pointcut" ref="sleepPointcut"/>
+    </bean>
+
+    <!-- 定义代理对象 -->
+    <bean id="linaProxy" class="org.springframework.aop.framework.ProxyFactoryBean">
+        <property name="target" ref="lina"/>
+        <property name="interceptorNames" value="sleepHelperAdvisor"/>
+        <!-- <property name="proxyInterfaces" value="com.tgb.springaop.service.Sleepable"/> -->
+    </bean>
+
 </beans>
