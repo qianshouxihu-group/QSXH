@@ -25,8 +25,16 @@
         <div class="top-left">
         </div>
         <div class="top-right">
-            <a href="">注册</a> |
-            <a href="">登录</a>
+            <c:choose>
+                <c:when test="${ sessionScope.user!=null }">
+                    <a>${ sessionScope.user.uname },欢迎您！</a>|
+                    <a href="testManager/outLogin.action">注销</a>
+                </c:when>
+                <c:otherwise>
+                    <a href="">注册</a> |
+                    <a href="">登录</a>
+                </c:otherwise>
+            </c:choose>
         </div>
     </div>
     <div class="top-ban">

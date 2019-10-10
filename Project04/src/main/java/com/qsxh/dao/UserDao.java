@@ -38,6 +38,8 @@ public interface UserDao {
     /*===========kjy============*/
     //用户登录
     public User userLogin(@Param("userid") String userid, @Param("upass") String upass);
+    //管理员登录
+    public User userLogin2(@Param("userid") String userid, @Param("upass") String upass);
     //查询用户信息
     public User getUser(@Param("userid") String userid);
     //查看金币

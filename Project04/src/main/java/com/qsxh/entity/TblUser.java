@@ -10,6 +10,12 @@ public class TblUser {
     private String ustate;
     private String uonline;
     private String regdate;
+    private String fgood;
+    private String uage;
+    private String uheight;
+    private String conste;
+    private String uincome;
+    private String ucharm;
 
     //无参构造
     public TblUser() {
@@ -25,6 +31,54 @@ public class TblUser {
         this.ustate = ustate;
         this.uonline = uonline;
         this.regdate = regdate;
+    }
+
+    public String getUcharm() {
+        return ucharm;
+    }
+
+    public void setUcharm(String ucharm) {
+        this.ucharm = ucharm;
+    }
+
+    public String getUage() {
+        return uage;
+    }
+
+    public void setUage(String uage) {
+        this.uage = uage;
+    }
+
+    public String getUheight() {
+        return uheight;
+    }
+
+    public void setUheight(String uheight) {
+        this.uheight = uheight;
+    }
+
+    public String getConste() {
+        return conste;
+    }
+
+    public void setConste(String conste) {
+        this.conste = conste;
+    }
+
+    public String getUincome() {
+        return uincome;
+    }
+
+    public void setUincome(String uincome) {
+        this.uincome = uincome;
+    }
+
+    public String getFgood() {
+        return fgood;
+    }
+
+    public void setFgood(String fgood) {
+        this.fgood = fgood;
     }
 
     public String getUserid() {

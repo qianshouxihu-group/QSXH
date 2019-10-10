@@ -2,27 +2,36 @@ package com.qsxh.entity;
 
 public class TblRelation {
 
-    private String fromid;
-    private String toid;
+    private String ffromid;
+    private String ftoid;
     private String fgood;
     private String ffollow;
+    private String giftno;
 
     public TblRelation(){}
 
-    public String getFromid() {
-        return fromid;
+    public String getGiftno() {
+        return giftno;
     }
 
-    public void setFromid(String fromid) {
-        this.fromid = fromid;
+    public void setGiftno(String giftno) {
+        this.giftno = giftno;
     }
 
-    public String getToid() {
-        return toid;
+    public String getFfromid() {
+        return ffromid;
     }
 
-    public void setToid(String toid) {
-        this.toid = toid;
+    public void setFfromid(String ffromid) {
+        this.ffromid = ffromid;
+    }
+
+    public String getFtoid() {
+        return ftoid;
+    }
+
+    public void setFtoid(String ftoid) {
+        this.ftoid = ftoid;
     }
 
     public String getFgood() {

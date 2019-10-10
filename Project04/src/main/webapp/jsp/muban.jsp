@@ -13,6 +13,7 @@
     <meta name="Description" content="牵手西湖婚恋交友网"/>
     <link type="image/x-icon" rel=icon href="images/icon.png"/>
     <link type="text/css" rel="stylesheet" href="css/style.css"/>
+    <link type="text/css" rel="stylesheet" href="css/chat.css"/>
      <script src="js/jquery-1.8.3.min.js"></script>
 </head>
 <body>
@@ -23,8 +24,8 @@
         <div class="top-right">
 
             <c:choose>
-                <c:when test="${ sessionScope.userBase!=null }">
-                    <a>${ sessionScope.userBase.uname },欢迎您！</a>|
+                <c:when test="${ sessionScope.user!=null }">
+                    <a>${ sessionScope.user.uname },欢迎您！</a>|
                     <a href="testManager/outLogin.action">注销</a>
                 </c:when>
                 <c:otherwise>
@@ -49,7 +50,7 @@
         <a href="">智能匹配</a>
         <a href="">我的关注</a>
         <a href="">个人中心</a>
-        <a href="">我的消息</a>
+        <a href="">我的消息 <div class="my-notice">${countList.get(0)+countList.get(1)+countList.get(2)+countList.get(3)}</div></a>
         <a href="">会员服务</a>
         <a href="">活动专题</a>
     </div>

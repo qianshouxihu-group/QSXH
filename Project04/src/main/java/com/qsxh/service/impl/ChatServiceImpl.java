@@ -34,9 +34,26 @@ public class ChatServiceImpl implements ChatService {
     @Override
     public boolean offLine(String userid) {
 
-        int result = chatUserDao.offLine(userid);
+        int result = chatUserDao.changeLine(userid,"12");
         flag = result > 0 ? true : false;
 
+        return flag;
+    }
+
+    @Override
+    public boolean online(String userid) {
+
+        int result = chatUserDao.changeLine(userid,"11");
+        flag = result > 0 ? true : false;
+
+        return flag;
+    }
+
+    @Override
+    public boolean clearChat(String userid) {
+
+        int result = chatUserDao.clearChat(userid);
+        flag = result > 0 ? true : false;
         return flag;
     }
 }

@@ -17,6 +17,10 @@ public class UserServiceImp implements UserService {
     public User userLogin(String userid, String upass) {
         return uDao.userLogin(userid,upass);
     }
+    @Override
+    public User userLogin2(String userid, String upass) {
+        return uDao.userLogin2(userid,upass);
+    }
 
     @Override
     public User getUser(String userid) {

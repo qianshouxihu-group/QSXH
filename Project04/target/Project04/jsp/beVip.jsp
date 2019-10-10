@@ -23,8 +23,8 @@
         <div class="top-right">
 
             <c:choose>
-                <c:when test="${ sessionScope.userBase!=null }">
-                    <a>${ sessionScope.userBase.uname },欢迎您！</a>|
+                <c:when test="${ sessionScope.user!=null }">
+                    <a>${ sessionScope.user.uname },欢迎您！</a>|
                     <a href="testManager/outLogin.action">注销</a>
                 </c:when>
                 <c:otherwise>

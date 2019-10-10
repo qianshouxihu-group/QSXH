@@ -7,6 +7,7 @@ import com.qsxh.entity.Account;
 import com.qsxh.entity.User;
 import com.qsxh.service.AccountService;
 import com.qsxh.service.UserService;
+import org.junit.jupiter.api.Test;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -40,6 +41,8 @@ public class AccountAction extends ActionSupport {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         Date date = new Date();
         String dateStringParse = sdf.format(date);
+        //去除money后小数点的内容
+        money = money.substring(0,money.indexOf("."));
 
         int money2 = Integer.parseInt(money);//money是当前充入的金额。
         int goldnum;
@@ -171,20 +174,24 @@ public class AccountAction extends ActionSupport {
         return "forward:/AccountAction/bevip.action";//action之间跳转
     }
 
-
-//    @Test
-//    @Transactional
-//    public void ttt()
+//    @RequestMapping("tx")
+//    public void txtx()
 //    {
-//        AccountService as=new AccountServiceImp();
-//        try {
-//            as.recharge(new Account("888","8888","21","888","1001"));
-//            as.changegold("5555","1001");
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//            System.out.println("错");
-//        }
+//        int s=as.testshiwu();
+//        System.out.println("测试结果是"+s);
 //    }
+
+
+    @Test
+    @Transactional
+    public void ttt()
+    {
+        String number = "123.456";
+
+        String intNumber = number.substring(0,number.indexOf("."));
+
+        System.out.println(intNumber);
+    }
 
 
 }

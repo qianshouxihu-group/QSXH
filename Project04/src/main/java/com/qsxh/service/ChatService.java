@@ -16,4 +16,10 @@ public interface ChatService {
     //用户下线
     public boolean offLine(String userid);
 
+    //用户上线
+    public boolean online(String userid);
+
+    //清空聊天列表
+    public boolean clearChat(String userid);
+
 }

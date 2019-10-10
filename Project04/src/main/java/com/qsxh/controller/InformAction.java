@@ -8,15 +8,12 @@ import com.qsxh.entity.Message;
 import com.qsxh.service.IInformBiz;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.annotation.Resource;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 
 //我的消息功能
@@ -26,13 +23,6 @@ public class InformAction {
     @Resource
     private IInformBiz informBiz;//消息业务处理对象
 
-    //获取未读条数
-//    @RequestMapping("/unreadCount")
-    public List<Integer> unreadCount(String userid)
-    {
-        List<Integer> list = informBiz.unreadCount(userid);//session取userid
-        return list;
-    }
     @ResponseBody
     //系统消息
     @RequestMapping("/systemInform.action")
@@ -47,9 +37,6 @@ public class InformAction {
         PageInfo pageInfo = new PageInfo(list , 5);
         //pageInfo存入request
         mav.addObject("pageInfo", pageInfo);
-        //获取所有消息的未读数量
-        List<Integer> countList = unreadCount("1001");
-        mav.addObject("countList" , countList);
         //跳转消息页面
         mav.setViewName("clientInform_system");
         return mav;
@@ -66,9 +53,6 @@ public class InformAction {
         PageInfo pageInfo = new PageInfo(list , 5);
         //pageInfo存入request
         mav.addObject("pageInfo", pageInfo);
-        //获取所有消息的未读数量
-        List<Integer> countList = unreadCount("1001");
-        mav.addObject("countList" , countList);
         //跳转消息页面
         mav.setViewName("clientInform_active");
         return mav;
