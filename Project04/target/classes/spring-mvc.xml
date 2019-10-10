@@ -62,4 +62,13 @@
 <!--        </mvc:message-converters>-->
 <!--    </mvc:annotation-driven>-->
 
+        <mvc:interceptors>
+            <mvc:interceptor>
+                <mvc:mapping path="/**"/>
+                <mvc:exclude-mapping path="/log/*"/>
+                <mvc:exclude-mapping path="/regManager/*"/>
+                <bean class="com.qsxh.Interceptor.informCountInterceptor"/>
+            </mvc:interceptor>
+        </mvc:interceptors>
+
 </beans>

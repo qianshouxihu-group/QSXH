@@ -15,6 +15,7 @@
     <link type="image/x-icon" rel=icon href="images/icon.png" />
     <link type="text/css" rel="stylesheet" href="css/style.css"/>
     <link type="text/css" rel="stylesheet" href="css/bootstrap.min.css"/>
+    <link type="text/css" rel="stylesheet" href="css/chat.css"/>
     <script type="text/javascript" src="js/bootstrap.min.js"></script>
     <style>td {white-space:nowrap;overflow:hidden;text-overflow: ellipsis;}</style>
 
@@ -44,7 +45,7 @@
         <a href="">智能匹配</a>
         <a href="">我的关注</a>
         <a href="">个人中心</a>
-        <a href="">我的消息<%--<span style="color: #0000FF">(+5)</span>--%></a>
+        <a href="">我的消息<div class="my-notice">${countList.get(0)+countList.get(1)+countList.get(2)+countList.get(3)}</div></a>
         <a href="">会员服务</a>
         <a href="">活动专题</a>
     </div>
