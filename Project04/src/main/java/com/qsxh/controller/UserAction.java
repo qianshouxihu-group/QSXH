@@ -14,9 +14,6 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -36,38 +33,7 @@ public class UserAction extends ActionSupport {
     private User user;
     private List<User> userList;
 
-    //登录测试
-    //1、判断是否会员 2、若是会员判断到期日 3、如果是，并到期。把身份变为普通用户，并清除到期日。
-    @RequestMapping("/login")
-    public ModelAndView managerLogin(HttpServletRequest request, String uname, String password){
-        ModelAndView mv = new ModelAndView();
-        User user = us.userLogin(uname,password);
-        HttpSession session = request.getSession();
-        System.out.println("账号名"+uname+"   "+"密码"+password);
-        System.out.println("登的"+user.getUname());
-        if(null!= user)
-        {
-          session.setAttribute("user", user);
-         // 1
-          if("4".equals(user.getRoleid())){
-            String vipdate= as.getVipenddate(user.getUserid());
-            Date date = new Date();
-            DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
-            // 2
-            if (df.format(date).compareTo(vipdate)>0) {
-                // 3
-                us.changeRoldid(user.getUserid(),"3");
-                as.addVipenddate(user.getUserid(),"");
-            }
-        }
 
-
-        mv.setViewName("myfollowed");
-        }else{
-            mv.setViewName("loginfile");
-        }
-        return mv;
-    }
     //注销方法
     @RequestMapping("/outLogin")
     public ModelAndView outLogin(HttpSession session, HttpServletRequest request){

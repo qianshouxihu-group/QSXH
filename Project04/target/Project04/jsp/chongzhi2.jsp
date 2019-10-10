@@ -17,7 +17,7 @@
 </head>
 <body>
 <%String chongzhi = request.getParameter("chongzhi");%>
-<form action="AccountAction/rec.action" method="post">
+
 <div class="head">
     <div class="top">
         <div class="top-left">
@@ -63,7 +63,7 @@
 
         <div class="main-box1" style="width:800px; height:400px; ">
             <p>
-                <input type="hidden" name="money" value="<%=chongzhi%>">
+                <input type="hidden" name="money" id="money" value="<%=chongzhi%>">
                 <span>请选择您的支付方式：</span>
                 <select class="conditon-select" id="select" onchange="hiddenXX()">
                     <option>请选择</option>
@@ -92,7 +92,7 @@
                 <br><br><br><h1>扫描支付宝二维码</h1>
 
                 <br><br><br>
-                <button class="save-btn">确定充值2</button>
+                <button class="save-btn"  onclick="openUrl()" >确定充值2</button>
             </div>
 
 
@@ -125,7 +125,7 @@
         <p>地址：厦门市软件园二期观日路56号  电话：xxx-xxxx-xxxx  </p>
     </div>
 </div>
-</form>
+
 <script type="text/javascript">
     // var ss=request.getAttribute("chongzhi");
     // alert(ss);
@@ -159,6 +159,12 @@
             $("#s3").hide();
             $("#s0").show();
         }
+    }
+</script>
+<script>
+    function openUrl(){
+        var money = document.getElementById("money").value;
+        window.location.href= "jsp/alipay/index.jsp?money="+money;
     }
 </script>
 </body>

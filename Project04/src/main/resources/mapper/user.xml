@@ -81,31 +81,40 @@
     </select>
 
     <!--===============kjy===============-->
-
+    <!--用户登录-->
     <select id="userLogin" resultType="com.qsxh.entity.User">
         select * from tbluser where userid = #{userid} and upass = #{upass} and roleid in (3,4,5,6)
     </select>
 
+    <!--管理员登录-->
+    <select id="userLogin2" resultType="com.qsxh.entity.User">
+        select * from tbluser where userid = #{userid} and upass = #{upass} and roleid in (1,2)
+    </select>
+
+    <!--根据id得到用户资料-->
     <select id="getUser"  resultType="com.qsxh.entity.User">
            select * from tbluser where userid = #{userid}
     </select>
 
+    <!--根据id查出用户金币-->
     <select id="selectGold" resultType="java.lang.String">
         select ugold from tbldata where userid = #{id}
     </select>
 
+    <!--查角色名-->
     <select id="getRolename" resultType="java.lang.String">
         SELECT rname FROM tblrole WHERE roleid = #{rid}
    </select>
 
+    <!--查参数名-->
     <select id="getParam" resultType="java.lang.String">
         SELECT pname FROM tblparam WHERE paramid = #{paramid}
     </select>
 
+    <!--更改用户角色-->
     <update id="changeRoldid" parameterType="java.lang.String">
        update tbluser SET roleid = #{rid} where userid = #{id}
     </update>
-
     <!--=======================gjy===================-->
     <!--    普通用户列表-->
     <select id="findUserList" parameterType="com.qsxh.entity.User" resultType="com.qsxh.entity.User">
