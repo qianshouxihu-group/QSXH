@@ -7,50 +7,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="c7f8fdca-3548-4e98-9fb7-8a1ad7e2a070" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/qsxh/utiles/FileDeleteUtil.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/qsxh/controller/MyFollowAction.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/qsxh/controller/MyFollowAction.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/qsxh/controller/MyWebSocketHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/qsxh/controller/MyWebSocketHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/qsxh/controller/UserAction.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/qsxh/controller/UserAction.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/qsxh/service/impl/RelationServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/qsxh/service/impl/RelationServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/qsxh/utiles/UploadUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/qsxh/utiles/UploadUtil.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/qsxh/websocket/MyHandShakeInterceptor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/qsxh/websocket/MyHandShakeInterceptor.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/mapper/user.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/mapper/user.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/qsxh/utiles/Operation.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/qsxh/utiles/Operation.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/qsxh/utiles/SleepHelper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/qsxh/utiles/SleepHelper.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/spring-base.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/spring-base.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/css/chat.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/css/chat.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/js/chat.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/js/chat.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/js/chatserver.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/js/chatserver.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/jsp/myfollowed.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/jsp/myfollowed.jsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/Project04/WEB-INF/classes/com/qsxh/controller/FileUploadAciton.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/Project04/WEB-INF/classes/com/qsxh/controller/FileUploadAciton.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/Project04/WEB-INF/classes/com/qsxh/controller/MyFollowAction.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/Project04/WEB-INF/classes/com/qsxh/controller/MyFollowAction.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/Project04/WEB-INF/classes/com/qsxh/controller/UserAction.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/Project04/WEB-INF/classes/com/qsxh/controller/UserAction.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/Project04/WEB-INF/classes/com/qsxh/service/impl/RelationServiceImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/Project04/WEB-INF/classes/com/qsxh/service/impl/RelationServiceImpl.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/Project04/WEB-INF/classes/com/qsxh/utiles/Uploadutil.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/Project04/WEB-INF/classes/com/qsxh/utiles/Uploadutil.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/Project04/WEB-INF/classes/com/qsxh/websocket/MyHandShakeInterceptor.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/Project04/WEB-INF/classes/com/qsxh/websocket/MyHandShakeInterceptor.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/Project04/WEB-INF/classes/mapper/user.xml" beforeDir="false" afterPath="$PROJECT_DIR$/target/Project04/WEB-INF/classes/mapper/user.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/Project04/WEB-INF/classes/spring-base.xml" beforeDir="false" afterPath="$PROJECT_DIR$/target/Project04/WEB-INF/classes/spring-base.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/Project04/css/chat.css" beforeDir="false" afterPath="$PROJECT_DIR$/target/Project04/css/chat.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/Project04/js/chat.js" beforeDir="false" afterPath="$PROJECT_DIR$/target/Project04/js/chat.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/Project04/js/chatserver.js" beforeDir="false" afterPath="$PROJECT_DIR$/target/Project04/js/chatserver.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/Project04/jsp/myfollowed.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/target/Project04/jsp/myfollowed.jsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/Project04/upload/0560d533848045879ad9827a3bd896d8_0197-4122_1(1).jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/Project04/upload/0fe7722709bf4e79a8adff502590adc3_5point-190.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/Project04/upload/2245f5a1b75a4ee4bee1fcd5964453cb_5point-190.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/Project04/upload/41cc2d833e6846ef94278b316fbce5c5_324-2509-b190.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/Project04/upload/4d0cba5aaf874119a8420bf9ed5c1515_5point-190.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/Project04/upload/538dcc49c9c045a2992af2392ee9de0e_5point-190.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/Project04/upload/5b9ba423474c4be58a6cb4709217dd10_324-2509_1(3).jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/Project04/upload/c1fcc81a6a3945608e1072eee7999735_aa-yokoku-190-ss.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/Project04/upload/d6f5cc1c41014952ba4b9bb3c8fa8df0_ars-401k-tb.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/Project04/upload/dfc117d636834583b00d8777a30b746e_5point-190.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/qsxh/controller/FileUploadAciton.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/qsxh/controller/FileUploadAciton.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/qsxh/controller/MyFollowAction.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/qsxh/controller/MyFollowAction.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/qsxh/controller/UserAction.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/qsxh/controller/UserAction.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/qsxh/service/impl/RelationServiceImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/qsxh/service/impl/RelationServiceImpl.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/qsxh/utiles/Uploadutil.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/qsxh/utiles/Uploadutil.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/qsxh/websocket/MyHandShakeInterceptor.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/qsxh/websocket/MyHandShakeInterceptor.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/mapper/user.xml" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/mapper/user.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/spring-base.xml" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/spring-base.xml" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/classes/" />
     <ignored path="$PROJECT_DIR$/target/" />
@@ -78,23 +38,6 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/com/qsxh/service/impl/RelationServiceImpl.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="260">
-              <caret line="156" column="5" lean-forward="true" selection-start-line="156" selection-start-column="5" selection-end-line="156" selection-end-column="5" />
-              <folding>
-                <element signature="method#findRelation#0;class#RelationServiceImpl#0" />
-                <element signature="method#good#0;class#RelationServiceImpl#0" />
-                <element signature="method#follow#0;class#RelationServiceImpl#0" />
-                <element signature="method#sendGift#0;class#RelationServiceImpl#0" />
-                <element signature="method#addCharm#0;class#RelationServiceImpl#0" />
-                <element signature="method#goldAccount#0;class#RelationServiceImpl#0" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/pom.xml">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="250">
@@ -104,15 +47,22 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/resources/log4j.properties">
+        <entry file="file://$PROJECT_DIR$/src/main/java/com/qsxh/controller/MyFollowAction.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="290">
-              <caret line="10" lean-forward="true" selection-start-line="10" selection-end-line="10" />
+            <state relative-caret-position="32">
+              <caret line="28" selection-start-line="28" selection-end-line="28" />
+              <folding>
+                <element signature="method#findFollowed#0;class#MyFollowAction#0" />
+                <element signature="method#giveGood#0;class#MyFollowAction#0" />
+                <element signature="method#chatList#0;class#MyFollowAction#0" />
+                <element signature="method#cancelFollow#0;class#MyFollowAction#0" />
+                <element signature="method#sendGift#0;class#MyFollowAction#0" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/qsxh/utiles/UploadUtil.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="145">
@@ -133,29 +83,30 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/resources/spring-base.xml">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2146">
-              <caret line="74" column="45" selection-start-line="74" selection-start-column="45" selection-end-line="74" selection-end-column="45" />
+            <state relative-caret-position="-50">
+              <caret line="21" column="68" selection-start-line="21" selection-start-column="49" selection-end-line="21" selection-end-column="68" />
             </state>
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/webapp/js/chat.js">
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/web.xml">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="299">
-              <caret line="121" column="49" selection-start-line="121" selection-start-column="49" selection-end-line="121" selection-end-column="49" />
+            <state relative-caret-position="-1218" />
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/com/qsxh/utiles/SleepHelper.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="348">
+              <caret line="16" column="37" selection-start-line="16" selection-start-column="37" selection-end-line="16" selection-end-column="37" />
               <folding>
-                <element signature="n#!!block;n#getChatList#0" />
+                <element signature="e#495#496#0" expanded="true" />
+                <element signature="e#533#534#0" expanded="true" />
+                <element signature="e#606#607#0" expanded="true" />
+                <element signature="e#644#645#0" expanded="true" />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/webapp/js/chatserver.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="3683">
-              <caret line="127" column="100" selection-start-line="127" selection-start-column="100" selection-end-line="127" selection-end-column="100" />
             </state>
           </provider>
         </entry>
@@ -241,16 +192,16 @@
         <option value="$PROJECT_DIR$/src/main/webapp/css/font-awesome.min.css" />
         <option value="$PROJECT_DIR$/src/main/webapp/jsp/myfollowed.jsp" />
         <option value="$PROJECT_DIR$/src/main/webapp/css/chat.css" />
-        <option value="$PROJECT_DIR$/src/main/java/com/qsxh/utiles/SleepHelper.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/qsxh/service/impl/RelationServiceImpl.java" />
-        <option value="$PROJECT_DIR$/src/main/resources/spring-base.xml" />
         <option value="$PROJECT_DIR$/src/main/java/com/qsxh/controller/MyWebSocketHandler.java" />
-        <option value="$PROJECT_DIR$/src/main/java/com/qsxh/controller/MyFollowAction.java" />
         <option value="$PROJECT_DIR$/src/main/webapp/js/chatserver.js" />
         <option value="$PROJECT_DIR$/src/main/java/com/qsxh/utiles/UploadUtil.java" />
         <option value="$PROJECT_DIR$/src/main/webapp/js/chat.js" />
         <option value="$PROJECT_DIR$/src/main/java/com/qsxh/utiles/BookAOP.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/qsxh/controller/MyFollowAction.java" />
+        <option value="$PROJECT_DIR$/src/main/resources/spring-base.xml" />
         <option value="$PROJECT_DIR$/src/main/java/com/qsxh/utiles/Operation.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/qsxh/utiles/SleepHelper.java" />
       </list>
     </option>
   </component>
@@ -261,7 +212,7 @@
     <option name="FILTER_DEBUG" value="true" />
     <option name="CUSTOM_FILTER" />
   </component>
-  <component name="ProjectFrameBounds" extendedState="7">
+  <component name="ProjectFrameBounds" extendedState="6">
     <option name="x" value="283" />
     <option name="y" value="130" />
     <option name="width" value="1185" />
@@ -287,6 +238,86 @@
               <item name="Project04" type="b2602c69:ProjectViewProjectNode" />
               <item name="Project04" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Project04" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Project04" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Project04" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Project04" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Project04" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Project04" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="qsxh" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Project04" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Project04" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="qsxh" type="462c0819:PsiDirectoryNode" />
+              <item name="controller" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Project04" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Project04" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="qsxh" type="462c0819:PsiDirectoryNode" />
+              <item name="service" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Project04" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Project04" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="qsxh" type="462c0819:PsiDirectoryNode" />
+              <item name="service" type="462c0819:PsiDirectoryNode" />
+              <item name="impl" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Project04" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Project04" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="qsxh" type="462c0819:PsiDirectoryNode" />
+              <item name="utiles" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Project04" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Project04" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="resources" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Project04" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Project04" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="webapp" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Project04" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Project04" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="webapp" type="462c0819:PsiDirectoryNode" />
+              <item name="WEB-INF" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -431,17 +462,18 @@
       <workItem from="1570427790514" duration="11080000" />
       <workItem from="1570495004334" duration="25654000" />
       <workItem from="1570582143327" duration="25310000" />
-      <workItem from="1570668288059" duration="2274000" />
+      <workItem from="1570668288059" duration="3577000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="116594000" />
+    <option name="totallyTimeSpent" value="117897000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
+    <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.16717096" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.1633888" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Designer" order="2" />
       <window_info id="Image Layers" order="3" />
@@ -451,7 +483,7 @@
       <window_info id="Web" order="7" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info active="true" anchor="bottom" id="Find" order="1" visible="true" weight="0.09819967" />
-      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.4977307" weight="0.2618658" />
+      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.4977307" visible="true" weight="0.17021276" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -480,13 +512,6 @@
     <option name="version" value="1" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/main/webapp/jsp/chongzhi.jsp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="203">
-          <caret line="25" column="54" selection-start-line="25" selection-start-column="46" selection-end-line="25" selection-end-column="54" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/webapp/jsp/muban.jsp">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="203">
@@ -663,13 +688,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/resources/spring-mvc.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="261">
-          <caret line="39" column="19" selection-start-line="39" selection-start-column="19" selection-end-line="39" selection-end-column="19" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/qsxh/controller/MatchUserAction.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="174">
@@ -712,13 +730,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/qsxh/utiles/SleepHelper.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="157">
-          <caret line="16" column="35" selection-start-line="16" selection-start-column="28" selection-end-line="16" selection-end-column="35" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/resources/mapper/chat.xml">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="232">
@@ -744,34 +755,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="145">
           <caret line="5" column="23" selection-start-line="5" selection-start-column="19" selection-end-line="5" selection-end-column="23" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/qsxh/utiles/Operation.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="174">
-          <caret line="6" column="35" lean-forward="true" selection-start-line="6" selection-start-column="35" selection-end-line="6" selection-end-column="35" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/qsxh/controller/MyFollowAction.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="609">
-          <caret line="77" column="39" selection-start-line="77" selection-start-column="39" selection-end-line="77" selection-end-column="39" />
-          <folding>
-            <element signature="method#findFollowed#0;class#MyFollowAction#0" />
-            <element signature="method#giveGood#0;class#MyFollowAction#0" />
-            <element signature="method#chatList#0;class#MyFollowAction#0" />
-            <element signature="method#cancelFollow#0;class#MyFollowAction#0" />
-            <element signature="method#sendGift#0;class#MyFollowAction#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/resources/spring-base.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2146">
-          <caret line="74" column="45" selection-start-line="74" selection-start-column="45" selection-end-line="74" selection-end-column="45" />
         </state>
       </provider>
     </entry>
@@ -820,17 +803,58 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/qsxh/controller/MyWebSocketHandler.java">
+    <entry file="file://$PROJECT_DIR$/src/main/resources/log4j.properties">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="329">
-          <caret line="75" column="42" lean-forward="true" selection-start-line="75" selection-start-column="42" selection-end-line="75" selection-end-column="42" />
+        <state relative-caret-position="290">
+          <caret line="10" lean-forward="true" selection-start-line="10" selection-end-line="10" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/resources/spring-mvc.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="171">
+          <caret line="39" column="19" selection-start-line="39" selection-start-column="19" selection-end-line="39" selection-end-column="19" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pom.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="250">
+          <caret line="58" column="39" selection-start-line="58" selection-start-column="34" selection-end-line="58" selection-end-column="39" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/qsxh/utiles/UploadUtil.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="145">
+          <caret line="32" column="45" lean-forward="true" selection-start-line="32" selection-start-column="45" selection-end-line="32" selection-end-column="45" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/qsxh/utiles/Operation.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="116">
+          <caret line="4" selection-start-line="4" selection-end-line="4" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/qsxh/utiles/SleepHelper.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="348">
+          <caret line="16" column="37" selection-start-line="16" selection-start-column="37" selection-end-line="16" selection-end-column="37" />
+          <folding>
+            <element signature="e#495#496#0" expanded="true" />
+            <element signature="e#533#534#0" expanded="true" />
+            <element signature="e#606#607#0" expanded="true" />
+            <element signature="e#644#645#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/qsxh/service/impl/RelationServiceImpl.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="260">
-          <caret line="156" column="5" lean-forward="true" selection-start-line="156" selection-start-column="5" selection-end-line="156" selection-end-column="5" />
+        <state relative-caret-position="-232">
+          <caret line="17" column="25" selection-start-line="17" selection-start-column="10" selection-end-line="17" selection-end-column="25" />
           <folding>
             <element signature="method#findRelation#0;class#RelationServiceImpl#0" />
             <element signature="method#good#0;class#RelationServiceImpl#0" />
@@ -842,25 +866,37 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/pom.xml">
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/qsxh/controller/MyWebSocketHandler.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="250">
-          <caret line="58" column="39" selection-start-line="58" selection-start-column="34" selection-end-line="58" selection-end-column="39" />
+        <state relative-caret-position="329">
+          <caret line="75" column="42" lean-forward="true" selection-start-line="75" selection-start-column="42" selection-end-line="75" selection-end-column="42" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/resources/log4j.properties">
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/qsxh/controller/MyFollowAction.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="290">
-          <caret line="10" lean-forward="true" selection-start-line="10" selection-end-line="10" />
+        <state relative-caret-position="32">
+          <caret line="28" selection-start-line="28" selection-end-line="28" />
+          <folding>
+            <element signature="method#findFollowed#0;class#MyFollowAction#0" />
+            <element signature="method#giveGood#0;class#MyFollowAction#0" />
+            <element signature="method#chatList#0;class#MyFollowAction#0" />
+            <element signature="method#cancelFollow#0;class#MyFollowAction#0" />
+            <element signature="method#sendGift#0;class#MyFollowAction#0" />
+          </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/qsxh/utiles/UploadUtil.java">
+    <entry file="file://$PROJECT_DIR$/src/main/resources/spring-base.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="145">
-          <caret line="32" column="45" lean-forward="true" selection-start-line="32" selection-start-column="45" selection-end-line="32" selection-end-column="45" />
+        <state relative-caret-position="-50">
+          <caret line="21" column="68" selection-start-line="21" selection-start-column="49" selection-end-line="21" selection-end-column="68" />
         </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/web.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1218" />
       </provider>
     </entry>
   </component>

@@ -3,7 +3,6 @@ package com.qsxh.utiles;
 
 import java.lang.annotation.*;
 
-@Target({METHOD, TYPe})
 @Retention(RetentionPolicy.RUNTIME)
 @Inherited
 @Documented

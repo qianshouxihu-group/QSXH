@@ -7,8 +7,6 @@ import com.qsxh.entity.TblUser;
 import com.qsxh.entity.User;
 import com.qsxh.service.ChatService;
 import com.qsxh.service.RelationService;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -54,10 +52,6 @@ public class MyFollowAction {
     @RequestMapping("/good")//点赞
     public String giveGood(HttpServletRequest request,String followedid){
         System.out.println("---进入点赞逻辑---");
-
-        ApplicationContext ct = new ClassPathXmlApplicationContext(
-                "spring-base.xml");
-        relationService = (RelationService) ct.getBean("linaProxy");
 
         //获得id
         User user = (User) request.getSession().getAttribute("user");
