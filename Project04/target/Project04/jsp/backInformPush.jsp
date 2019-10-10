@@ -26,7 +26,7 @@
 <fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
     <legend>查询条件</legend>
 </fieldset>
-<%--============================条件查询================================--%>
+<%--============================查询条件================================--%>
 <div class="layui-form">
     <div class="demoTable">
         <div class="layui-form-item">
@@ -63,8 +63,8 @@
     <!-- ==============================数据表格开始============================ -->
     <div class="layui-card-body"  >
         <div style="display: none;" id="userToolBar">
-            <button type="button" class="layui-btn layui-btn-sm" lay-event="allPass">批量通过</button>
-            <button class="layui-btn layui-btn-sm layui-btn-danger" lay-event="allNoPass">批量不通过</button>
+            <button type="button" class="layui-btn layui-btn-sm" lay-event="newPush">新增推送</button>
+<%--            <button class="layui-btn layui-btn-sm layui-btn-danger" lay-event="allNoPass">批量不通过</button>--%>
         </div>
         <table class="layui-table" lay-filter="test" id="demo" align="center">
         </table>
@@ -221,9 +221,9 @@
 <%--===========================行操作按钮================================--%>
 <script id="barDemo" type="text/html">
     <div class="layui-btn-container">
-        <button class="layui-btn layui-btn-sm" lay-event="pass">通过</button>
-        <button class="layui-btn layui-btn-sm layui-btn-danger" lay-event="nopass">不通过</button>
-        <button class="layui-btn layui-btn-sm layui-btn-warm" lay-event="details">查看资料</button>
+<%--        <button class="layui-btn layui-btn-sm" lay-event="pass">通过</button>--%>
+<%--        <button class="layui-btn layui-btn-sm layui-btn-danger" lay-event="nopass">不通过</button>--%>
+        <button class="layui-btn layui-btn-sm layui-btn-warm" lay-event="details">查看详情</button>
     </div>
 </script>
 
@@ -314,7 +314,7 @@
                 ,{field: 'icontext', title: '内容'}
                 ,{field: 'itype', title: '类型'}
                 ,{field: 'itime', title: '时间'}
-                ,{field: 'itoid', title: '接收人'}
+                // ,{field: 'itoid', title: '接收人'}
                 ,{field: 'iurl', title: 'url'}
                 ,{field: 'right', title: '操作', toolbar: '#barDemo', minWidth: 270}
             ]]
@@ -515,17 +515,7 @@
         table.on('tool(test)', function(obj) {
             var data = obj.data;
             alert(data.userid);
-            if (obj.event === 'nopass') {
-                layer.confirm('确定不通过吗？', function (index) {
-                    fal("<%=path%>checkManager/nopass.action",data.userid);
-                    layer.close(index);
-                });
-            }else if (obj.event === 'pass') {
-                layer.confirm('确定通过吗？', function (index) {
-                    fal("<%=path%>checkManager/pass.action",data.userid);
-                    layer.close(index);
-                });
-            }else if (obj.event === 'details'){
+            if (obj.event === 'details'){
                 openDetails(data);
             }
         });
