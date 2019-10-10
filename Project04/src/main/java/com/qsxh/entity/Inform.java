@@ -15,6 +15,8 @@ public class Inform {
     private String begindate;//查询条件 起始时间
     private String enddate;//查询条件 终止时间
 
+    private String pname;
+
     public Inform() {
     }
 
@@ -127,5 +129,13 @@ public class Inform {
 
     public void setEnddate(String enddate) {
         this.enddate = enddate;
+    }
+
+    public String getPname() {
+        return pname;
+    }
+
+    public void setPname(String pname) {
+        this.pname = pname;
     }
 }

@@ -32,17 +32,6 @@ public class InformPushAction {
 
         System.out.println("查询条件："+"title:"+inform.getItitle()+"type:"+inform.getItype()+"begindate:"+inform.getBegindate()+"enddate:"+inform.getEnddate());
 
-//        if(null != inform.getBegindate() && !("").equals(inform.getBegindate()) && "" != inform.getBegindate())
-//        {
-//            inform.setBegindate(inform.getBegindate()+" 00:00:00");
-//        }
-//
-//        if(null != inform.getEnddate() && !("").equals(inform.getEnddate()) && "" != inform.getEnddate())
-//        {
-//            inform.setEnddate(inform.getEnddate()+" 23:59:59");
-//        }
-
-
         Map<String , Object> map = new HashMap<>();
         map = informPushBiz.informList(inform);
 

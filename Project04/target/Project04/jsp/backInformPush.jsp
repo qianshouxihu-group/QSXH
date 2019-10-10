@@ -154,7 +154,7 @@
             <div class="layui-inline">
                 <label class="layui-form-label">类型:</label>
                 <div class="layui-input-inline">
-                    <input type="text" name="itype" id="itype3" readonly="readonly" autocomplete="off"<%--autocomplete自动完成--%>
+                    <input type="text" name="pname" id="itype3" readonly="readonly" autocomplete="off"<%--autocomplete自动完成--%>
                            class="layui-input">
                 </div>
             </div>
@@ -284,7 +284,7 @@
                 ,{field: 'informid', title: 'ID', fixed: 'left'}
                 ,{field: 'ititle', title: '标题'}
                 ,{field: 'icontext', title: '内容'}
-                ,{field: 'itype', title: '类型'}
+                ,{field: 'pname', title: '类型'}
                 ,{field: 'itime', title: '时间'}
                 // ,{field: 'itoid', title: '接收人'}
                 ,{field: 'iurl', title: 'url'}
