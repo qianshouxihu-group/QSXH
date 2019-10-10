@@ -3,6 +3,17 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.qsxh.dao.InformDao">
+    <!--系统消息未读数-->
+    <select id="unreadSysInform" resultType="java.lang.Integer">
+        select count(*) from tblinform
+        where itoid = #{userid} and istate = '32' and itype = '81'
+    </select>
+
+    <!--活动消息未读数-->
+    <select id="unreadActiveInform" resultType="java.lang.Integer">
+        select count(*) from tblinform
+        where itoid = #{userid} and istate = '32' and itype = '82'
+    </select>
 
     <!--系统消息-->
     <select id="systemInform" resultType="com.qsxh.entity.Inform">
@@ -23,4 +34,47 @@
     <update id="readSysOrActive">
         update tblinform set istate = '31' where informid = #{informid}
     </update>
+
+    <!--发送系统消息-->
+    <insert id="sendSystemInform" parameterType="com.qsxh.entity.Inform">
+        insert into tblinform (itime , ititle , icontext , itype , itoid , istate)
+        values (#{itime} , #{ititle} , #{icontext} , #{itype} , #{itoid} , #{istate})
+    </insert>
+
+    <!--历史推送消息 列表-->
+    <select id="informList" parameterType="com.qsxh.entity.Inform" resultType="com.qsxh.entity.Inform">
+        select * from tblinform
+<!--        <if test=" !(''.equals(dfromid)) and null!= dfromid">-->
+<!--            and dfromid like '%${dfromid}%'-->
+<!--        </if>-->
+<!--        <if test=" !(''.equals(dtoid)) and null!= dtoid">-->
+<!--            and dtoid like '%${dtoid}%'-->
+<!--        </if>-->
+<!--        <if test=" !(''.equals(begindate)) and null!= begindate ">-->
+<!--            and ddate &gt;= #{begindate}-->
+<!--        </if>-->
+<!--        <if test=" !(''.equals(enddate)) and null!= enddate">-->
+<!--            and ddate &lt;= #{enddate}-->
+<!--        </if>-->
+        ORDER BY itime desc
+        limit #{page},#{limit}
+    </select>
+
+    <!--历史推送消息 记录数-->
+    <select id="informCount" parameterType="com.qsxh.entity.Inform" resultType="java.lang.Integer">
+        select count(*) from tblinform
+        <!--        <if test=" !(''.equals(dfromid)) and null!= dfromid">-->
+        <!--            and dfromid like '%${dfromid}%'-->
+        <!--        </if>-->
+        <!--        <if test=" !(''.equals(dtoid)) and null!= dtoid">-->
+        <!--            and dtoid like '%${dtoid}%'-->
+        <!--        </if>-->
+        <!--        <if test=" !(''.equals(begindate)) and null!= begindate ">-->
+        <!--            and ddate &gt;= #{begindate}-->
+        <!--        </if>-->
+        <!--        <if test=" !(''.equals(enddate)) and null!= enddate">-->
+        <!--            and ddate &lt;= #{enddate}-->
+        <!--        </if>-->
+    </select>
+
 </mapper>

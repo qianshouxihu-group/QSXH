@@ -1,4 +1,4 @@
-﻿.online, .offline, .me {
+﻿﻿.online, .offline, .me {
     margin-right: 3px;
     font-size: 10px;
 }
@@ -11,12 +11,15 @@
     color: #E38968;
 }
 
+/*小红点*/
 .my-notice{
     display: inline-block;
     height: auto;
     min-width: 10px;
     padding: 3px 5px;
     font-size: 12px;
+    padding: 2px 5px 2px 1px;
+    font-size: 10px;
     font-weight: 700;
     line-height: 1;
     text-align: center;
@@ -33,6 +36,11 @@
 
 .myfollow{
     background:#eb6877;
+    background: #8c85e6;
+    bottom: 20px;
+    right: auto;
+}
+.myfollow{background:#eb6877;
     color:#fff;
     -moz-border-radius:15px;
     -webkit-border-radius:15px;

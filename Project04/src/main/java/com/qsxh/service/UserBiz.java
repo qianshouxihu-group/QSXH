@@ -26,5 +26,4 @@ public interface UserBiz {
     //前台注册 插入tbluser表和tbldata
     public boolean insert4table(String userid, String upass);
 
-
 }

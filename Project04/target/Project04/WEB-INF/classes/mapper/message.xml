@@ -3,15 +3,23 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.qsxh.dao.MessageDao">
+    <!--留言未读数-->
+    <select id="unreadMsgInform"  resultType="java.lang.Integer">
+        select count(*) from tblmessage
+        where mtoid = #{userid} and mstate = '32'
+    </select>
 
     <!--我的留言-->
     <select id="messageInform" resultType="com.qsxh.entity.Message">
-        select * from tblmessage where mtoid = #{userid} ORDER BY mtime desc
+        select m.* , u.uname from tblmessage m , tbluser u
+        where mtoid = #{userid} and m.mfromid = u.userid
+        ORDER BY mtime desc
     </select>
 
     <!--查看详情-->
     <select id="messageDetails" resultType="com.qsxh.entity.Message">
-        select * from tblmessage where msgid = #{msgid}
+        select m.* , u.uname from tblmessage m , tbluser u
+        where msgid = #{msgid} and m.mfromid = u.userid
     </select>
 
     <!--更改为已读-->
@@ -19,4 +27,9 @@
         update tblmessage set mstate = '31' where msgid = #{msgid}
     </update>
 
+    <!--回复 添加一条记录-->
+    <insert id="addOneRecord" parameterType="com.qsxh.entity.Message">
+        insert into tblmessage (mtime , mfromid , mtoid , mcontext , mstate , mtitle)
+         values (#{mtime} , #{mfromid} , #{mtoid} , #{mcontext} , '32' , #{mtitle})
+    </insert>
 </mapper>

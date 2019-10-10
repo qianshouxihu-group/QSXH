@@ -1,6 +1,7 @@
 package com.qsxh.controller;
 
 import com.opensymphony.xwork2.ActionSupport;
+import com.qsxh.AopLog.Log;
 import com.qsxh.entity.User;
 import com.qsxh.service.AccountService;
 import com.qsxh.service.UserBiz;
@@ -136,6 +137,15 @@ public class UserAction extends ActionSupport {
             e.printStackTrace();
             return "0";
         }
+    }
+
+    /*--------------------------------------测试AOP日志--------------------------------------*/
+    @Log(operationType = "增加操作", operationName = "添加用户")
+    public void testAOP(String userName, String password){
+        System.out.println("UserController被调用了~~~~~~~~~~~~~~~~···");
+
+        String tmp = null;
+        tmp.substring(1);
     }
 
     public String getUserid() {

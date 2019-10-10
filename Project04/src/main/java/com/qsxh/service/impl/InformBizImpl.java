@@ -8,8 +8,12 @@ import com.qsxh.entity.Inform;
 import com.qsxh.entity.Message;
 import com.qsxh.service.IInformBiz;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 //我的消息业务
@@ -21,6 +25,21 @@ public class InformBizImpl implements IInformBiz {
     private MessageDao messageDao ;//留言dao层
     @Resource
     private DatingDao datingDao;//约会dao层
+
+    //消息未读数
+    @Override
+    public List<Integer> unreadCount(String userid) {
+        Integer count1 = informDao.unreadSysInform(userid);
+        Integer count2 = informDao.unreadActiveInform(userid);
+        Integer count3 = messageDao.unreadMsgInform(userid);
+        Integer count4 = datingDao.unreadDatingInform(userid);
+        List<Integer> list = new ArrayList<>();
+        list.add(count1);
+        list.add(count2);
+        list.add(count3);
+        list.add(count4);
+        return list;
+    }
 
     //系统消息
     @Override
@@ -87,11 +106,58 @@ public class InformBizImpl implements IInformBiz {
         }
     }
 
+    //我的留言 回复
+    @Override
+    public String addOneRecord(Message message) {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        String mtime = dateFormat.format(new Date());
+        message.setMtime(mtime);
+        message.setMfromid("1001");//先写死，后面从session取
+
+        Integer num = messageDao.addOneRecord(message);
+        if(num > 0 )
+        {
+            return "replySuccess";
+        }
+        else
+        {
+            return "replyFail";
+        }
+    }
+
     //我的约会 查看详情
     @Override
     public Dating datingDetails(String dateid) {
         Dating dating = datingDao.datingDetails(dateid);
         return dating;
+    }
+    //我的约会 回复并接受
+    @Override
+    @Transactional
+    public String replyAndAccept(Dating dating) {
+        Integer num1 = datingDao.replyDating(dating);
+        Integer num2 = datingDao.acceptDating(dating);
+        if (num1 > 0 && num2 >0)
+        {
+            return "success";
+        }
+        else
+        {
+            return "fail";
+        }
+    }
+    //我的约会 拒绝
+    @Override
+    public String reject(String dateid) {
+        Integer num = datingDao.rejectDating(dateid);
+        if (num > 0)
+        {
+            return "success";
+        }
+        else
+        {
+            return "fail";
+        }
     }
 
 }
