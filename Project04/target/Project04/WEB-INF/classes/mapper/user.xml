@@ -29,6 +29,57 @@
         insert into tblcplimit (userid) values (#{userid})
     </insert>
 
+    <!--后台注册审核 列表-->
+    <select id="regCheckList" resultType="com.qsxh.entity.User">
+        select u.* , d.* from tbluser u , tbldata d where roleid = '6' and u.userid = d.userid
+        <if test=" !(''.equals(begindate)) and null!= begindate ">
+            and regdate &gt;= #{begindate}
+        </if>
+        <if test=" !(''.equals(enddate)) and null!= enddate">
+            and regdate &lt;= #{enddate}
+        </if>
+        <if test=" !(''.equals(userid)) and null!= userid">
+            and u.userid like '%${userid}%'
+        </if>
+        <if test=" !(''.equals(uname)) and null!= uname">
+            and u.uname like '%${uname}%'
+        </if>
+        ORDER BY regdate
+        limit #{page},#{limit}
+    </select>
+
+    <!--后台注册审核 记录数-->
+    <select id="regCheckCount" parameterType="com.qsxh.entity.User" resultType="java.lang.Integer">
+        select count(*) from tbluser where roleid = '6'
+        <if test=" !(''.equals(begindate)) and null!= begindate ">
+            and regdate &gt;= #{begindate}
+        </if>
+        <if test=" !(''.equals(enddate)) and null!= enddate">
+            and regdate &lt;= #{enddate}
+        </if>
+        <if test=" !(''.equals(userid)) and null!= userid">
+            and userid like '%${userid}%'
+        </if>
+        <if test=" !(''.equals(uname)) and null!= uname">
+            and uname like '%${uname}%'
+        </if>
+    </select>
+
+    <!--后台注册审核 通过-->
+    <update id="regCheckPass">
+        update tbluser set roleid = '3' where userid = #{userid}
+    </update>
+
+    <!--后台注册审核 不通过-->
+    <update id="regCheckNoPass">
+        update tbluser set roleid = '5' where userid = #{userid}
+    </update>
+
+    <!--后台注册审核 查看资料详情-->
+    <select id="dataDetails" resultType="com.qsxh.entity.User">
+        select u.* , d.* from tbluser u , tbldata d where u.userid = d.userid and u.userid = #{userid}
+    </select>
+
     <!--===============kjy===============-->
 
     <select id="userLogin" resultType="com.qsxh.entity.User">
