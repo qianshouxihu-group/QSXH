@@ -1,8 +1,10 @@
 package com.qsxh.service;
 
 import com.qsxh.entity.Dating;
+import com.qsxh.entity.Inform;
 import com.qsxh.entity.User;
 
+import java.util.List;
 import java.util.Map;
 
 public interface ICheckBiz {
@@ -19,7 +21,7 @@ public interface ICheckBiz {
     //后台注册审核 查看资料详情
     public User dataDetails(String userid);
     //发送审核结果消息
-    public Integer sendSystemInform(String userid , Dating datingDetails ,String result );
+    public Integer sendSystemInform(String userid , String result);
 
 
     //后台约会审核 列表

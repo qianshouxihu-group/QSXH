@@ -6,6 +6,7 @@ public class Role {
 
     private int limit;
     private int page;
+    private String [] ids;
     public Role() {
     }
 
@@ -14,6 +15,22 @@ public class Role {
         this.rname = rname;
         this.limit = limit;
         this.page = page;
+    }
+
+    public Role(String roleid, String rname, int limit, int page, String[] ids) {
+        this.roleid = roleid;
+        this.rname = rname;
+        this.limit = limit;
+        this.page = page;
+        this.ids = ids;
+    }
+
+    public String[] getIds() {
+        return ids;
+    }
+
+    public void setIds(String[] ids) {
+        this.ids = ids;
     }
 
     public String getRoleid() {

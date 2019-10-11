@@ -53,7 +53,7 @@ public class CheckBizImpl implements ICheckBiz {
         //更改该用户角色为普通用户
         Integer num = userDao.regCheckPass(userid);
         //系统发送一条信息给该用户，提示其审核通过
-        Integer num2 = sendSystemInform(userid ,null, "pass");
+        Integer num2 = sendSystemInform(userid , "pass");
         if(num > 0 && num2 > 0)
         {
             return "passSuccess";
@@ -70,7 +70,7 @@ public class CheckBizImpl implements ICheckBiz {
         //更改该用户角色为未提交
         Integer num = userDao.regCheckNoPass(userid);
         //系统发送一条信息给用户，提示其审核不通过
-        Integer num2 = sendSystemInform(userid ,null, "nopass");
+        Integer num2 = sendSystemInform(userid , "nopass");
         if(num > 0 && num2 > 0)
         {
             return "noPassSuccess";
@@ -104,7 +104,7 @@ public class CheckBizImpl implements ICheckBiz {
     }
     //发送审核结果消息
     @Override
-    public Integer sendSystemInform(String userid , Dating datingDetails ,String result ) {
+    public Integer sendSystemInform(String userid , String result) {
         Inform inform = new Inform();
         //构建发送的消息
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -129,11 +129,11 @@ public class CheckBizImpl implements ICheckBiz {
             }
             case "datingPass":
                 inform.setItitle("约会审核通过");
-                inform.setIcontext("恭喜您，您向"+datingDetails.getUname2()+"发起的约会申请（约会时间："+datingDetails.getDdate()+" "+datingDetails.getDtime()+"）已通过我们的审核，请等待对方回复！");//这边需要将接收人的姓名返回给发起人，让其知道是哪条约会
+                inform.setIcontext("恭喜您，您的约会申请已通过我们的审核，请等待对方回复！");//这边需要将接收人的姓名返回给发起人，让其知道是哪条约会
                 break;
             case "datingNoPass":
                 inform.setItitle("约会审核未通过");
-                inform.setIcontext("抱歉，您向"+datingDetails.getUname2()+"发起的约会申请（约会时间："+datingDetails.getDdate()+" "+datingDetails.getDtime()+"）约会申请未通过我们的审核，请重新申请约会！");//这边需要将接收人的姓名返回给发起人，让其知道是哪条约会
+                inform.setIcontext("抱歉，您的约会申请未通过我们的审核，请重新申请约会！");//这边需要将接收人的姓名返回给发起人，让其知道是哪条约会
                 break;
             default:break;
         }
@@ -169,9 +169,7 @@ public class CheckBizImpl implements ICheckBiz {
         //更改该约会为通过
         Integer num = datingDao.datingCheckPass(dateid);
         //系统发送一条信息给该用户，提示其审核通过
-        //获得该约会的详细信息，以便进行详细的反馈（什么时候，发给谁的约会被通过或不通过）
-        Dating datingDetails = datingDao.datingDetails(dateid);
-        Integer num2 = sendSystemInform(dfromid , datingDetails , "datingPass");
+        Integer num2 = sendSystemInform(dfromid , "datingPass");
         if(num > 0 && num2 > 0)
         {
             return "passSuccess";
@@ -188,9 +186,7 @@ public class CheckBizImpl implements ICheckBiz {
         //更改该约会为不通过
         Integer num = datingDao.datingCheckNoPass(dateid);
         //系统发送一条信息给该用户，提示其审核不通过
-        //获得该约会的详细信息，以便进行详细的反馈（什么时候，发给谁的约会被通过或不通过）
-        Dating datingDetails = datingDao.datingDetails(dateid);
-        Integer num2 = sendSystemInform(dfromid ,datingDetails , "datingNoPass");
+        Integer num2 = sendSystemInform(dfromid , "datingNoPass");
         if(num > 0 && num2 > 0)
         {
             return "noPassSuccess";

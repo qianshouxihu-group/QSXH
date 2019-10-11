@@ -17,6 +17,8 @@
     <title>表格</title>
     <script  src="<%=path%>js/jquery.min.js" type="text/javascript"></script>
     <link rel="stylesheet" href="<%=path%>/layui/css/layui.css" media="all">
+    <link rel="stylesheet" href="<%=path%>layui_ext/dtree/dtree.css">
+    <link rel="stylesheet" href="<%=path%>layui_ext/dtree/font/dtreefont.css">
     <script src="<%=path%>/layui/layui.js"></script>
 </head>
 <body>
@@ -56,6 +58,8 @@
         </table>
     </div>
     <!-- 数据表格结束 -->
+
+
 </div>
 
 
@@ -131,13 +135,16 @@
             $("#rname").val("");
             form.render();
         });
-
     });
 
-    layui.use([ 'table','form'], function(){
+    layui.extend({
+        dtree:'<%=path%>layui_ext/dist/dtree'
+    }).use([ 'jquery', 'layer', 'form','dtree' ,'table'], function(){
+        var $ = layui.jquery;
         var table = layui.table;
+        var layer = layui.layer;
         var form = layui.form;
-
+        var dtree=layui.dtree;
         table.render({
             elem: '#demo'
             ,height: 312
@@ -282,7 +289,7 @@
         //监听行工具事件
         table.on('tool(test)', function(obj) {
             var data = obj.data;
-            alert(data.userid);
+            alert(data.roleid);
             if (obj.event === 'delete') {
                 layer.confirm('确定删除用户？', function (index) {
                     fal("<%=path%>admin/deleteAdmin.action",data.userid);
@@ -312,13 +319,16 @@
                 btn:['<div class="layui-icon layui-icon-release">确认分配</div>','<div class="layui-icon layui-icon-close">取消分配</div>'],
                 yes:function(index, layero){
                     var nodes = dtree.getCheckbarNodesParam("menuTree");
-                    var roleid=data.roleid;
-                    var params="roleid="+roleid;
+                    var params="roleid="+data.roleid;
+                    alert(data.roleid);
                     $.each(nodes,function(i,item){
                         params+="&ids="+item.nodeId;
                     })
+                    layer.alert(JSON.stringify(params), {
+                        title: '最终的提交信息'
+                    })
                     //保存角色和菜单的关系
-                    $.post("${ctx}/role/saveRoleMenu.action",params,function(obj){
+                    $.post("<%=path%>roledemo/saveRoleMenu.action",params,function(obj){
                         layer.msg(obj.msg);
                     })
                 },
@@ -332,7 +342,7 @@
                         checkbar: true,
                         checkbarType: "all", // 默认就是all，其他的值为： no-all  p-casc   self  only\
                         checkbarData: "choose" ,
-                        url: "${ctx}/role/initRoleMenuTreeJson.action?roleid="+data.roleid // 使用url加载（可与data加载同时存在）
+                        url: "<%=path%>roledemo/initRoleMenuTreeJson.action?roleid="+data.roleid // 使用url加载（可与data加载同时存在）
                     });
                 }
             });

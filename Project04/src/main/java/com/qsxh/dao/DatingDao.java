@@ -1,6 +1,7 @@
 package com.qsxh.dao;
 
 import com.qsxh.entity.Dating;
+import com.qsxh.entity.User;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 

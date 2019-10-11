@@ -1,11 +1,9 @@
 package com.qsxh.controller;
 
 import com.opensymphony.xwork2.ActionSupport;
+import com.qsxh.entity.Menu;
 import com.qsxh.entity.User;
-import com.qsxh.service.AccountService;
-import com.qsxh.service.IInformBiz;
-import com.qsxh.service.UserBiz;
-import com.qsxh.service.UserService;
+import com.qsxh.service.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
@@ -24,9 +22,8 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.util.*;
 import java.util.List;
-import java.util.Random;
 
 @Controller
 @RequestMapping("/log")
@@ -40,6 +37,8 @@ public class UserLogAction extends ActionSupport {
     @Resource
     private IInformBiz informBiz;
 
+    @Resource
+    private MenuService menuService;
 
     //前台用户登录逻辑
     @RequestMapping("/login")
@@ -99,7 +98,7 @@ public class UserLogAction extends ActionSupport {
         ModelAndView mv = new ModelAndView();
         HttpSession session = request.getSession();
         User user = us.userLogin2(uname,password);
-
+        System.out.println(""+uname+"   "+password);
         String verifyCode = request.getParameter("verifyCode");
         String sessionVerifyCode = (String) session.getAttribute("verifyCodeValue");
         if (!verifyCode.equalsIgnoreCase(sessionVerifyCode)) {
@@ -109,9 +108,21 @@ public class UserLogAction extends ActionSupport {
         }else{
             if(null!= user)
             {
+
+
+                //角色菜单对应的map
+                String roleid=user.getRoleid();
+                List<com.qsxh.entity.Menu> menuList=new ArrayList<com.qsxh.entity.Menu>();
+                menuList=menuService.selectRoleMenuList(roleid);
+                Map<String, List<Menu>> menumap = new HashMap<String, List<Menu>>();
+                menumap=menuService.listToMap(menuList);
+
+
                 session.setAttribute("manager", user);
 
-                mv.setViewName("");
+                session.setAttribute("menumap", menumap);
+
+                mv.setViewName("admin/adminindex");
             }else{
                 request.setAttribute("log","lf");
                 mv.setViewName("login_backstage");
