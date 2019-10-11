@@ -5,6 +5,7 @@ import com.github.pagehelper.PageInfo;
 import com.qsxh.entity.TblRelation;
 import com.qsxh.entity.TblUser;
 import com.qsxh.entity.User;
+import com.qsxh.interceptor.Log;
 import com.qsxh.service.ChatService;
 import com.qsxh.service.RelationService;
 import org.springframework.stereotype.Controller;
@@ -82,6 +83,7 @@ public class MyFollowAction {
     }
 
     @RequestMapping("/change")//更改关注状态
+    @Log(operationType = "修改关注状态", operationName = "修改用户")
     public String cancelFollow(HttpServletRequest request,String followedid){
         System.out.println("---进入关注逻辑---");
 

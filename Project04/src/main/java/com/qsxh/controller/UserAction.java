@@ -2,6 +2,7 @@ package com.qsxh.controller;
 
 import com.opensymphony.xwork2.ActionSupport;
 import com.qsxh.entity.User;
+import com.qsxh.interceptor.Log;
 import com.qsxh.service.AccountService;
 import com.qsxh.service.UserBiz;
 import com.qsxh.service.UserService;
@@ -38,6 +39,7 @@ public class UserAction extends ActionSupport {
     //登录测试
     //1、判断是否会员 2、若是会员判断到期日 3、如果是，并到期。把身份变为普通用户，并清除到期日。
     @RequestMapping("/login")
+    @Log(operationType = "登录", operationName = "修改用户")
     public ModelAndView managerLogin(HttpServletRequest request, String uname, String password){
         ModelAndView mv = new ModelAndView();
         User user = us.userLogin(uname,password);

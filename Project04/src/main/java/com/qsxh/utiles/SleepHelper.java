@@ -1,20 +1,18 @@
 package com.qsxh.utiles;
 
 import org.aspectj.lang.annotation.AfterReturning;
-import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.annotation.Pointcut;
-import org.springframework.stereotype.Component;
 
 /**
  * 定义一个睡眠的通知（增强） 同时实现前置 和后置
  */
-	@Aspect
-	@Component
+//	@Aspect
+////	@Component
 	public class SleepHelper {
 
 		//切入点
-		@Pointcut("execution(* *.good(..))")
+		@Pointcut("execution(* *.good(com.qsxh.entity.TblRelation))")
 		public void sleeppoint() {
 		}
 
