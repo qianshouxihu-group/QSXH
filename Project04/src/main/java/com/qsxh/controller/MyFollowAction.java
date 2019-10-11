@@ -28,6 +28,7 @@ public class MyFollowAction {
     private ChatService chatService;
 
     @RequestMapping("/getlist")//获得关注列表
+    @Log(operationType = "获得关注列表", operationName = "修改用户")
     public ModelAndView findFollowed(HttpServletRequest request, @RequestParam(value = "page", defaultValue = "1") Integer page){
         ModelAndView mv = new ModelAndView();
 

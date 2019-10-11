@@ -61,7 +61,7 @@ public  class LogInterceptor {
     }
 
     //Controller层切点
-    @Pointcut("execution(* com.qsxh.controller.*.*(..))")
+    @Pointcut("execution(@Log * *(..))")
     public  void controllerAspect() {
     }
 
