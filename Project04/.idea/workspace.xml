@@ -72,6 +72,15 @@
           </provider>
         </entry>
       </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/resources/spring-base.xml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="493">
+              <caret line="28" column="43" selection-start-line="28" selection-start-column="43" selection-end-line="28" selection-end-column="43" />
+            </state>
+          </provider>
+        </entry>
+      </file>
     </leaf>
   </component>
   <component name="FileTemplateManagerImpl">
@@ -84,7 +93,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>serverurl</find>
       <find>cp</find>
       <find>img</find>
       <find>getAllRelations</find>
@@ -109,10 +117,12 @@
       <find>chat-close</find>
       <find>chat-n</find>
       <find>del</find>
-      <find>log</find>
       <find>de</find>
       <find>return</find>
       <find>chat-return</find>
+      <find>aspectj</find>
+      <find>log</find>
+      <find>Method</find>
     </findStrings>
     <replaceStrings>
       <replace>eb6877</replace>
@@ -134,7 +144,6 @@
         <option value="$PROJECT_DIR$/src/main/java/com/qsxh/utiles/DataHelp.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/qsxh/dao/ChatUserDao.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/qsxh/service/ChatService.java" />
-        <option value="$PROJECT_DIR$/src/main/java/com/qsxh/service/impl/ChatServiceImpl.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/qsxh/entity/TblRelation.java" />
         <option value="$PROJECT_DIR$/src/main/resources/mapper/relation.xml" />
         <option value="$PROJECT_DIR$/src/main/java/com/qsxh/dao/RelationDao.java" />
@@ -147,15 +156,11 @@
         <option value="$PROJECT_DIR$/src/main/java/com/qsxh/websocket/MyHandShakeInterceptor.java" />
         <option value="$PROJECT_DIR$/src/main/webapp/css/font-awesome.min.css" />
         <option value="$PROJECT_DIR$/src/main/webapp/jsp/myfollowed.jsp" />
-        <option value="$PROJECT_DIR$/src/main/webapp/css/chat.css" />
-        <option value="$PROJECT_DIR$/src/main/java/com/qsxh/service/impl/RelationServiceImpl.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/qsxh/controller/MyWebSocketHandler.java" />
         <option value="$PROJECT_DIR$/src/main/webapp/js/chatserver.js" />
         <option value="$PROJECT_DIR$/src/main/java/com/qsxh/utiles/UploadUtil.java" />
         <option value="$PROJECT_DIR$/src/main/webapp/js/chat.js" />
         <option value="$PROJECT_DIR$/src/main/java/com/qsxh/utiles/BookAOP.java" />
-        <option value="$PROJECT_DIR$/src/main/java/com/qsxh/controller/MyFollowAction.java" />
-        <option value="$PROJECT_DIR$/src/main/resources/spring-base.xml" />
         <option value="$PROJECT_DIR$/src/main/java/com/qsxh/utiles/Operation.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/qsxh/utiles/SleepHelper.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/qsxh/Interceptor/informCountInterceptor.java" />
@@ -481,7 +486,7 @@
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="Application Servers" order="7" weight="0.049099836" />
       <window_info anchor="bottom" id="Spring" order="8" weight="0.3289689" />
-      <window_info anchor="bottom" id="Terminal" order="9" weight="0.3289689" />
+      <window_info anchor="bottom" id="Terminal" order="9" weight="0.62356794" />
       <window_info anchor="bottom" id="Docker" order="10" show_stripe_button="false" />
       <window_info anchor="bottom" id="Event Log" order="11" sideWeight="0.50226927" side_tool="true" weight="0.5220949" />
       <window_info anchor="bottom" id="Messages" order="12" weight="0.44517186" />

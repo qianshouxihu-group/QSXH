@@ -134,6 +134,11 @@ public class RelationServiceImpl implements RelationService {
 
         nowGold = nowGold - payGold;
         String agold = nowGold + "";
+
+        if (nowGold<0){
+            return false;
+        }
+
         int goldNum = accountDao.changegold(agold,userid);
 
         System.out.println("金币扣款成功，金币余额---"+agold);

@@ -5,6 +5,7 @@ import com.github.pagehelper.PageInfo;
 import com.qsxh.entity.TblRelation;
 import com.qsxh.entity.TblUser;
 import com.qsxh.entity.User;
+import com.qsxh.interceptor.Log;
 import com.qsxh.service.ChatService;
 import com.qsxh.service.RelationService;
 import org.springframework.stereotype.Controller;
@@ -27,6 +28,7 @@ public class MyFollowAction {
     private ChatService chatService;
 
     @RequestMapping("/getlist")//获得关注列表
+    @Log(actionType = "关注列表", actionName = "获得关注列表")
     public ModelAndView findFollowed(HttpServletRequest request, @RequestParam(value = "page", defaultValue = "1") Integer page){
         ModelAndView mv = new ModelAndView();
 
@@ -82,6 +84,7 @@ public class MyFollowAction {
     }
 
     @RequestMapping("/change")//更改关注状态
+    @Log(actionType = "关注列表", actionName = "修改关注状态")
     public String cancelFollow(HttpServletRequest request,String followedid){
         System.out.println("---进入关注逻辑---");
 
