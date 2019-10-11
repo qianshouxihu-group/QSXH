@@ -70,22 +70,15 @@ public  class LogInterceptor {
     @Around("controllerAspect()")
     public Object around(ProceedingJoinPoint joinPoint) throws Throwable {
 
-
-
-
         Object result = null;
 
         //取得类名和方法名
         String className = joinPoint.getTarget().getClass().getName();
         String methodName = joinPoint.getSignature().getName();
 
-
-
         //相当于前置通知
         logStr=className+"类的"+methodName+"方法开始执行******Start******";
         logger.info(logStr);
-
-
 
         try {
             result = joinPoint.proceed();//方法执行
@@ -101,14 +94,14 @@ public  class LogInterceptor {
             Object[] arguments = joinPoint.getArgs();
             Class targetClass = Class.forName(targetName);
             Method[] methods = targetClass.getMethods();
-            String operationType = "";
-            String operationName = "";
+            String actionType = "";
+            String actionName = "";
             for (Method method : methods) {
                 if (method.getName().equals(methodName)) {
                     Class[] clazzs = method.getParameterTypes();
                     if (clazzs.length == arguments.length) {
-                        operationType = method.getAnnotation(Log.class).operationType();
-                        operationName = method.getAnnotation(Log.class).operationName();
+                        actionType = method.getAnnotation(Log.class).actionType();
+                        actionName = method.getAnnotation(Log.class).actionName();
                         break;
                     }
                 }
@@ -116,13 +109,13 @@ public  class LogInterceptor {
 
             //*========控制台输出=========*//
             System.out.println("=====controller后置通知开始=====");
-            System.out.println("请求方法:" + (joinPoint.getTarget().getClass().getName() + "." + joinPoint.getSignature().getName() + "()")+"."+operationType);
-            System.out.println("方法描述:" + operationName);
+            System.out.println("请求方法:" + (joinPoint.getTarget().getClass().getName() + "." + joinPoint.getSignature().getName() + "()")+"."+actionType);
+            System.out.println("方法描述:" + actionName);
             System.out.println("请求人:" + user.getUname());
             System.out.println("请求IP:" + ip);
 
             //相当于后置通知
-            logStr=className+"."+methodName+"()方法正常执行结束...";
+            logStr="请求人:" + user.getUname()+"."+"请求方法:"+ actionName +"()方法正常执行结束...";
             logger.info(logStr);
 
         }catch (Exception e){

@@ -8,8 +8,8 @@ import java.lang.annotation.*;
 public @interface Log {
 
     /** 要执行的操作类型  比如：增加操作 **/
-    public String operationType() default "";
+    public String actionType() default "";
 
     /** 要执行的具体操作  比如：添加用户 **/
-    public String operationName() default "";
+    public String actionName() default "";
 }
