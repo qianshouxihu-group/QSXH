@@ -2,6 +2,7 @@ package com.qsxh.controller;
 
 import com.opensymphony.xwork2.ActionSupport;
 import com.qsxh.entity.User;
+import com.qsxh.interceptor.Log;
 import com.qsxh.service.AccountService;
 import com.qsxh.service.UserBiz;
 import com.qsxh.service.UserService;
@@ -39,6 +40,7 @@ public class UserLogAction extends ActionSupport {
 
     //前台用户登录逻辑
     @RequestMapping("/login")
+    @Log(actionType = "登录", actionName = "前台用户登录")
     public ModelAndView managerLogin(HttpServletRequest request, String uname, String password){
         ModelAndView mv = new ModelAndView();
         User user = us.userLogin(uname,password);
@@ -73,7 +75,7 @@ public class UserLogAction extends ActionSupport {
                 }
 
 
-                mv.setViewName("muban");
+                mv.setViewName("myfollowed");
             }else{
                 request.setAttribute("log","lf");
                 mv.setViewName("login");
@@ -87,6 +89,7 @@ public class UserLogAction extends ActionSupport {
 
     //后台管理员登录逻辑
     @RequestMapping("/login2")
+    @Log(actionType = "登录", actionName = "后台管理员登录")
     public ModelAndView managerLogin2(HttpServletRequest request, String uname, String password) {
         ModelAndView mv = new ModelAndView();
         HttpSession session = request.getSession();

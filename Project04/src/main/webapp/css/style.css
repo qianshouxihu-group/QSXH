@@ -77,7 +77,7 @@ i{ font-style: normal;}
 .main-user{ position: absolute; background: url(../images/name.png); width: 22px; height: 22px; top: 8px; left: 5px;}
 .main-password{ position: absolute; background:url(../images/password.png); width: 22px; height: 22px; top: 4px; left: 5px;}
 .main-btn{ width: 210px; height: 32px; margin: 0 auto; display: block; border: 0; background: #eb6877; text-align: center; color: #fff; font-size: 16px;}
-.main-pass-text{ display: block; color: #eb6877; width: 210px; margin: 0 auto; font-size: 12px; margin-top: 10px;}
+.main-pass-text{ display: block; color: #eb6877; width: 210px; margin: 0 auto; font-size: 12px; margin-top: 30px;}
 .main-pass-text a{ color: #eb6877;}
 .main-log .forget{ float: right;}
 .main-radv{ width: 233px; margin-top: 20px; border: 1px solid #ddd;}
@@ -244,7 +244,7 @@ i{ font-style: normal;}
 .login-left{ width: 700px; float: left;}
 .login-right{ float: left;}
 .login-left img{ margin: 20px 0px 0px 230px;}
-.login-right img{ margin-top: 50px;}
+.login-right img{ margin-top: 10px;}
 .yzm{ height: 30px; border: 1px solid #BFBFBF; text-indent: 12px; float: left; width: 162px;}
 .main-logbox button{ cursor: pointer; margin-left: 20px; background: #eb6877; color: #fff; border: 0; line-height: 30px; width: 115px; margin-left: 20px;}
 .remember {

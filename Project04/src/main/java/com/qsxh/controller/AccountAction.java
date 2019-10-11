@@ -5,6 +5,7 @@ import com.github.pagehelper.PageInfo;
 import com.opensymphony.xwork2.ActionSupport;
 import com.qsxh.entity.Account;
 import com.qsxh.entity.User;
+import com.qsxh.interceptor.Log;
 import com.qsxh.service.AccountService;
 import com.qsxh.service.UserService;
 import org.junit.jupiter.api.Test;
@@ -33,8 +34,8 @@ public class AccountAction extends ActionSupport {
     @Resource
     private UserService us;
 
-    @Transactional
     @RequestMapping("/rec")//增加一条充值记录,修改账户金币余额
+    @Log(actionType = "充值记录", actionName = "增加记录，更改金币余额")
     public String recharge(HttpServletRequest request, String money) {
         User uu = (User) request.getSession().getAttribute("user");
         ModelAndView mv = new ModelAndView();

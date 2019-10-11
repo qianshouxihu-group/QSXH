@@ -1,6 +1,6 @@
 package com.qsxh.websocket;
 
-import com.qsxh.controller.MyWebSocketHandler;
+import com.qsxh.controller.MyWebSocketAction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
@@ -13,7 +13,7 @@ import org.springframework.web.socket.config.annotation.WebSocketHandlerRegistry
 public class MyWebSocketConfig extends WebMvcConfigurerAdapter implements WebSocketConfigurer {
 
     @Autowired
-    MyWebSocketHandler handler;
+    MyWebSocketAction handler;
 
     public void registerWebSocketHandlers(WebSocketHandlerRegistry webSocketHandlerRegistry) {
 

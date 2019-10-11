@@ -20,9 +20,12 @@
     <link type="image/x-icon" rel=icon href="images/icon.png" />
     <link type="text/css" rel="stylesheet" href="css/style.css"/>
     <style>
-        .main-log{ height: 390px; width: 350px; margin-bottom: 30px; background: #fff;}
+        /*div{border: 1px blue solid}*/
+        .main-log{ height: 470px; width: 350px; margin-bottom: 30px; background: #fff;}
         .main-logbox{ width: 300px;}
-        .main-userBase-input{ width: 270px;}
+        .main-userSpan{color:#b3b4b7;margin-left: 30px}
+        .main-userNoctice{color:red;margin-left: 30px}
+        .main-userCan{color:green;margin-left: 30px}
         .main-log .tit{ height: 50px; line-height: 50px; font-size: 24px;}
         .login-left{ width: 650px;}
         .login-left img{ margin: 90px 0px 0px 200px;}
@@ -73,12 +76,12 @@
             if(null == phone || 0 == phone.length)
             {
                 // alert("手机号不可为空！");
-                $("#phoneError").html("手机号不可为空！");
+                $("#phoneError").html("手机号不可为空！").attr("class","main-userNoctice");
                 flag = false;
             }
             else if(!test.test(phone))
             {
-                $("#phoneError").html("手机号格式不正确！");
+                $("#phoneError").html("手机号格式不正确！").attr("class","main-userNoctice");
                 // alert("手机号格式不正确！");
                 flag = false;
             }
@@ -94,13 +97,13 @@
                         if(data.msg == "success")
                         {
                             // alert("此手机号可用");
-                            $("#phoneError").html("此手机号可用！");
+                            $("#phoneError").html("此手机号可用！").attr("class","main-userCan");
                             flag = true;
                         }
                         else if(data.msg == "fail")
                         {
                             // alert("此手机号已被注册！");
-                            $("#phoneError").html("此手机号已被注册！");
+                            $("#phoneError").html("此手机号已被注册！").attr("class","main-userNoctice");
                             flag = false;
                         }
                     }
@@ -116,18 +119,18 @@
             if(null == password || 0 == password.length)
             {
                 // alert("密码不可为空！");
-                $("#passError").html("密码不可为空！");
+                $("#passError").html("密码不可为空！").attr("class","main-userNoctice");
                 return false;
             }
             else if (!test.test(password))
             {
                 // alert("密码格式不正确，必须为6-18位字母、数字的组合！")
-                $("#passError").html("密码格式不正确，必须为6-18位字母、数字的组合！");
+                $("#passError").html("密码格式不正确，必须为6-18位字母、数字的组合！").attr("class","main-userNoctice");
                 return false;
             }
             else
             {
-                $("#passError").html("密码格式正确!");
+                $("#passError").html("密码格式正确!").attr("class","main-usercan");
                 return true;
             }
         }
@@ -138,18 +141,18 @@
             if(null == repass || 0 == repass.length)
             {
                 // alert("请输入重复密码！");
-                $("#repassError").html("请输入重复密码！");
+                $("#repassError").html("请输入重复密码！").attr("class","main-userNoctice");
                 return false;
             }
             else if(pass != repass)
             {
                 // alert("两次密码不一致！");
-                $("#repassError").html("两次密码不一致！");
+                $("#repassError").html("两次密码不一致！").attr("class","main-userNoctice");
                 return false;
             }
             else
             {
-                $("#repassError").html("两次密码一致！");
+                $("#repassError").html("两次密码一致！").attr("class","main-userNoctice");
                 return true;
             }
         }
@@ -194,24 +197,24 @@
                 <form id="form" onsubmit="return false;">
                     <div class="main-logbox">
                         <i class="main-user1"></i>
-                        <input placeholder="手机号码" type="text" class="main-userBase-input" name="phone" id="phone" onchange="checkPhone()">
+                        <input placeholder="手机号码" type="text" class="main-user-input" name="phone" id="phone" onchange="checkPhone()">
                     </div>
                     <%--提示信息--%>
-                    <span id="phoneError" style="color: red">请输入正确的手机号码，并确保是首次注册</span><p/>
+                    <span id="phoneError" class="main-userSpan">请输入正确的手机号码，并确保是首次注册</span><p/>
 
                     <div class="main-logbox">
                         <i class="main-password"></i>
-                        <input placeholder="登录密码" type="password" class="main-userBase-input" name="password" id="password" onchange="checkPass()">
+                        <input placeholder="登录密码" type="password" class="main-user-input" name="password" id="password" onchange="checkPass()">
                     </div>
                     <%--提示信息--%>
-                    <span id="passError" style="color: red">请输入6-18位的数字与字母组合</span><p/>
+                    <span id="passError" class="main-userSpan">请输入6-18位的数字与字母组合</span><p/>
 
                     <div class="main-logbox">
                         <i class="main-password"></i>
-                        <input placeholder="再次输入密码" type="password" class="main-userBase-input" id="repassword" onchange="checkRePass()">
+                        <input placeholder="再次输入密码" type="password" class="main-user-input" id="repassword" onchange="checkRePass()">
                     </div>
                     <%--提示信息--%>
-                    <span id="repassError" style="color: red">请再次输入密码，两次密码需保持一致</span><p/>
+                    <span id="repassError" class="main-userSpan">请再次输入密码，两次密码需保持一致</span><p/>
 
                     <div class="main-logbox" style="border: 0;">
                         <input type="text" name="code" placeholder="手机验证码" class="yzm">

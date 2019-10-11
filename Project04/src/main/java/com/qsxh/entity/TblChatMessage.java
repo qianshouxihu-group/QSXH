@@ -1,6 +1,6 @@
 package com.qsxh.entity;
 
-public class TblChatUser {
+public class TblChatMessage {
 
     private String fromid;
     private String type;
@@ -8,7 +8,7 @@ public class TblChatUser {
     private String content;
     private String time;
 
-    public TblChatUser() {
+    public TblChatMessage() {
     }
 
     public String getFromid() {

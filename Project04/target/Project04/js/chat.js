@@ -1,11 +1,9 @@
 ﻿
     var fromid = '';
     var toid = '';
-    var serverurl = '';
 
     function getParam(userid,url) {
         fromid = userid;
-        serverurl = url;
     }
     
     //布局
@@ -37,13 +35,11 @@
         screenFuc();
     })();
 
-    var clock = 1;
-
     //打开/关闭聊天框
     $(".chatBtn").click(function () {
-        $(".chatBox").toggle(10);
+        $(".chatBox").toggle(0);
         //获得聊天列表
-        showChatList();
+        showChatList(fromid);
         actionControl();
     })
 
@@ -56,6 +52,7 @@
         $(".chat-message-num").css("padding", 0);
     }
 
+    //聊天列表加载后的绑定事件
     function actionControl() {
         //未读信息数量为空时
         var totalNum = $(".chat-message-num").html();
@@ -72,15 +69,14 @@
         // 进聊天页面
         $(".chat-list-people").each(function () {
             $(this).click(function () {
-
+                alert('进入聊天页面')
                 var offline = $(this).next().val();
                 if (offline=="12"){
                     alert('对方不在线！')
                     return false;
                 }
-                toid = $(this).prev().val();
 
-                clock = 1;
+                toid = $(this).prev().val();
 
                 var n = $(this).index();
                 $(".chatBox-head-one").toggle();
@@ -106,6 +102,9 @@
                 //传头像
                 $(".ChatInfoHead>img").attr("src", $(this).children().eq(0).children("img").attr("src"));
 
+                //获得聊天记录
+                showMessages(fromid,toid,'images/icon01.png','images/icon01.png');
+
                 //聊天框默认最底部
                 $(document).ready(function () {
                     $("#chatBox-content-demo").scrollTop($("#chatBox-content-demo")[0].scrollHeight);
@@ -117,15 +116,23 @@
         //返回列表
         $(".chat-return").off("click");
         $(".chat-return").click(function () {
-            if (confirm('将清空聊天记录，是否返回？')) {
-                $(".chatBox-head-one").toggle(1);
-                $(".chatBox-head-two").toggle(1);
-                $(".chatBox-list").fadeToggle(1);
-                $(".chatBox-kuang").fadeToggle(1);
-                $(".chatBox-content-demo").html('');
-            }
-
+            $(".chatBox-head-one").toggle(1);
+            $(".chatBox-head-two").toggle(1);
+            $(".chatBox-list").fadeToggle(1);
+            $(".chatBox-kuang").fadeToggle(1);
+            $(".chatBox-content-demo").html('');
         });
+
+        //删除对象
+        $(".chat-delete").off("click");
+        $(".chat-delete").click(function (event) {
+            alert('进入删除逻辑');
+            toid = $(this).parent().prev().val();
+            deleteChatUser(fromid,toid);
+            event.stopPropagation();
+        });
+
+
 
         //发送信息
         $("#chat-fasong").off("click");
@@ -198,21 +205,21 @@
         }
         var uploadResult = uploadFile(pic);
 
-        //聊天框默认最底部
-        $(document).ready(function () {
-            $("#chatBox-content-demo").scrollTop($("#chatBox-content-demo")[0].scrollHeight);
-        });
+        if (uploadResult=="yes") {
+            //聊天框默认最底部
+
+        }
 
     }
 
     //通过ajax获得聊天列表
-    function getChatList() {
+    function getChatList(cfromid) {
         var chatListData;
         $.ajax({
             async : false, //设置同步
             type : 'POST',
-            url : 'MyFollowManager/chat.action',
-            data : {userid:fromid},
+            url : 'ChatOnline/chatList.action',
+            data : {userid:cfromid},
             dataType : 'json',
             success : function(result){
                 chatListData = result;
@@ -225,8 +232,8 @@
     }
 
     //展示列表信息
-    function showChatList() {
-        var userList = getChatList();
+    function showChatList(scfromid) {
+        var userList = getChatList(scfromid);
         var listData = "";
         var online = "";
         for (i = 0; i < userList.length; i++) {
@@ -253,6 +260,7 @@
 
     //文件上传
     function uploadFile(pic){
+        var backData = "no"
         //创建一个FormData对象：用一些键值对来模拟一系列表单控件：
         // 即把form中所有表单元素的name与value组装成一个queryString
         var form = new FormData();
@@ -271,7 +279,6 @@
                 */
             processData: false,
             success:function(data){
-                alert('图片上传返回信息---'+data);
                 if (data!='no'){
                     var reader = new FileReader();
                     reader.onload = function (evt) {
@@ -284,9 +291,41 @@
                         //发送信息
                         sendMessage(data,toid,'img');
 
+                        $(document).ready(function () {
+                            $("#chatBox-content-demo").scrollTop($("#chatBox-content-demo")[0].scrollHeight);
+                        });
+
+                        backData = "yes"
                     };
                     reader.readAsDataURL(pic.files[0]);
                 }
             }
         });
+
+        return backData;
     }
+
+    //删除聊天对象
+    function deleteChatUser(dfromid,dtoid) {
+        $.ajax({
+            async : false, //设置同步
+            type : 'POST',
+            url : 'ChatOnline/delete.action',
+            data : {fromid:dfromid,toid:dtoid},
+            success : function(result){
+                alert(result);
+                if (result=="yes"){
+                    alert('删除成功');
+                    showChatList(dfromid);
+                }
+                else if (result=="no"){
+                    alert('删除失败，未知错误')
+                }
+            },
+            error : function(result){
+                alert('删除失败，连接异常');
+            }
+        });
+    }
+
+

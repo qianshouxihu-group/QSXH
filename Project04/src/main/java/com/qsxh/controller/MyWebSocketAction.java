@@ -1,7 +1,7 @@
 package com.qsxh.controller;
 
 import com.google.gson.Gson;
-import com.qsxh.entity.TblChatUser;
+import com.qsxh.entity.TblChatMessage;
 import com.qsxh.service.ChatService;
 import org.springframework.stereotype.Component;
 import org.springframework.web.socket.*;
@@ -13,7 +13,7 @@ import java.util.Iterator;
 import java.util.Map;
 
 @Component
-public class MyWebSocketHandler implements WebSocketHandler{
+public class MyWebSocketAction implements WebSocketHandler{
 
     @Resource
     private ChatService chatService;
@@ -41,7 +41,6 @@ public class MyWebSocketHandler implements WebSocketHandler{
             userSocketSessionMap.put(userid, webSocketSession);
         }
 
-
     }
 
     //收到信息后的处理
@@ -53,36 +52,16 @@ public class MyWebSocketHandler implements WebSocketHandler{
         String message = webSocketMessage.getPayload().toString();
         System.out.println("收到来自客户端的信息"+message);
 
-        //得到Socket通道中的数据并转化为Message对象
-        TblChatUser chat = new Gson().fromJson(message, TblChatUser.class);
+        //得到Socket通道中的数据并转化为chatMessage对象
+        TblChatMessage chatMessage = new Gson().fromJson(message, TblChatMessage.class);
 
-        String toid = chat.getToid();
-        String type = chat.getType();
+        String toid = chatMessage.getToid();
 
-        switch (type){
-            case "text":
+        //对消息进行处理
+        String resultMessage = chatService.chatControl(chatMessage);
 
-                break;
-            case "img":
-
-                break;
-            case "bg":
-
-                break;
-            case "apply":
-
-                break;
-            case "agree":
-                chatService.addChat(chat);
-                break;
-            case "refuse":
-
-                break;
-
-        }
-
-
-        TextMessage tm = new TextMessage(message);
+        //封装处理后的消息
+        TextMessage tm = new TextMessage(resultMessage);
 
         //发送Socket信息
         sendMessageToUser(toid, tm);
