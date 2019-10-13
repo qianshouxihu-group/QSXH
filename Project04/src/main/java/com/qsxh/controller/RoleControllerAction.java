@@ -32,15 +32,22 @@ public class RoleControllerAction {
     ResultObj saveRoleMenu(Role role) {
 
         ResultObj resultObj=new ResultObj();
+        System.out.println("保存的角色ID为========="+role.getRoleid());
         try {
-            this.roleService.saveRoleMenu(role);
-            resultObj.setMsg("权限保存成功");
+            if (!role.getRoleid().equals("1")){
+                this.roleService.saveRoleMenu(role);
+                System.out.println("权限保存成功===================");
+                resultObj.setMsg("权限保存成功");
+            }else {
+                System.out.println("超级管理权限不能修改===================");
+                resultObj.setMsg("超级管理权限不能修改");
+            }
+
             return resultObj;
         } catch (Exception e) {
             e.printStackTrace();
             resultObj.setMsg("权限保存失败");
             return resultObj;
-
         }
     }
 

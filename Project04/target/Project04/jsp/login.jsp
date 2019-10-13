@@ -15,7 +15,7 @@
     <link type="text/css" rel="stylesheet" href="css/style.css"/>
     <script src="js/jquery-1.8.3.min.js"></script>
     <style>
-        .main-log{ height: 260px; width: 350px; margin-bottom: 30px; background: #fff;}
+        .main-log{ height: 280px; width: 350px; margin-bottom: 30px; background: #fff;}
         .main-logbox{ width: 300px;}
         .main-user-input{ width: 270px;}
         .main-log .tit{ height: 50px; line-height: 50px; font-size: 24px;}
@@ -83,7 +83,7 @@
                 <div class="main-logbox">
                     <i class="fa fa-picture-o"></i>
                     <input class="main-user-input"  type="text" id="verifyCode" name="verifyCode" placeholder="验证码" maxlength="4">
-                    <img style="position: absolute;right: 0;top: -50px;"  src="log/getVerifyCode.action" width="110" height="34" id="verifyCodeImage" onclick="javascript:changeImage();">
+                    <img style="position: absolute;right: 0;top: -10px;"  src="log/getVerifyCode.action" width="110" height="34" id="verifyCodeImage" onclick="javascript:changeImage();">
                 </div>
 
                 <button type="submit" class="main-btn">立即登录</button>

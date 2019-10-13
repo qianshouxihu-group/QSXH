@@ -29,6 +29,7 @@
         FROM tblrelation tr,tbluser tu,tbldata td
         WHERE tr.ffollow='71' AND tr.ffromid=#{userid}
         AND tr.ftoid=tu.userid AND tu.userid=td.userid
+        ORDER BY tu.uonline
     </select>
 
     <!--查找魅力值-->

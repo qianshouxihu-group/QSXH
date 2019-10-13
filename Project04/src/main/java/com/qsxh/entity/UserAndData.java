@@ -2,7 +2,7 @@ package com.qsxh.entity;
 
 public class UserAndData {
     private String userid;
-    private int uage;
+    private int uage; //年龄------1
     private String upass;
     private String uname;
     private String roleid;
@@ -10,38 +10,43 @@ public class UserAndData {
     private String ustate;
     private String uonline;
     private String regdate;
-    private String usex;
-    private String ubirthday;
+    private String usex;//性别
+    private String ubirthday;//生日
     private String uwechat;
-    private String uaddress;
-    private String uheight;
+    private String uaddress;//所在地------2
+    private String uheight;//身高------3
     private String uweight;
-    private String uedu;
-    private String umerried;
-    private String ublood;
+    private String uedu;//学历------4
+    private String umerried;//婚姻状况------5
+    private String ublood;//血型------6
     private String uschool;
     private String ucharm;
     private String uinstro;
     private String ugold;
-    private String uincome;
+    private String uincome;//收入------7
     private String conste;//星座
     private String realname;//真实姓名
     private String positions;//职位
-    private String uwork;//工作类别
+    private String uwork;//工作类别------8
     private String major;//专业
     private String gradtime;//毕业时间
-    private String uhouse;//住房
-    private String ucar;//车
+    private String uhouse;//住房------9
+    private String ucar;//车------10
     private String s_province;//省
     private String s_city;//市
     private String uageRange;//年龄范围
-    private int minage; //最小年龄
-    private int maxage; //最大年龄
+    private String minbir; //最小年龄de年份
+    private String maxbir; //最大年龄de年份
+    private String condition;  //查询条件
+    private int limit;  //查询的记录条数
+    private String limitString;//接收limit
+    private int count;//匹配指数
+    private int page;//页数
 
     public UserAndData() {
     }
 
-    public UserAndData(String userid, int uage, String upass, String uname, String roleid, String uimgurl, String ustate, String uonline, String regdate, String usex, String ubirthday, String uwechat, String uaddress, String uheight, String uweight, String uedu, String umerried, String ublood, String uschool, String ucharm, String uinstro, String ugold, String uincome, String conste, String realname, String positions, String uwork, String major, String gradtime, String uhouse, String ucar, String s_province, String s_city, String uageRange, int minage, int maxage) {
+    public UserAndData(String userid, int uage, String upass, String uname, String roleid, String uimgurl, String ustate, String uonline, String regdate, String usex, String ubirthday, String uwechat, String uaddress, String uheight, String uweight, String uedu, String umerried, String ublood, String uschool, String ucharm, String uinstro, String ugold, String uincome, String conste, String realname, String positions, String uwork, String major, String gradtime, String uhouse, String ucar, String s_province, String s_city, String uageRange, String minbir, String maxbir, String condition, int limit, String limitString, int count, int page) {
         this.userid = userid;
         this.uage = uage;
         this.upass = upass;
@@ -76,8 +81,13 @@ public class UserAndData {
         this.s_province = s_province;
         this.s_city = s_city;
         this.uageRange = uageRange;
-        this.minage = minage;
-        this.maxage = maxage;
+        this.minbir = minbir;
+        this.maxbir = maxbir;
+        this.condition = condition;
+        this.limit = limit;
+        this.limitString = limitString;
+        this.count = count;
+        this.page = page;
     }
 
     public String getUserid() {
@@ -352,19 +362,59 @@ public class UserAndData {
         this.uageRange = uageRange;
     }
 
-    public int getMinage() {
-        return minage;
+    public String getMinbir() {
+        return minbir;
     }
 
-    public void setMinage(int minage) {
-        this.minage = minage;
+    public void setMinbir(String minbir) {
+        this.minbir = minbir;
     }
 
-    public int getMaxage() {
-        return maxage;
+    public String getMaxbir() {
+        return maxbir;
     }
 
-    public void setMaxage(int maxage) {
-        this.maxage = maxage;
+    public void setMaxbir(String maxbir) {
+        this.maxbir = maxbir;
+    }
+
+    public String getCondition() {
+        return condition;
+    }
+
+    public void setCondition(String condition) {
+        this.condition = condition;
+    }
+
+    public int getLimit() {
+        return limit;
+    }
+
+    public void setLimit(int limit) {
+        this.limit = limit;
+    }
+
+    public String getLimitString() {
+        return limitString;
+    }
+
+    public void setLimitString(String limitString) {
+        this.limitString = limitString;
+    }
+
+    public int getCount() {
+        return count;
+    }
+
+    public void setCount(int count) {
+        this.count = count;
+    }
+
+    public int getPage() {
+        return page;
+    }
+
+    public void setPage(int page) {
+        this.page = page;
     }
 }

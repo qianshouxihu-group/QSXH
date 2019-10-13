@@ -6,7 +6,7 @@
 
     <!--    管理员列表-->
     <select id="findAdminList" parameterType="com.qsxh.entity.User" resultType="com.qsxh.entity.User">
-        select u1.*,u2.* from tbluser u1,tblrole u2 where u1.roleid in (1,2) and u1.ustate='91'and u1.roleid=u2.roleid
+        select u1.*,u2.* from tbluser u1,tblrole u2 where u1.roleid in (1,2,7) and u1.ustate='91'and u1.roleid=u2.roleid
         <if test=" !(''.equals(userid)) and null!= userid ">
             and u1.userid like '%${userid}%'
         </if>
@@ -40,6 +40,9 @@
         <if test=" '普通管理员'.equals(rname) ">
             ,roleid='2'
         </if>
+        <if test=" '中级管理员'.equals(rname) ">
+            ,roleid='7'
+        </if>
          where userid=#{userid}
     </update>
 
@@ -51,11 +54,14 @@
         <if test=" '普通管理员'.equals(rname) ">
             insert into tbluser (userid,uname,upass,roleid,ustate,regdate) values (#{userid},#{uname},#{upass},'2','91',#{regdate})
         </if>
+        <if test=" '中级管理员'.equals(rname) ">
+            insert into tbluser (userid,uname,upass,roleid,ustate,regdate) values (#{userid},#{uname},#{upass},'7','91',#{regdate})
+        </if>
     </update>
 
     <!--    管理员数-->
     <select id="getAdminNum" parameterType="com.qsxh.entity.User" resultType="java.lang.Integer">
-        select count(*) from tbluser u1,tblrole u2 where u1.roleid in (1,2) and u1.ustate='91'and u1.roleid=u2.roleid
+        select count(*) from tbluser u1,tblrole u2 where u1.roleid in (1,2,7) and u1.ustate='91'and u1.roleid=u2.roleid
         <if test=" !(''.equals(userid)) and null!= userid ">
             and u1.userid like '%${userid}%'
         </if>

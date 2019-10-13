@@ -14,10 +14,11 @@
         <meta name="Description" content="牵手西湖婚恋交友网"/>
 		<link type="image/x-icon" rel=icon href="images/icon.png" />
 		<link type="text/css" rel="stylesheet" href="css/style.css"/>
+        <link rel="stylesheet" href="css/loading.css">
 		<script type="text/javascript" src="js/jquery-1.8.3.min.js"></script>
         <script type="text/javascript" src="js/koala.min.1.5.js"></script>
-        <script type="text/javascript" src="js/comment.js"></script>
         <script type="text/javascript" src="js/jquery.collapse.js" ></script>
+        <script src="js/loading.js"></script>
 	</head>
 	<body>
 		<div class="head">
@@ -38,10 +39,10 @@
 		</div>
 		<div class="nav-box">
 			<div class="nav">
-				<a href="matchUser/matchByTime.action">网站首页</a>
+				<a href="matchUser/matchByTime.action?limitString=12">网站首页</a>
 				<a href="">了解我们</a>
-				<a href="matchUser/smartMatch.action">条件搜索</a>
-				<a href="">智能匹配</a>
+				<a id="searchUser" href="matchUser/smartMatch.action?limitString=30&usex=${user.usex}&condition=charm">条件搜索</a>
+				<a href="matchUser/smartUser.action?id=${sessionScope.user.userid}">智能匹配</a>
 				<a href="">会员服务 </a>
 				<a href="">活动专题 </a>
 				<a href="">我的消息 </a>
@@ -88,9 +89,8 @@
 						<li>
 							<a href="">
 								<img src="images/test.png">
-								<p class="mem-num">昵称：${list.uname}</p>
-								<p class="mem-text">${list.uage}岁  |  ${list.uwork}  |  ${list.uheight}cm</p>
-								<p class="mem-text">♥${list.ucharm}</p>
+                                <p class="mem-num">昵称：${list.uname}</p>
+                                <p class="mem-text">${list.uage}岁  |  ${list.uheight}cm  |  ♥${list.ucharm}</p>
 							</a>
 						</li>
 					</c:forEach>
@@ -105,8 +105,7 @@
 							<a href="">
 								<img src="images/test3.png">
 								<p class="mem-num">昵称：${list.uname}</p>
-								<p class="mem-text">${list.uage}岁  |  ${list.uwork}  |  ${list.uheight}cm</p>
-								<p class="mem-text">♥${list.ucharm}</p>
+								<p class="mem-text">${list.uage}岁  |  ${list.uheight}cm  |  ♥${list.ucharm}</p>
 							</a>
 						</li>
 					</c:forEach>
@@ -201,7 +200,17 @@
 			bns: ['.prev', '.next'],                      
 			interval: 3000  
 		}) 
-	})  
+	})
+
+    //loading全屏，加载等待效果
+    $('#searchUser').click(function(){
+        var load = new Loading();
+        load.init();
+        load.start();
+        setTimeout(function() {
+            load.stop();
+        }, 30000)
+    });
 </script>
 </body>
 </html>

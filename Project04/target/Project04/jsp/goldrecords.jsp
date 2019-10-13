@@ -88,33 +88,37 @@
                 </tbody>
             </table>
             <div> 第${pageInfo.pageNum}页，共${pageInfo.pages}页，共${pageInfo.total}条记录</div><br>
-            <div class="col-md-6 offset-md-4">
-                <nav aria-label="Page navigation example">
-                    <ul class="pagination pagination-sm">
-                        <li class="page-item"><a class="page-link" href="AccountAction/arec.action?page=1">首页</a></li>
-                        <c:if test="${pageInfo.hasPreviousPage}">
-                            <li class="page-item"><a class="page-link"
-                                                     href="AccountAction/arec.action?page=${pageInfo.pageNum-1}">上一页</a></li>
-                        </c:if>
-                        <c:forEach items="${pageInfo.navigatepageNums}" var="page">
-                            <c:if test="${page==pageInfo.pageNum}">
-                                <li class="page-item active"><a class="page-link" href="#">${page}</a></li>
-                            </c:if>
-                            <c:if test="${page!=pageInfo.pageNum}">
-                                <li class="page-item"><a class="page-link"
-                                                         href="AccountAction/arec.action?page=${page}">${page}</a></li>
-                            </c:if>
-                        </c:forEach>
-                        <c:if test="${pageInfo.hasNextPage}">
-                            <li class="page-item"><a class="page-link"
-                                                     href="AccountAction/arec.action?page=${pageInfo.pageNum+1}">下一页</a></li>
-                        </c:if>
-                        <li class="page-item"><a class="page-link" href="AccountAction/arec.action?page=${pageInfo.pages}">末页</a>
-                        </li>
-                    </ul>
-                </nav>
-            </div>
 
+            <div class="page">
+                <a href="AccountAction/grec.action?page=1">首页</a>
+                <c:if test="${pageInfo.hasPreviousPage}">
+                    <a href="AccountAction/grec.action?page=${pageInfo.pageNum-1}">上一页</a>
+                </c:if>
+                <c:forEach items="${pageInfo.navigatepageNums}" var="page">
+                    <c:if test="${page==pageInfo.firstPage and page>1}">
+                        <a href="AccountAction/grec.action?page=1">1</a>
+                        <c:if test="${page!=2}">
+                            <span>...</span>
+                        </c:if>
+                    </c:if>
+                    <c:if test="${page==pageInfo.pageNum}">
+                        <a class="cur">${page}</a>
+                    </c:if>
+                    <c:if test="${page!=pageInfo.pageNum}">
+                        <a href="AccountAction/grec.action?page=${page}">${page}</a>
+                    </c:if>
+                    <c:if test="${page<pageInfo.pages and page==pageInfo.lastPage}">
+                        <c:if test="${page!=(pageInfo.pages-1)}">
+                            <span>...</span>
+                        </c:if>
+                        <a href="AccountAction/grec.action?page=${pageInfo.pages}">${pageInfo.pages}</a>
+                    </c:if>
+                </c:forEach>
+                <c:if test="${pageInfo.hasNextPage}">
+                    <a href="AccountAction/grec.action?page=${pageInfo.pageNum+1}">下一页</a>
+                </c:if>
+                <a href="AccountAction/grec.action?page=${pageInfo.pages}">末页</a>
+            </div>
 
           <%--  <a>您的当前金币总额为：${gold}</a>--%>
         </div>

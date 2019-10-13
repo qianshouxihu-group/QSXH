@@ -25,35 +25,12 @@
 
 <!-- 搜索条件开始 -->
 <fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
-    <legend>查询条件</legend>
+    <legend>角色分配权限菜单</legend>
 </fieldset>
 <%--条件查询--%>
 <div class="layui-form">
-    <div class="demoTable">
-        <div class="layui-form-item">
-            <label class="layui-form-label">角色</label>
-            <div class="layui-input-inline" style="width:150px">
-                <select name="rname" id="rname" lay-verify="required">
-                    <option value=""></option>
-                    <option value="普通管理员">普通管理员</option>
-                    <option value="超级管理员">超级管理员</option>
-                </select>
-            </div>
-        </div>
-        <div class="layui-form-item">
-            <div class="layui-input-block layui-show-xs-block">
-                <span><button class="layui-btn"  data-type="reload"><i class="layui-icon">&#xe615;</i></button></span>
-                <button type="button" class="layui-btn" id="conditionreset" >重置</button>
-            </div>
-
-        </div>
-    </div>
     <!-- 数据表格开始 -->
     <div class="layui-card-body"  >
-        <div style="display: none;" id="userToolBar">
-            <button type="button" class="layui-btn layui-btn-sm" lay-event="add">增加</button>
-            <button class="layui-btn layui-btn-sm layui-btn-danger" lay-event="getCheckData">批量删除用户</button>
-        </div>
         <table class="layui-table" lay-filter="test" id="demo" align="center">
         </table>
     </div>
@@ -63,56 +40,6 @@
 </div>
 
 
-<!-- 添加和修改的弹出层开始 -->
-<div style="display: none;padding: 20px" id="saveOrUpdateDiv" >
-    <form class="layui-form " action="" lay-filter="dataFrm" id="dataFrm">
-        <div class="layui-form-item">
-            <div class="layui-inline">
-                <label class="layui-form-label">ID:</label>
-                <div class="layui-input-inline">
-                    <input type="text" name="userid" id="userid1" lay-verify="required" readonly="readonly" autocomplete="off"
-                           class="layui-input">
-                </div>
-            </div>
-            <div class="layui-inline">
-                <label class="layui-form-label">用户名:</label>
-                <div class="layui-input-inline">
-                    <input type="text" name="uname" autocomplete="off"
-                           class="layui-input">
-                </div>
-            </div>
-        </div>
-        <div class="layui-form-item">
-            <div class="layui-inline">
-                <label class="layui-form-label">密码：</label>
-                <div class="layui-input-inline">
-                    <input type="text" name="upass" autocomplete="off"
-                           class="layui-input">
-                </div>
-            </div>
-        </div>
-        <div class="layui-form-item">
-            <div class="layui-inline">
-                <label class="layui-form-label">角色：</label>
-                <div class="layui-input-block">
-                    <input type="radio" name="rname" value="普通管理员" title="普通管理员">
-                    <input type="radio" name="rname" value="超级管理员" title="超级管理员">
-                </div>
-            </div>
-        </div>
-
-
-        <div class="layui-form-item" style="text-align: center;">
-            <div class="layui-input-block">
-                <button type="button" class="layui-btn layui-btn-normal layui-btn-sm layui-icon layui-icon-release" lay-filter="doSubmit" lay-submit="">提交</button>
-                <button type="reset" class="layui-btn layui-btn-warm layui-btn-sm layui-icon layui-icon-refresh" >重置</button>
-            </div>
-        </div>
-    </form>
-
-</div>
-<!-- 添加和修改的弹出层结束 -->
-
 <!-- 角色分配菜单的弹出层开始 -->
 <div style="display: none;" id="selectRoleMenu">
     <ul id="menuTree" class="dtree" data-id="0"></ul>
@@ -121,10 +48,13 @@
 </body>
 <%--行操作按钮--%>
 <script id="barDemo" type="text/html">
-    <div class="layui-btn-container">
-        <button class="layui-btn layui-btn-sm" lay-event="edit">编辑</button>
-        <button class="layui-btn layui-btn-sm" lay-event="selectRoleMenu">分配菜单</button>
-    </div>
+
+<%--    超级管理员才能分配权限--%>
+    <c:if test="${sessionScope.manager.roleid=='1'}" var="flag" scope="session">
+        <div class="layui-btn-container">
+            <button class="layui-btn layui-btn-sm" lay-event="selectRoleMenu">分配菜单</button>
+        </div>
+    </c:if>
 </script>
 <script >
 
@@ -147,8 +77,8 @@
         var dtree=layui.dtree;
         table.render({
             elem: '#demo'
-            ,height: 312
-            ,limit: 3
+            ,limits:[5,10]
+            ,limit: 5
             ,toolbar:"#userToolBar"
             ,id: 'docReload'
             ,url: '<%=path%>role/select.action' //数据接口

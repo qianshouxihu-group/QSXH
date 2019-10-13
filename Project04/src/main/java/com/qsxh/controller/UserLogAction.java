@@ -3,6 +3,7 @@ package com.qsxh.controller;
 import com.opensymphony.xwork2.ActionSupport;
 import com.qsxh.entity.Menu;
 import com.qsxh.entity.User;
+import com.qsxh.interceptor.Log;
 import com.qsxh.service.*;
 import com.qsxh.utiles.MD5;
 import org.springframework.stereotype.Controller;
@@ -23,8 +24,8 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.*;
 import java.util.List;
+import java.util.*;
 
 @Controller
 @RequestMapping("/log")
@@ -43,11 +44,11 @@ public class UserLogAction extends ActionSupport {
 
     //前台用户登录逻辑
     @RequestMapping("/login")
+    @Log(actionType = "登录", actionName = "前台用户登录")
     public ModelAndView managerLogin(HttpServletRequest request, String uname, String password){
         ModelAndView mv = new ModelAndView();
         //md5加密
         String md5pass = MD5.getMD5(password);
-
         User user = us.userLogin(uname,md5pass);
         HttpSession session = request.getSession();
 
@@ -56,6 +57,7 @@ public class UserLogAction extends ActionSupport {
 
         String verifyCode = request.getParameter("verifyCode");
         String sessionVerifyCode = (String) session.getAttribute("verifyCodeValue");
+        System.out.println("验证码"+sessionVerifyCode);
         if (!verifyCode.equalsIgnoreCase(sessionVerifyCode)) {
             //验证失败逻辑
             request.setAttribute("log","codeerror");
@@ -81,10 +83,21 @@ public class UserLogAction extends ActionSupport {
                         us.changeRoldid(user.getUserid(),"3");
                         as.addVipenddate(user.getUserid(),"");
                     }
+                    mv.setViewName("index");
                 }
 
+                if("3".equals(user.getRoleid())){
+                    mv.setViewName("index");
+                }
+                if("5".equals(user.getRoleid())){
+                    request.getSession().setAttribute("userid",user.getUserid());
+                    mv.setViewName("cregdata");
+                }
+                if("6".equals(user.getRoleid())){
+                    request.getSession().setAttribute("userid",user.getUserid());
+                    mv.setViewName("cregsuccess");
+                }
 
-                mv.setViewName("muban");
             }else{
                 request.setAttribute("log","lf");
                 mv.setViewName("login");
@@ -113,17 +126,14 @@ public class UserLogAction extends ActionSupport {
             if(null!= user)
             {
 
-
-                //角色菜单对应的map
+                //角色对应的菜单map
                 String roleid=user.getRoleid();
-                List<com.qsxh.entity.Menu> menuList=new ArrayList<com.qsxh.entity.Menu>();
+                List<com.qsxh.entity.Menu> menuList=new ArrayList<Menu>();
                 menuList=menuService.selectRoleMenuList(roleid);
-                Map<String, List<Menu>> menumap = new HashMap<String, List<Menu>>();
+                Map<String, List<com.qsxh.entity.Menu>> menumap = new HashMap<String, List<Menu>>();
                 menumap=menuService.listToMap(menuList);
 
-
                 session.setAttribute("manager", user);
-
                 session.setAttribute("menumap", menumap);
 
                 mv.setViewName("admin/adminindex");
@@ -133,8 +143,6 @@ public class UserLogAction extends ActionSupport {
             }
 
         }
-
-
         return mv;
     }
 

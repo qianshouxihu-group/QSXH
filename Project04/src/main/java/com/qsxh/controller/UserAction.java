@@ -1,8 +1,11 @@
 package com.qsxh.controller;
 
+import com.aliyuncs.dysmsapi.model.v20170525.SendSmsResponse;
+import com.aliyuncs.exceptions.ClientException;
 import com.opensymphony.xwork2.ActionSupport;
 import com.qsxh.entity.User;
 import com.qsxh.service.AccountService;
+import com.qsxh.service.AliMessagesUtil;
 import com.qsxh.service.UserBiz;
 import com.qsxh.service.UserService;
 import org.springframework.stereotype.Controller;
@@ -41,7 +44,7 @@ public class UserAction extends ActionSupport {
         //通过session.invalidata()方法来注销当前的session
         session.invalidate();
         //String path = request.getURI()
-        mv.setViewName("test");
+        mv.setViewName("login");
         return mv;
     }
 
@@ -103,5 +106,44 @@ public class UserAction extends ActionSupport {
             return "0";
         }
     }
+
+    //忘记密码--发送短信验证码
+    @RequestMapping("/sendcode")
+    public @ResponseBody Map  sendcode(String userid,HttpSession session) throws ClientException {
+        System.out.println("忘记密码--发送短信验证码 userid="+userid);
+        Map<String , String> map = new HashMap<>();
+
+        String code= AliMessagesUtil.getRandNum(6);
+        SendSmsResponse response= AliMessagesUtil.sendSms(userid,code);
+        System.out.println("验证码是"+code);
+        if (null!=response) {
+            map.put("msg", "success");
+            userBiz.userPassReset(userid);
+            session.setAttribute("code",code);
+        }else {
+            map.put("msg", "fail");
+        }
+        return map;
+    }
+
+    //忘记密码--验证 验证码的正误，并重置密码
+    @RequestMapping("/checkcode")
+    public @ResponseBody Map checkcode(HttpSession session, HttpServletRequest request,String code)
+    {
+        Map<String , String> map = new HashMap<>();
+        String scode= (String) session.getAttribute("code");
+        if(scode.equals(code)){
+            //验证码正确
+            //移除session中存储的验证码
+            session.removeAttribute("code");
+            map.put("msg", "success");
+
+        }else{
+            //验证码错误
+            map.put("msg", "fail");
+        }
+        return map;
+    }
+
 
 }

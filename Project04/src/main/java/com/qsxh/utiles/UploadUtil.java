@@ -35,7 +35,7 @@ public class UploadUtil {
             //文件传输，parent文件
             file.transferTo(new File(parent, newFileName));
 
-            map.put("oldname",oldName);//文件原名称
+          map.put("oldname",oldName);//文件原名称
             map.put("name",newFileName);//文件新名称
             map.put("url",url);
 

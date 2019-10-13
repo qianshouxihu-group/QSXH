@@ -15,7 +15,7 @@
     <style>
         .main-log{ height: 390px; width: 350px; margin-bottom: 30px;}
         .main-logbox{ width: 300px;}
-        .main-userBase-input{ width: 270px;}
+        .main-user-input{ width: 270px;}
         .main-log .tit{ height: 50px; line-height: 50px; font-size: 24px;}
         .login-left{ width: 650px;}
         .login-left img{ margin: 90px 0px 0px 200px;}
@@ -41,7 +41,7 @@
 </div>
 <div class="nav-box">
     <div class="nav">
-        <a href="">网站首页</a>
+        <a href="matchUser/matchByTime.action?limitString=12">网站首页</a>
         <a href="">了解我们</a>
         <a href="">条件搜索</a>
         <a href="">智能匹配</a>

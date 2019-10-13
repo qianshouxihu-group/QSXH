@@ -1,7 +1,6 @@
 package com.qsxh.websocket;
 
 import com.qsxh.entity.User;
-import com.qsxh.utiles.FileDeleteUtil;
 import org.springframework.http.server.ServerHttpRequest;
 import org.springframework.http.server.ServerHttpResponse;
 import org.springframework.http.server.ServletServerHttpRequest;
@@ -11,7 +10,7 @@ import org.springframework.web.socket.server.HandshakeInterceptor;
 import javax.servlet.http.HttpSession;
 import java.util.Map;
 
-public class MyHandShakeInterceptor implements HandshakeInterceptor{
+public class MyHandShakeInterceptor implements HandshakeInterceptor {
 
     @Override
     public boolean beforeHandshake(ServerHttpRequest serverHttpRequest, ServerHttpResponse serverHttpResponse, WebSocketHandler webSocketHandler, Map<String, Object> map) throws Exception {
@@ -22,21 +21,16 @@ public class MyHandShakeInterceptor implements HandshakeInterceptor{
             HttpSession session = servletRequest.getServletRequest().getSession(false);
 
             //清空图片缓存文件夹
-            String path = session.getServletContext().getRealPath("/temp");
-            FileDeleteUtil.clearFolder(path);
+//            String path = session.getServletContext().getRealPath("/temp");
+//            FileDeleteUtil.clearFolder(path);
 
             // 标记用户
             User tblUser = (User) session.getAttribute("user");
-            User manager = (User) session.getAttribute("manager");
 
             if(tblUser !=null){
                 map.put("wsid", tblUser.getUserid());//为服务器创建WebSocketSession做准备
                 System.out.println("用户id："+ tblUser.getUserid()+" 被加入");
-            }else if (manager!=null){
-                map.put("wsid", manager.getUserid());//为服务器创建WebSocketSession做准备
-                System.out.println("用户id："+ manager.getUserid()+" 被加入");
-            }
-            else{
+            }else{
                 System.out.println("user为空");
                 return false;
             }

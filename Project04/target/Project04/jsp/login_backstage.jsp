@@ -15,11 +15,13 @@
 </head>
 <body>
 <div id="container">
-    <div></div>
+    <img src="<%=path%>/images/timg.jpg" width="100%" height="100%" />
     <div class="admin-login-background">
         <!--<div class="admin-header">-->
         <!--<img src="image/ex_logo.png" class="admin-logo">-->
         <!--</div>-->
+
+
         <form class="layui-form" action="log/login2.action" method="post">
             <div>
                 <i class="layui-icon layui-icon-username admin-icon admin-icon-username"></i>

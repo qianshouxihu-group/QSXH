@@ -32,6 +32,6 @@ public interface RelationDao {
     public String findCharm(@Param("userid") String userid);
 
     //修改魅力值
-    public Integer changeCharm(@Param("userid") String userid,@Param("ucharm") String ucharm);
+    public Integer changeCharm(@Param("userid") String userid, @Param("ucharm") String ucharm);
 
 }

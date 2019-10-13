@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.qsxh.dao.CpLimitDao">
+    <!--择偶条件查询-->
+    <select id="findCpLimitByUser" resultType="com.qsxh.entity.PersonalData">
+        select uheight,umerried,uhouse,agerange,uincome,ucar,uedu,uwork,ublood,
+        constellation,uaddress,s_province,s_city from tblcplimit
+        where userid = #{userid}
+    </select>
+    <!--更新择偶条件-->
+    <update id="updateCpLimitByUser" parameterType="com.qsxh.entity.PersonalData">
+        UPDATE tblcplimit SET uheight = #{uheight},umerried = #{umerried},uhouse = #{uhouse},
+        agerange = #{agerange},uincome = #{uincome},ucar = #{ucar},uedu = #{uedu},uwork = #{uwork},
+        ublood = #{ublood},constellation = #{constellation},uaddress = #{uaddress},s_province = #{s_province},s_city = #{s_city}
+        WHERE userid = #{userid}
+    </update>
+    <!--不带地址的择偶条件更新-->
+    <update id="updateCpLimitWithoutAddress" parameterType="com.qsxh.entity.PersonalData">
+        UPDATE tblcplimit SET uheight = #{uheight},umerried = #{umerried},uhouse = #{uhouse},
+        agerange = #{agerange},uincome = #{uincome},ucar = #{ucar},uedu = #{uedu},uwork = #{uwork},
+        ublood = #{ublood},constellation = #{constellation}
+        WHERE userid = #{userid}
+    </update>
+</mapper>
+

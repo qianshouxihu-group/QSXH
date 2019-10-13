@@ -14,11 +14,12 @@
         <meta name="Description" content="牵手西湖婚恋交友网"/>
 		<link type="image/x-icon" rel=icon href="images/icon.png" />
 		<link type="text/css" rel="stylesheet" href="css/style.css"/>
+		<link rel="stylesheet" href="css/jquery.range.css">
+		<link rel="stylesheet" href="css/loading.css">
 		<script type="text/javascript" src="js/jquery-1.8.3.min.js"></script>
-        <link rel="stylesheet" href="js/jquery.range.css">
         <script type="text/javascript" src="js/jquery.range.js"></script>
-        <script type="text/javascript" src="js/comment.js"></script>
         <script type="text/javascript" src="js/popup.mini.js"></script>
+		<script src="js/loading.js"></script>
 	</head>
 	<body>
 		<div class="head">
@@ -39,10 +40,10 @@
 		</div>
 		<div class="nav-box">
 			<div class="nav">
-				<a href="matchUser/matchByTime.action">网站首页</a>
+				<a href="matchUser/matchByTime.action?limitString=12">网站首页</a>
 				<a href="">了解我们</a>
-				<a href="matchUser/smartMatch.action">条件搜索</a>
-				<a href="">智能匹配</a>
+				<a id="searchUser" href="matchUser/smartMatch.action?limitString=30&usex=${sessionScope.user.usex}&conditin=charm">条件搜索</a>
+				<a href="matchUser/smartUser.action?id=${sessionScope.user.userid}">智能匹配</a>
 				<a href="">会员服务 </a>
 				<a href="">活动专题 </a>
 				<a href="">我的消息 </a>
@@ -72,7 +73,7 @@
 							<div class="infor-link">
 								<select id="uedu">
 									<option value="不限">不限</option>
-									<option value="高中及以下">高中及以下</option>
+									<option value="高中">高中</option>
 									<option value="专科">专科</option>
 									<option value="本科">本科</option>
 									<option value="硕士">硕士</option>
@@ -102,14 +103,44 @@
 							<div class="infor-link">
 								<select id="uwork">
 									<option value="不限">不限</option>
+									<option value="在校学生">在校学生</option>
+									<option value="计算机/IT">计算机/IT</option>
+									<option value="通信技术">通信技术</option>
 									<option value="销售">销售</option>
-									<option value="互联网">互联网</option>
-									<option value="账务">账务</option>
-									<option value="教育培训">教育培训</option>
+									<option value="市场拓展">市场拓展</option>
+									<option value="公关/商务">公关/商务</option>
+									<option value="采购/贸易">采购/贸易</option>
+									<option value="客户服务">客户服务</option>
+									<option value="人力/行政">人力/行政</option>
+									<option value="高级管理">高级管理</option>
+									<option value="制造/加工">制造/加工</option>
+									<option value="质控/安检">质控/安检</option>
+									<option value="工程机械">工程机械</option>
+									<option value="技工">技工</option>
+									<option value="财会/审计">财会/审计</option>
+									<option value="金融">金融</option>
+									<option value="装修/物业">装修/物业</option>
+									<option value="家政/月嫂">家政/月嫂</option>
+									<option value="航空">航空</option>
+									<option value="教育/培训">教育/培训</option>
+									<option value="咨询/顾问">咨询/顾问</option>
+									<option value="学术/科研">学术/科研</option>
+									<option value="法律">法律</option>
+									<option value="设计/创意">设计/创意</option>
+									<option value="文学/媒体">文学/媒体</option>
+									<option value="餐饮/旅游">餐饮/旅游</option>
+									<option value="能源/化工">能源/化工</option>
+									<option value="地质勘探">地质勘探</option>
+									<option value="医疗/护理">医疗/护理</option>
+									<option value="保健/美容">保健/美容</option>
+									<option value="生物工程">生物工程</option>
+									<option value="制药/器械">制药/器械</option>
+									<option value="体育工作者">体育工作者</option>
 									<option value="翻译">翻译</option>
-									<option value="管理">管理</option>
-									<option value="医疗">医疗</option>
-									<option value="酒店">酒店</option>
+									<option value="公务员/干部">公务员/干部</option>
+									<option value="个体/电商">个体/电商</option>
+									<option value="警察">警察</option>
+									<option value="其他">其他</option>
 								</select>
 							</div>
 							<span>月 &nbsp;收 &nbsp;入</span>
@@ -134,11 +165,6 @@
 							<button id="search" onclick="search()" style=" margin-left: 30px;width:100px; height: 30px; background: rosybrown;">搜索</button>
 						</li>
 				</ul>
-				<ul class="sequence">
-					<li><a href="" class="sort_a"><i class="sort_a1">综合排序</i></a></li>
-					<li><a href="" class="sort_a"><i class="sort_a1">最新会员</i></a></li>
-					<li><a href="" class="sort_a"><i class="sort_a1">魅力值</i></a></li>
-				</ul>
 				<ul class="main-member">
 					<c:if test="${!empty MatchUserList}">
 						<c:forEach items="${MatchUserList}" var="list">
@@ -158,16 +184,6 @@
 						</li>
 					</c:if>
 				</ul>
-				<div class="page">
-					<a href="" class="cur">1</a>
-					<a href="">2</a>
-					<a href="">3</a>
-					<a href="">4</a>
-					<a href="">5</a>
-					<span>...</span>
-					<a href="">24</a>
-					<a href="">下一页</a>
-				</div>
 			</div><!--left-->
 			<div class="main-right"><!--right-->
 				<div class="main-log">
@@ -188,48 +204,17 @@
 				<div class="main-message">
 					<div class="tit">最新会员推荐</div>
 					<ul class="member-list">
-						<li>
-							<img src="images/bgimg.jpg" />
-							<p>会员号：100001</p>
-                            <p>婚况：未      年龄：26</p>
-                            <p>学历：大专   身高：160cm</p>
-                            <p> 职业：CEO   房产：有房</p>
-						</li>
-						<li>
-							<img src="images/bgimg.jpg" />
-							<p>会员号：100001</p>
-                            <p>婚况：未      年龄：26</p>
-                            <p>学历：大专   身高：160cm</p>
-                            <p> 职业：CEO   房产：有房</p>
-						</li>
-						<li>
-							<img src="images/bgimg.jpg" />
-							<p>会员号：100001</p>
-                            <p>婚况：未      年龄：26</p>
-                            <p>学历：大专   身高：160cm</p>
-                            <p> 职业：CEO   房产：有房</p>
-						</li>
-						<li>
-							<img src="images/bgimg.jpg" />
-							<p>会员号：100001</p>
-                            <p>婚况：未      年龄：26</p>
-                            <p>学历：大专   身高：160cm</p>
-                            <p> 职业：CEO   房产：有房</p>
-						</li>
-						<li>
-							<img src="images/bgimg.jpg" />
-							<p>会员号：100001</p>
-                            <p>婚况：未      年龄：26</p>
-                            <p>学历：大专   身高：160cm</p>
-                            <p> 职业：CEO   房产：有房</p>
-						</li>
-						<li>
-							<img src="images/bgimg.jpg" />
-							<p>会员号：100001</p>
-                            <p>婚况：未      年龄：26</p>
-                            <p>学历：大专   身高：160cm</p>
-                            <p> 职业：CEO   房产：有房</p>
-						</li>
+						<c:forEach items="${Memberlist}" var="list">
+							<li>
+								<a href="">
+									<img src="images/bgimg.jpg" />
+									<p>昵称：${list.uname}</p>
+									<p>年龄：${list.uage}岁</p>
+									<p>身高：${list.uheight}cm</p>
+									<p> ♥${list.ucharm}</p>
+								</a>
+							</li>
+						</c:forEach>
 					</ul>
 				</div>
 				<div class="main-message1">
@@ -277,6 +262,40 @@
 		 new PopUp_api({el:'.s-jubao',html:'.ddd'});	 
 	})()
 
+    //loading全屏，加载等待效果
+    $('#searchUser').click(function(){
+        var load = new Loading();
+        load.init();
+        load.start();
+        setTimeout(function() {
+            load.stop();
+        }, 30000)
+    });
+	/*
+	保存选中的下拉框属性
+	 */
+	$(function () {
+			getSelectState("uageRange","${userAndData.uageRange}");
+			getSelectState("uedu","${userAndData.uedu}");
+			getSelectState("umerried","${userAndData.umerried}");
+			getSelectState("uhouse","${userAndData.uhouse}");
+			getSelectState("uwork","${userAndData.uwork}");
+			getSelectState("uincome","${userAndData.uincome}");
+			getSelectState("s_province","${userAndData.s_province}");
+			getSelectState("s_city","${userAndData.s_city}");
+        })
+
+	function getSelectState(selectId,optionValue){
+	    var sel = document.getElementById(selectId);
+	    for(var i=0;i<sel.length;i++){
+	        if(sel.options[i].value == optionValue){
+	            sel.selectedIndex = i;
+	            break;
+			}
+		}
+	}
+
+	//点击搜索按钮时
 	function search(){
 	    var uageRange = $("#uageRange").val();
 	    var uedu = $("#uedu").val();
@@ -285,9 +304,84 @@
 	    var uwork = $("#uwork").val();
 	    var uincome = $("#uincome").val();
 	    var s_province = $("#s_province").val();
-	    var s_city = $("#s_city").val();
-	    window.location.href="matchUser/matchByCondition.action?uageRange="+uageRange+"&uedu="+uedu+"&umerried="+umerried+"&uhouse="+uhouse+"&uwork="+uwork+"&uincome="+uincome+"&s_province="+s_province+"&s_city="+s_city;
-	}
+        var s_city = $("#s_city").val();
+        window.location.href="matchUser/matchByCondition.action?uageRange="+uageRange+"&uedu="+uedu+"&umerried="+umerried+"&uhouse="+uhouse+"&uwork="+uwork+"&uincome="+uincome+"&s_province="+s_province+"&s_city="+s_city+"&limitString=30&usex=女&condition=charm";
+    }
+
+
+    //滑至底部时加载用户数据
+    var throldHold = 400; //两次scroll事件触发之间最小的事件间隔
+
+    window.onscroll  = function(){
+
+        //主要是解决Firefox问题。Firefox你滑动的过程可能会出现加载多次，
+
+        //而其它浏览器只加载一次，所以延迟加载，导致在某段时间只执行一次
+
+        if (arguments.callee.timer) {
+            clearTimeout(arguments.callee.timer);
+        }
+        arguments.callee.timer = setTimeout(isDivScroll, throldHold);
+    }
+
+    var isDivScroll = function(){
+        var marginBot = -1;
+        if (document.compatMode === "CSS1Compat"){
+            marginBot = document.documentElement.scrollHeight - (document.documentElement.scrollTop+document.body.scrollTop)-  document.documentElement.clientHeight;
+        } else {
+            marginBot = document.body.scrollHeight - document.body.scrollTop - document.body.clientHeight;
+        }
+
+        //这里不要设置为<=0，因为IE监控不到
+        if(marginBot <= 10) {
+            var uageRange = $("#uageRange").val();
+            var uedu = $("#uedu").val();
+            var umerried = $("#umerried").val();
+            var uhouse = $("#uhouse").val();
+            var uwork = $("#uwork").val();
+            var uincome = $("#uincome").val();
+            var s_province = $("#s_province").val();
+            var s_city = $("#s_city").val();
+            //执行数据加载
+            $.ajax({
+                // url:"matchUser/MatchForPage.action?uageRange="+uageRange+"&uedu="+uedu+"&umerried="+umerried+"&uhouse="+uhouse+"&uwork="+uwork+"&uincome="+uincome+"&s_province="+s_province+"&s_city="+s_city+"&limitString=30&usex=女",
+                url:"matchUser/MatchForPage.action",
+                type: "GET",
+                contentType: "application/json; charset=utf-8",
+                data:{
+                    "uageRange":uageRange,
+                    "uedu":uedu,
+                    "umerried":umerried,
+                    "uhouse":uhouse,
+                    "uwork":uwork,
+                    "uincome":uincome,
+                    "s_province":s_province,
+                    "s_city":s_city,
+                    "limitString":'30',
+                    "usex":'女',
+                    "condition":'charm'
+                },
+                dataType: "json",
+                success:function (data) {
+                    for (var o in data){
+                        var str = "<li>"+
+                            "<a href=''>"+
+                            "<img src='images/test.png'>"+
+                            "<p class='mem-num'>昵称："+data[o].uname+"</p>"+
+                            "<p class='mem-text'>"+data[o].uage+"岁  |  "+data[o].uwork+"  |  "+data[o].uheight+"cm</p>"+
+                            "<p class='mem-text'>♥"+data[o].ucharm+"</p>"+
+                            "</a>"+
+                            "</li>";
+
+                        $(".main-member").append(str);
+                    }
+                },
+                error:function () {
+                    
+                }
+            })
+        }
+    }
 </script>
 </body>
 </html>

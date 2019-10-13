@@ -9,7 +9,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%
     String path = request.getContextPath()+"/";
-
 %>
 <!DOCTYPE html>
 <html>
@@ -21,7 +20,7 @@
 <body class="layui-layout-body" onload="updateTime()">
 <div class="layui-layout layui-layout-admin">
     <div class="layui-header">
-        <div class="layui-logo">牵手鹭岛管理后台</div>
+        <div class="layui-logo">牵手西湖管理后台</div>
 
         <ul class="layui-nav layui-layout-left">
             <li class="layui-nav-item">
@@ -34,10 +33,19 @@
             <li class="layui-nav-item">
                 <a href="javascript:;">
                     <img src="http://t.cn/RCzsdCq" class="layui-nav-img">
-                    ${sessionScope.manage.uname}
+                    ${sessionScope.manager.uname}
+                    <c:if test="${sessionScope.manager.roleid=='1'}" var="flag" scope="session">
+                        超级管理员
+                    </c:if>
+                    <c:if test="${sessionScope.manager.roleid=='2'}" var="flag" scope="session">
+                        普通管理员
+                    </c:if>
+                    <c:if test="${sessionScope.manager.roleid=='7'}" var="flag" scope="session">
+                        中级管理员
+                    </c:if>
                 </a>
             </li>
-            <li class="layui-nav-item"><a href="<%=path%>jsp/admin/index.jsp" >注销</a></li>
+            <li class="layui-nav-item"><a href="<%=path%>jsp/login_backstage.jsp" >注销</a></li>
         </ul>
     </div>
 
@@ -53,57 +61,19 @@
                                         <dl class="layui-nav-child">
                                             <c:forEach items="${mp.value}" var="ml" varStatus="xyz">
                                                 <dd><a href="<%=path%>${ml.nurl}" target="main">${ml.mname}</a></dd>
+
                                             </c:forEach>
                                         </dl>
                                     </li>
                                 </c:forEach>
-
-<%--                <li class="layui-nav-item layui-nav-itemed">--%>
-<%--                    <a class="" href="javascript:;">会员管理</a>--%>
-<%--                    <dl class="layui-nav-child">--%>
-<%--                        <dd><a href="<%=path%>jsp/admin/usermanage.jsp" target="main">普通会员管理</a></dd>--%>
-<%--                        <dd><a href="<%=path%>jsp/admin/vipusermanage.jsp" target="main">VIP会员管理</a></dd>--%>
-<%--                    </dl>--%>
-<%--                </li>--%>
-<%--                <li class="layui-nav-item">--%>
-<%--                    <a href="javascript:;">审核</a>--%>
-<%--                    <dl class="layui-nav-child">--%>
-<%--                        <dd><a href="<%=path%>jsp/admin/" target="main">会员注册审核</a></dd>--%>
-<%--                        <dd><a href="<%=path%>jsp/admin/" target="main">约会申请审核</a></dd>--%>
-<%--                    </dl>--%>
-<%--                </li>--%>
-<%--                <li class="layui-nav-item">--%>
-<%--                    <a href="javascript:;">消息推送</a>--%>
-<%--                    <dl class="layui-nav-child">--%>
-<%--                        <dd><a href="<%=path%>jsp/admin/" target="main">系统消息</a></dd>--%>
-<%--                        <dd><a href="<%=path%>jsp/admin/" target="main">活动列表</a></dd>--%>
-<%--                    </dl>--%>
-<%--                </li>--%>
-<%--                <li class="layui-nav-item">--%>
-<%--                    <a href="javascript:;">管理员</a>--%>
-<%--                    <dl class="layui-nav-child">--%>
-<%--                        <dd><a href="<%=path%>jsp/admin/adminmanage.jsp" target="main">后台管理员管理</a></dd>--%>
-<%--                        <dd><a href="<%=path%>jsp/admin/rolemanage.jsp" target="main">权限管理</a></dd>--%>
-<%--                    </dl>--%>
-<%--                </li>--%>
-<%--                <li class="layui-nav-item">--%>
-<%--                    <a href="javascript:;">数据统计</a>--%>
-<%--                    <dl class="layui-nav-child">--%>
-<%--                        <dd><a href="<%=path%>jsp/admin/increaseUserStat.jsp" target="main">新增用户统计</a></dd>--%>
-<%--                        <dd><a href="<%=path%>jsp/admin/vipBuyStat.jsp" target="main">购买会员统计</a></dd>--%>
-<%--                        <dd><a href="<%=path%>jsp/admin/userSexStat.jsp" target="main">用户性别统计</a></dd>--%>
-<%--                        <dd><a href="<%=path%>jsp/admin/userConsumeOrderStat.jsp" target="main">用户消费排行</a></dd>--%>
-<%--                        <dd><a href="<%=path%>jsp/admin/userEduStat.jsp" target="main">用户学历分布</a></dd>--%>
-<%--                        <dd><a href="<%=path%>jsp/admin/userAgeStat.jsp" target="main">用户年龄段分布</a></dd>--%>
-<%--                    </dl>--%>
-<%--                </li>--%>
             </ul>
         </div>
     </div>
 
     <div class="layui-body">
         <!-- 内容主体区域 -->
-        <iframe name="main" style="width: 100%;height: 100%;"></iframe>
+        <iframe name="main" src="<%=path%>jsp/admin/default.jsp" style="width: 100%;height: 100%;">
+        </iframe>
     </div>
 
     <div class="layui-footer">
