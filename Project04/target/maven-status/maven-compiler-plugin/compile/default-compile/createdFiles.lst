@@ -2,7 +2,6 @@ com\qsxh\dao\MatchUserDao.class
 com\qsxh\dao\StatMapper.class
 com\qsxh\dao\TestDao.class
 com\qsxh\service\IInformBiz.class
-com\qsxh\AopLog\SystemLogAspect.class
 com\qsxh\entity\TblRelation.class
 com\qsxh\dao\MessageDao.class
 com\qsxh\service\ChatService.class
@@ -38,16 +37,16 @@ com\qsxh\service\IInformPushBiz.class
 com\qsxh\utiles\FileDeleteUtil.class
 com\qsxh\entity\TreeNode.class
 com\qsxh\entity\StatEntity.class
+com\qsxh\service\AliMessagesUtil.class
 com\qsxh\dao\RoleDao.class
-com\qsxh\AopLog\SystemLog.class
 com\qsxh\entity\Menu.class
 com\qsxh\entity\Menu1.class
 com\qsxh\entity\TblChatUser.class
 com\qsxh\controller\VipUserAction.class
 com\qsxh\utiles\AlipayConfig.class
+com\qsxh\rabbitmq\MessageProducer2.class
 com\qsxh\controller\MatchUserAction.class
 com\qsxh\service\impl\MenuServiceImpl.class
-com\qsxh\AopLog\Test.class
 com\qsxh\controller\AdminAction.class
 com\qsxh\service\impl\RelationServiceImpl.class
 com\qsxh\service\impl\UserServiceImp.class
@@ -78,6 +77,7 @@ com\qsxh\service\impl\InformBizImpl.class
 com\qsxh\service\impl\RoleServiceImpl.class
 com\qsxh\controller\MyWebSocketHandler.class
 com\qsxh\controller\FileUploadAciton.class
+com\qsxh\controller\RabbitmqAction.class
 com\qsxh\entity\User.class
 com\qsxh\service\impl\AccountServiceImp.class
 com\qsxh\service\impl\StatServiceImpl.class
@@ -87,10 +87,10 @@ com\qsxh\utiles\Operation.class
 com\qsxh\service\RoleService.class
 com\qsxh\controller\RoleAction.class
 com\qsxh\service\impl\AdminBizImpl.class
+com\qsxh\rabbitmq\MessageConsumer.class
 com\qsxh\controller\MyFollowAction.class
 com\qsxh\entity\Param.class
 com\qsxh\entity\Inform.class
-com\qsxh\AopLog\Log.class
 com\qsxh\controller\AccountAction.class
 com\qsxh\dao\PersonalDao.class
 com\qsxh\utiles\UploadUtil.class

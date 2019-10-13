@@ -1,5 +1,8 @@
 package com.qsxh.controller;
 
+import com.aliyuncs.dysmsapi.model.v20170525.SendSmsResponse;
+import com.aliyuncs.exceptions.ClientException;
+import com.qsxh.service.AliMessagesUtil;
 import com.qsxh.service.UserBiz;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -39,20 +42,57 @@ public class RegAction {
     //注册 ajax
     @RequestMapping(value = "/reg.action" , method=RequestMethod.GET , produces="application/json;charset=utf-8")
 //    @Transactional(propagation= Propagation.REQUIRED,rollbackForClassName="Exception")
-    public @ResponseBody Map reg(HttpServletRequest re ,String phone, String password)
+    public @ResponseBody Map reg(HttpServletRequest request ,String phone, String password , String code)
     {
         System.out.println("手机号："+ phone + "密码:"+ password);
-        boolean flag = userBiz.insert4table(phone, password);//插入tbluser和tbldata
 
+        //从session中获取验证码
+        String regCode = request.getSession().getAttribute("regCode").toString();
+
+        //根据两个验证的结果 返回不同map
         Map<String , String> map = new HashMap<>();
-        if (flag)
+        if(regCode.equals(code))//比较用户输入验证码与发送的验证码
         {
-            map.put("msg", "success");
+            boolean flag = userBiz.insert4table(phone, password);//插入tbluser和tbldata和tblcplimit
+            if(flag)
+            {
+                request.getSession().removeAttribute("regCode");//插入成功后，移除验证码
+                map.put("msg", "success");
+            }
+            else
+            {
+                map.put("msg", "fail");
+            }
         }
         else
         {
-            map.put("msg", "fail");
+            map.put("msg", "codeWrong");
         }
+
         return map;
+    }
+
+    //发送短信验证码 并将验证码存入session
+    @RequestMapping("/getCode.action")
+    @ResponseBody
+    public String getCode(HttpServletRequest request , String phone)
+    {
+        String code = AliMessagesUtil.getRandNum(6);
+        String result = null;
+        try {
+            SendSmsResponse response = AliMessagesUtil.sendSms(phone, code);
+            if (null != response)
+            {
+                request.getSession().setAttribute("regCode" , code);
+                result = "success";//获取短信验证码成功
+            }
+            else
+            {
+                result = "fail";//获取短信验证码失败
+            }
+        } catch (ClientException e) {
+            e.printStackTrace();
+        }
+        return result;
     }
 }

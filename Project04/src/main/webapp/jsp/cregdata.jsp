@@ -53,7 +53,7 @@
             <li>
                 <p>
                     <span>会&nbsp;&nbsp;员 &nbsp;号：</span>
-                    0001
+                    <input type="text" name="userid" id="userid" value="<%=request.getParameter("userid")%>" readonly/>
                 </p>
                 <p>
                     <span>身&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;高：</span>

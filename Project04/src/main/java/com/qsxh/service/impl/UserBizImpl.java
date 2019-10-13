@@ -4,6 +4,7 @@ import com.qsxh.dao.UserDao;
 
 import com.qsxh.entity.User;
 import com.qsxh.service.UserBiz;
+import com.qsxh.utiles.MD5;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -72,6 +73,7 @@ public class UserBizImpl implements UserBiz {
         }
     }
     /*=================wzq=================*/
+
     //账号重复验证
     @Override
     public boolean checkUserid(String userid) {
@@ -100,7 +102,10 @@ public class UserBizImpl implements UserBiz {
         Integer num2 = 0;
         Integer num3 = 0;
         Integer num4 = 0;
-        num = userDao.reg(userid, upass , regdate);
+        //md5加密
+        String md5pass = MD5.getMD5(upass);
+
+        num = userDao.reg(userid, md5pass , regdate);
         num2 = userDao.addHisData(userid);//测试，让第二个dao层插入失败
 //        num3 = userDao.addHisHabit(userid);//暂时先不插入，还没确定这个表的结构
         num4 = userDao.addHisCplimit(userid);

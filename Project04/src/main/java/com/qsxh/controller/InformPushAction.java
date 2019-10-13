@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -32,17 +33,6 @@ public class InformPushAction {
 
         System.out.println("查询条件："+"title:"+inform.getItitle()+"type:"+inform.getItype()+"begindate:"+inform.getBegindate()+"enddate:"+inform.getEnddate());
 
-//        if(null != inform.getBegindate() && !("").equals(inform.getBegindate()) && "" != inform.getBegindate())
-//        {
-//            inform.setBegindate(inform.getBegindate()+" 00:00:00");
-//        }
-//
-//        if(null != inform.getEnddate() && !("").equals(inform.getEnddate()) && "" != inform.getEnddate())
-//        {
-//            inform.setEnddate(inform.getEnddate()+" 23:59:59");
-//        }
-
-
         Map<String , Object> map = new HashMap<>();
         map = informPushBiz.informList(inform);
 
@@ -52,12 +42,11 @@ public class InformPushAction {
     //新增推送
     @RequestMapping(value="/addPush.action")
     @ResponseBody
-    public String addPush(Inform inform)
-    {
+    public String addPush(Inform inform) throws IOException {
         System.out.println("新增推送:"+"title:"+inform.getItitle()+"context:"+inform.getIcontext()+"type:"+inform.getItype()+"toid:"+inform.getItoid()+"url:"+inform.getIurl());
-        //1、插入数据库
-        //2、实时推送
-        return "success";
+
+        String result = informPushBiz.addPush(inform);
+        return result;
     }
 
     //消息详情

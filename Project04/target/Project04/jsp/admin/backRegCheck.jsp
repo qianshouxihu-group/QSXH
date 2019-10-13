@@ -75,7 +75,15 @@
     <%--=================================资料弹窗=================================--%>
 
 <div style="display: none;padding: 20px" id="detailsDiv" >
-    <form class="layui-form " action="" lay-filter="dataFrm" id="dataFrm">
+    <form class="layui-form " action="" lay-filter="dataFrm" id="dataFrm" >
+
+        <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label">头像:</label>
+                <div class="layui-input-inline">
+                    <img id="img" style="width: 250px ; height: 350px;">
+                </div>
+            </div>
         <div class="layui-form-item">
             <div class="layui-inline">
                 <label class="layui-form-label">ID:</label>
@@ -447,7 +455,8 @@
                             //清空表单数据
                             // $("#dataFrm")[0].reset();
                             form.val("dataFrm",redata);
-                            // url="userBase/addUser.action";
+                            <%--$('#img').attr("src", <%=path%>+redata.uimgurl)--%>
+                            $('#img').attr("src", "<%=path%>images/1.jpg")
                         }
                     });
 

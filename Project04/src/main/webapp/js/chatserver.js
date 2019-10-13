@@ -9,8 +9,8 @@
 			serverurl = url;
 
 			//获取服务端地址
-			ws = "ws://" + serverurl + "/ws";
-
+			ws = "ws://" + serverurl + "ws";
+alert(ws);
 			//判断当前浏览器是否支持WebSocket
 			if ('WebSocket' in window) {
 				websocket = new WebSocket(ws);
@@ -65,7 +65,7 @@
 
 		//处理接收到的数据
 		function handleReceiveMessage(message) {
-		    // alert(message);
+		    alert(message);
 			messages = JSON.parse(message);
 
 			//判断是否为申请通知

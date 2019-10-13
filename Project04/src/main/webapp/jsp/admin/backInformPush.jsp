@@ -10,6 +10,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%
     String path = request.getContextPath()+"/";
+    String chatPath = request.getServerName()+":"+request.getServerPort()+path;
 %>
 <!DOCTYPE html>
 <html>
@@ -19,6 +20,7 @@
     <script  src="<%=path%>js/jquery.min.js" type="text/javascript"></script>
     <link rel="stylesheet" href="<%=path%>/layui/css/layui.css" media="all">
     <script src="<%=path%>/layui/layui.js"></script>
+    <script src="<%=path%>js/chatserver.js"></script>
 </head>
 <body>
 
@@ -84,14 +86,14 @@
             <div class="layui-inline">
                 <label class="layui-form-label">标题:</label>
                 <div class="layui-input-inline">
-                    <input type="text" name="ititle" id="ititle2" autocomplete="off"<%--autocomplete自动完成--%>
-                           class="layui-input">
+                    <input type="text" name="ititle" id="ititle2" autocomplete="off"
+                           lay-verify="notnull" class="layui-input">
                 </div>
             </div>
             <div class="layui-inline">
                 <label class="layui-form-label">类型:</label>
                 <div class="layui-input-inline">
-                    <select name="itype" id="itype2">
+                    <select name="itype" id="itype2" >
                         <option value="81">系统消息</option>
                         <option value="82">活动消息</option>
                     </select>
@@ -103,7 +105,7 @@
                 <label class="layui-form-label">内容:</label>
                 <div class="layui-input-inline">
                     <textarea cols="25" rows="5" name="icontext" id="icontext2" autocomplete="off"
-                              class="layui-input"></textarea>
+                              lay-verify="notnull" class="layui-input"></textarea>
                 </div>
             </div>
         </div>
@@ -200,6 +202,10 @@
 </script>
 
 <script>
+
+    <%-- 建立与webSocket连接 --%>
+    getConfig("123" , "<%=chatPath%>");
+
 /*===========================================初始化查询条件与格式化日期======================================*/
     layui.use('form', function(){
         var form = layui.form; //只有执行了这一步，部分表单元素才会自动修饰成功
@@ -381,6 +387,14 @@
                 }
             });
         }
+        //非空表单验证
+        form.verify({
+            notnull: function(value){
+                if(value.length < 5){
+                    return '内容至少5个字符！';
+                }
+            }
+        });
         //推送提交
         form.on("submit(doSubmit)",function(obj){
             //序列化表单数据
@@ -389,6 +403,7 @@
         });
         //ajax发送推送数据
         function pushSubmit(params) {
+            //通过ajax传到后台  进行插入数据库操作（ajax-->action-->biz-->生产者-->消费者-->dao）
             $.ajax({
                 async: true,
                 type: "post",
@@ -416,7 +431,9 @@
                 error: function (dat) {
                     layer.msg('断开');
                 }
-            })
+            });
+            //通过webSockect传到后台  完成实时推送 (该websocket线路发送请求到服务器websocket-->发送推送到所有websocket线路）
+            sendMessage($("#itoid2").val() , "userid" , "push");//（内容，接收人id，类型）
         }
 
     });

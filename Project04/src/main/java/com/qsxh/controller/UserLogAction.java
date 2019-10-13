@@ -4,6 +4,7 @@ import com.opensymphony.xwork2.ActionSupport;
 import com.qsxh.entity.Menu;
 import com.qsxh.entity.User;
 import com.qsxh.service.*;
+import com.qsxh.utiles.MD5;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
@@ -44,7 +45,10 @@ public class UserLogAction extends ActionSupport {
     @RequestMapping("/login")
     public ModelAndView managerLogin(HttpServletRequest request, String uname, String password){
         ModelAndView mv = new ModelAndView();
-        User user = us.userLogin(uname,password);
+        //md5加密
+        String md5pass = MD5.getMD5(password);
+
+        User user = us.userLogin(uname,md5pass);
         HttpSession session = request.getSession();
 
         System.out.println("账号名"+uname+"   "+"密码"+password);

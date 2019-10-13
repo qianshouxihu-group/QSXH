@@ -1,6 +1,7 @@
 package com.qsxh.controller;
 
 import com.google.gson.Gson;
+import com.qsxh.dao.InformDao;
 import com.qsxh.entity.TblChatUser;
 import com.qsxh.service.ChatService;
 import org.springframework.stereotype.Component;
@@ -10,6 +11,7 @@ import javax.annotation.Resource;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 
 @Component
@@ -17,6 +19,9 @@ public class MyWebSocketHandler implements WebSocketHandler{
 
     @Resource
     private ChatService chatService;
+    @Resource
+    private InformDao informDao;
+    private List<String> userids;
 
     //当MyWebSocketHandler类被加载时就会创建该Map，随类而生
     public static final Map<String, WebSocketSession> userSocketSessionMap;
@@ -55,13 +60,39 @@ public class MyWebSocketHandler implements WebSocketHandler{
 
         //得到Socket通道中的数据并转化为Message对象
         TblChatUser chat = new Gson().fromJson(message, TblChatUser.class);
-
+        String content = chat.getContent();
         String toid = chat.getToid();
         String type = chat.getType();
 
         switch (type){
-            case "text":
-
+            case "push":
+                //根据content(itoid)查询所有用户id
+//                switch (content)
+//                {
+//                    case "all":
+//                        userids = informDao.findAll("ol");
+//                        break;
+//                    case "allMan":
+//                        userids = informDao.findAllMan("ol");
+//                        break;
+//                    case "allWomen":
+//                        userids = informDao.findAllWomen("ol");
+//                        break;
+//                    case "allUser":
+//                        userids = informDao.findAllUser("ol");
+//                        break;
+//                    case "allVip":
+//                        userids = informDao.findAllVip("ol");
+//                        break;
+//                    default:
+//                        break;
+//                }
+                TextMessage msg = new TextMessage("test");//json格式
+//                for (String userid : userids)
+//                {
+                    //for循环发送实时消息
+                    sendMessageToUser("123" , msg);
+//                }
                 break;
             case "img":
 
@@ -85,7 +116,7 @@ public class MyWebSocketHandler implements WebSocketHandler{
         TextMessage tm = new TextMessage(message);
 
         //发送Socket信息
-        sendMessageToUser(toid, tm);
+//        sendMessageToUser(toid, tm);
     }
 
     public void handleTransportError(WebSocketSession webSocketSession, Throwable throwable) throws Exception {
@@ -140,4 +171,6 @@ public class MyWebSocketHandler implements WebSocketHandler{
 
         }
     }
+
+
 }
