@@ -63,35 +63,37 @@ public class MyWebSocketAction implements WebSocketHandler{
 
         String toid = chatMessage.getToid();
         String type = chatMessage.getType();
+        String toType = chatMessage.getContent();
 
         if (type.equals("push")){
-        //根据toid（类型）查询所有用户id
-        switch (toid)
-        {
-            case "all":
-                userids = informDao.findAll("ol");
-                break;
-            case "allMan":
-                userids = informDao.findAllMan("ol");
-                break;
-            case "allWomen":
-                userids = informDao.findAllWomen("ol");
-                break;
-            case "allUser":
-                userids = informDao.findAllUser("ol");
-                break;
-            case "allVip":
-                userids = informDao.findAllVip("ol");
-                break;
-            default:
-                break;
-        }
-        TextMessage msg = new TextMessage("test");//json格式
-        for (String userid : userids)
-        {
-            //for循环发送实时消息
-            sendMessageToUser("123" , msg);
-        }
+            System.out.println("websocket执行系统推送");
+            //根据toid（类型）查询所有用户id
+            switch (toType)
+            {
+                case "all":
+                    userids = informDao.findAll("ol");
+                    break;
+                case "allMan":
+                    userids = informDao.findAllMan("ol");
+                    break;
+                case "allWomen":
+                    userids = informDao.findAllWomen("ol");
+                    break;
+                case "allUser":
+                    userids = informDao.findAllUser("ol");
+                    break;
+                case "allVip":
+                    userids = informDao.findAllVip("ol");
+                    break;
+                default:
+                    break;
+            }
+            TextMessage msg = new TextMessage("newPush");//json格式
+            for (String userid : userids)
+            {
+                //for循环发送实时消息
+                sendMessageToUser(userid , msg);
+            }
         }
         else {
             //对消息进行处理
@@ -102,8 +104,6 @@ public class MyWebSocketAction implements WebSocketHandler{
             //发送Socket信息
             sendMessageToUser(toid, tm);
         }
-
-
 
     }
 

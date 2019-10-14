@@ -5,6 +5,7 @@ import com.github.pagehelper.PageInfo;
 import com.qsxh.entity.Dating;
 import com.qsxh.entity.Inform;
 import com.qsxh.entity.Message;
+import com.qsxh.entity.User;
 import com.qsxh.service.IInformBiz;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 //我的消息功能
@@ -26,11 +28,12 @@ public class InformAction {
     @ResponseBody
     //系统消息
     @RequestMapping("/systemInform.action")
-    public ModelAndView systemInform(@RequestParam(value = "page" , defaultValue = "1") Integer page)
+    public ModelAndView systemInform(HttpServletRequest request , @RequestParam(value = "page" , defaultValue = "1") Integer page)
     {
         System.out.println("页数："+page);
         PageHelper.startPage(page , 3);//(当前页，每页条数)
-        List<Inform> list = informBiz.systemInform("1001");//这边的user需要从session里面取~~~~~~~~~~~~~~~~~
+        User user = (User) request.getSession().getAttribute("user");
+        List<Inform> list = informBiz.systemInform(user.getUserid());//这边的user需要从session里面取~~~~~~~~~~~~~~~~~
 
         ModelAndView mav = new ModelAndView();
         //使用PageInfo包装数据
@@ -43,10 +46,11 @@ public class InformAction {
     }
     //活动消息
     @RequestMapping("/activeInform.action")
-    public ModelAndView activeInform(@RequestParam(value = "page" , defaultValue = "1") Integer page)
+    public ModelAndView activeInform(HttpServletRequest request , @RequestParam(value = "page" , defaultValue = "1") Integer page)
     {
         PageHelper.startPage(page , 3);//(当前页，每页条数)
-        List<Inform> list = informBiz.activeInform("1001");//这边的user需要从session里面取~~~~~~~~~~~~~~~~~
+        User user = (User) request.getSession().getAttribute("user");
+        List<Inform> list = informBiz.activeInform(user.getUserid());//这边的user需要从session里面取~~~~~~~~~~~~~~~~~
 
         ModelAndView mav = new ModelAndView();
         //使用PageInfo包装数据
@@ -59,10 +63,11 @@ public class InformAction {
     }
     //我的留言
     @RequestMapping("/messageInform.action")
-    public ModelAndView messageInform(@RequestParam(value = "page" , defaultValue = "1") Integer page)
+    public ModelAndView messageInform(HttpServletRequest request , @RequestParam(value = "page" , defaultValue = "1") Integer page)
     {
         PageHelper.startPage(page , 3);//(当前页，每页条数)
-        List<Message> list = informBiz.messageInform("1001");//这边的user需要从session里面取~~~~~~~~~~~~~~~~~
+        User user = (User) request.getSession().getAttribute("user");
+        List<Message> list = informBiz.messageInform(user.getUserid());//这边的user需要从session里面取~~~~~~~~~~~~~~~~~
 
         ModelAndView mav = new ModelAndView();
         //使用PageInfo包装数据
@@ -75,10 +80,11 @@ public class InformAction {
     }
     //我的约会
     @RequestMapping("/datingInform.action")
-    public ModelAndView datingInform(@RequestParam(value = "page" , defaultValue = "1") Integer page)
+    public ModelAndView datingInform(HttpServletRequest request , @RequestParam(value = "page" , defaultValue = "1") Integer page)
     {
         PageHelper.startPage(page , 3);//(当前页，每页条数)
-        List<Dating> list = informBiz.datingInform("1001");//这边的user需要从session里面取~~~~~~~~~~~~~~~~~
+        User user = (User) request.getSession().getAttribute("user");
+        List<Dating> list = informBiz.datingInform(user.getUserid());//这边的user需要从session里面取~~~~~~~~~~~~~~~~~
 
         ModelAndView mav = new ModelAndView();
         //使用PageInfo包装数据

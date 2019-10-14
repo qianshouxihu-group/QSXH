@@ -1,13 +1,14 @@
 package com.qsxh.controller;
 
-import com.mysql.cj.Session;
 import com.qsxh.entity.Dating;
+import com.qsxh.entity.User;
 import com.qsxh.service.IDatingBiz;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 
 //约会控制层
 @Controller
@@ -19,10 +20,12 @@ public class DatingAction {
     //和TA约会
     @RequestMapping("/dating.action")
     @ResponseBody
-    public String dating(Dating dating)
+    public String dating(HttpServletRequest request , Dating dating)
     {
         System.out.println("进入约会action");
         //session取userid，放入dating
+        User user = (User) request.getSession().getAttribute("user");
+        dating.setDfromid(user.getUserid());
 
         System.out.println(dating.getDdate()+dating.getDtime()+dating.getDaddress()+dating.getDcontext()+
         dating.getDpay());

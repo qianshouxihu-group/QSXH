@@ -55,7 +55,7 @@ public class InformPushBizImpl implements IInformPushBiz {
     public String addPush(Inform inform) {
 
         //获取系统时间，作为消息推送时间
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yy-MM-dd HH:mm:ss");
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         String now = dateFormat.format(new Date());
         inform.setItime(now);
 

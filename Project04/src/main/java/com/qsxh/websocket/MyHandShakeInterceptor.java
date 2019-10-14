@@ -26,11 +26,18 @@ public class MyHandShakeInterceptor implements HandshakeInterceptor {
 
             // 标记用户
             User tblUser = (User) session.getAttribute("user");
+            User manager = (User) session.getAttribute("manager");
 
             if(tblUser !=null){
                 map.put("wsid", tblUser.getUserid());//为服务器创建WebSocketSession做准备
                 System.out.println("用户id："+ tblUser.getUserid()+" 被加入");
-            }else{
+            }
+            else if(null != manager)
+            {
+                map.put("wsid", manager.getUserid());//为服务器创建WebSocketSession做准备
+                System.out.println("用户id："+ manager.getUserid()+" 被加入");
+            }
+            else{
                 System.out.println("user为空");
                 return false;
             }

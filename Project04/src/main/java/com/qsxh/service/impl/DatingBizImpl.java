@@ -15,6 +15,7 @@ public class DatingBizImpl implements IDatingBiz {
     //和TA约会
     @Override
     public String dating(Dating dating) {
+
         Integer num = datingDao.dating(dating);
         if (num > 0)
         {
