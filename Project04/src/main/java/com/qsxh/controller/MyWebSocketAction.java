@@ -1,6 +1,7 @@
 package com.qsxh.controller;
 
 import com.google.gson.Gson;
+import com.qsxh.dao.InformDao;
 import com.qsxh.entity.TblChatMessage;
 import com.qsxh.service.ChatService;
 import org.springframework.stereotype.Component;
@@ -10,6 +11,7 @@ import javax.annotation.Resource;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 
 @Component
@@ -17,6 +19,10 @@ public class MyWebSocketAction implements WebSocketHandler{
 
     @Resource
     private ChatService chatService;
+
+    @Resource
+    private InformDao informDao;
+    private List<String> userids;
 
     //当MyWebSocketHandler类被加载时就会创建该Map，随类而生
     public static final Map<String, WebSocketSession> userSocketSessionMap;
@@ -56,15 +62,49 @@ public class MyWebSocketAction implements WebSocketHandler{
         TblChatMessage chatMessage = new Gson().fromJson(message, TblChatMessage.class);
 
         String toid = chatMessage.getToid();
+        String type = chatMessage.getType();
 
-        //对消息进行处理
-        String resultMessage = chatService.chatControl(chatMessage);
+        if (type.equals("push")){
+        //根据toid（类型）查询所有用户id
+        switch (toid)
+        {
+            case "all":
+                userids = informDao.findAll("ol");
+                break;
+            case "allMan":
+                userids = informDao.findAllMan("ol");
+                break;
+            case "allWomen":
+                userids = informDao.findAllWomen("ol");
+                break;
+            case "allUser":
+                userids = informDao.findAllUser("ol");
+                break;
+            case "allVip":
+                userids = informDao.findAllVip("ol");
+                break;
+            default:
+                break;
+        }
+        TextMessage msg = new TextMessage("test");//json格式
+        for (String userid : userids)
+        {
+            //for循环发送实时消息
+            sendMessageToUser("123" , msg);
+        }
+        }
+        else {
+            //对消息进行处理
+            String resultMessage = chatService.chatControl(chatMessage);
+            //封装处理后的消息
+            TextMessage tm = new TextMessage(resultMessage);
 
-        //封装处理后的消息
-        TextMessage tm = new TextMessage(resultMessage);
+            //发送Socket信息
+            sendMessageToUser(toid, tm);
+        }
 
-        //发送Socket信息
-        sendMessageToUser(toid, tm);
+
+
     }
 
     public void handleTransportError(WebSocketSession webSocketSession, Throwable throwable) throws Exception {

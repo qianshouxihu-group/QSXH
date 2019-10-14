@@ -164,7 +164,7 @@
     </select>
 
     <update id="userPassReset" parameterType="java.lang.String" >
-        update tbluser set upass='123456' where userid=#{userid}
+        update tbluser set upass='8715a4f66d9eeddba20b5453edc41bd7' where userid=#{userid}
     </update>
 
 

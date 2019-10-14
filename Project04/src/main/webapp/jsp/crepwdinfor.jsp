@@ -9,6 +9,10 @@
 
     <!--[if IE 8]><style>.ie8 .alert-circle,.ie8 .alert-footer{display:none}.ie8 .alert-box{padding-top:75px}.ie8 .alert-sec-text{top:45px}</style><![endif]-->
     <title></title>
+    <link type="text/css" rel="stylesheet" href="css/chat.css"/>
+    <script type="text/javascript" src="js/chatserver.js" ></script>
+    <script type="text/javascript" src="js/chat.js" ></script>
+
     <style>
         body {
             margin: 0;
@@ -121,7 +125,7 @@
             <p>修改密码成功</p>
             <p>需请重新登录！</p>
         </div>
-        <a id="js-alert-btn" class="alert-btn" href="https://www.baidu.com">立即前往登录</a>
+        <a id="js-alert-btn" class="alert-btn" href="<%=basePath%>testManager/outLogin.action">立即前往登录</a>
     </div>
 </div>
 
@@ -135,7 +139,7 @@
         document.getElementById("js-sec-text").innerHTML = t,
             setInterval(function() {
                     if (0 == t){
-                        location.href="https://www.baidu.com";
+                        location.href="<%=basePath%>testManager/outLogin.action";
                     }else {
                         t -= 1,
                             document.getElementById("js-sec-text").innerHTML = t;

@@ -6,6 +6,7 @@ import com.qsxh.dao.UserDao;
 import com.qsxh.entity.Account;
 import com.qsxh.entity.TblRelation;
 import com.qsxh.entity.TblUser;
+import com.qsxh.entity.User;
 import com.qsxh.service.RelationService;
 import org.springframework.stereotype.Service;
 
@@ -35,9 +36,14 @@ public class RelationServiceImpl implements RelationService {
 
         TblRelation result = relationDao.findRelation(relation);
 
+
         if (result==null){
             relationDao.addRelation(relation);
+            result = relationDao.findRelation(relation);
         }
+
+        User user = userDao.getUser(relation.getFtoid());
+        result.setUonline(user.getUonline());
 
         return result;
     }

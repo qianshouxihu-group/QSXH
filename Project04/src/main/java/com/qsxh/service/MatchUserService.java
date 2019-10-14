@@ -15,7 +15,7 @@ public interface MatchUserService {
     public List<UserAndData> findUserByTime(UserAndData userAndData);
 
     //智能匹配
-    public List<UserAndData> SmartUser(String id);
+    public List<UserAndData> SmartUser(String id, String roleid);
 
     //分页
     public List<UserAndData> Page(UserAndData userAndData);

@@ -47,14 +47,14 @@
 </div>
 <div class="nav-box">
     <div class="nav">
-        <a href="">网站首页</a>
-        <a href="">了解我们</a>
-        <a href="">条件搜索</a>
-        <a href="">智能匹配</a>
-        <a href="">会员服务 </a>
-        <a href="">活动专题 </a>
-        <a href="">我的消息 &nbsp; <div class="my-notice">12</div></a>
-        <a href="">个人中心</a>
+        <a href="matchUser/matchByTime.action?limitString=12">网站首页</a>
+        <a href="jsp/clientAboutUs.jsp">了解我们</a>
+        <a id="searchUser" href="matchUser/smartMatch.action?limitString=30&usex=${user.usex}&condition=charm">条件搜索</a>
+        <a href="matchUser/smartUser.action?id=${sessionScope.user.userid}&roleid=${sessionScope.user.roleid}">智能匹配</a>
+        <a href="jsp/beVip.jsp">会员服务 </a>
+        <a href="jsp/clientActiveList.jsp">活动专题 </a>
+        <a href="informManager/systemInform.action">我的消息 <div class="my-notice">${countList.get(0)+countList.get(1)+countList.get(2)+countList.get(3)}</div></a>
+        <a href="personalManager/aboutBasic.action">个人中心</a>
     </div>
 </div>
 <div class="main">
@@ -432,9 +432,6 @@
 </script>
 </body>
 
-<script>
-
-</script>
 
 </html>
 

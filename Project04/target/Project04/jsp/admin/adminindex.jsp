@@ -45,7 +45,7 @@
                     </c:if>
                 </a>
             </li>
-            <li class="layui-nav-item"><a href="<%=path%>jsp/login_backstage.jsp" >注销</a></li>
+            <li class="layui-nav-item"><a href="<%=path%>testManager/outLogin2.action" onclick=confirm("确定注销？")>注销</a></li>
         </ul>
     </div>
 

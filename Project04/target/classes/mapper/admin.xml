@@ -4,6 +4,11 @@
 
 <mapper namespace="com.qsxh.dao.AdminDao">
 
+
+    <!--    根据id获得角色id-->
+    <select id="getRoleidFromId" parameterType="java.lang.String"  resultType="java.lang.Integer">
+        select roleid from tbluser where userid=#{userid}
+    </select>
     <!--    管理员列表-->
     <select id="findAdminList" parameterType="com.qsxh.entity.User" resultType="com.qsxh.entity.User">
         select u1.*,u2.* from tbluser u1,tblrole u2 where u1.roleid in (1,2,7) and u1.ustate='91'and u1.roleid=u2.roleid
@@ -22,7 +27,7 @@
 
 <!--重置密码-->
     <update id="adminPassReset" parameterType="java.lang.String" >
-        update tbluser set upass='123456' where userid=#{userid}
+        update tbluser set upass='8715a4f66d9eeddba20b5453edc41bd7' where userid=#{userid}
     </update>
 
 

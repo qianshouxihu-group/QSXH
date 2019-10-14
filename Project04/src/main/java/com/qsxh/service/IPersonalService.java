@@ -46,4 +46,7 @@ public interface IPersonalService {
     public boolean updateBasicWithoutAddress(PersonalData personalData);
     //不带地址的基础资料更新
     public boolean updateCpWithoutAddress(PersonalData personalData);
+    //修改用户密码
+    public boolean updateUserPass(@Param("upass") String upass,@Param("userid")String userid);
+
 }

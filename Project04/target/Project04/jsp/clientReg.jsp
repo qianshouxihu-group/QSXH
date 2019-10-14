@@ -247,8 +247,16 @@
     <div class="top">
 
         <div class="top-right">
-            <a href="">注册</a> |
-            <a href="">登录</a>
+            <c:choose>
+                <c:when test="${ sessionScope.user!=null }">
+                    <a>${ sessionScope.user.uname },欢迎您！</a>|
+                    <a href="testManager/outLogin.action">注销</a>
+                </c:when>
+                <c:otherwise>
+                    <a href="<%=path%>/jsp/clientReg.jsp">注册</a> |
+                    <a href="<%=path%>/jsp/login.jsp">登录</a>
+                </c:otherwise>
+            </c:choose>
         </div>
     </div>
     <div class="top-ban">
@@ -260,14 +268,14 @@
 </div>
 <div class="nav-box">
     <div class="nav">
-        <a href="">网站首页</a>
-        <a href="">条件搜索</a>
-        <a href="">智能匹配</a>
-        <a href="">我的关注</a>
-        <a href="">个人中心</a>
-        <a href="">我的消息</a>
-        <a href="">会员服务</a>
-        <a href="">活动专题</a>
+        <a href="<%=path%>/jsp/clientReg.jsp">网站首页</a>
+        <a href="<%=path%>/jsp/clientReg.jsp">条件搜索</a>
+        <a href="<%=path%>/jsp/clientReg.jsp">智能匹配</a>
+        <a href="<%=path%>/jsp/clientReg.jsp">我的关注</a>
+        <a href="<%=path%>/jsp/clientReg.jsp">个人中心</a>
+        <a href="<%=path%>/jsp/clientReg.jsp">我的消息</a>
+        <a href="<%=path%>/jsp/clientReg.jsp">会员服务</a>
+        <a href="<%=path%>/jsp/clientReg.jsp">活动专题</a>
     </div>
 </div>
 <div class="main">

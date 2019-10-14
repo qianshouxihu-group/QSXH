@@ -14,6 +14,7 @@
     <link type="image/x-icon" rel=icon href="images/icon.png"/>
     <link type="text/css" rel="stylesheet" href="css/style.css"/>
     <script src="js/jquery-1.8.3.min.js"></script>
+    <link type="text/css" rel="stylesheet" href="css/chat.css"/>
     <style>
         .main-log{ height: 280px; width: 350px; margin-bottom: 30px; background: #fff;}
         .main-logbox{ width: 300px;}
@@ -35,8 +36,8 @@
                     <a href="testManager/outLogin.action">注销</a>
                 </c:when>
                 <c:otherwise>
-                    <a href="">注册</a> |
-                    <a href="">登录</a>
+                    <a href="<%=path%>/jsp/clientReg.jsp">注册</a> |
+                    <a href="<%=path%>/jsp/login.jsp">登录</a>
                 </c:otherwise>
             </c:choose>
         </div>

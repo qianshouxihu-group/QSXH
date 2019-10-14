@@ -1,4 +1,6 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java"
+         pageEncoding="utf-8" import ="java.util.*,com.qsxh.entity.*"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%
     String path = request.getContextPath();
     String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
@@ -22,8 +24,16 @@
 
         </div>
         <div class="top-right">
-            <a href="">注册</a> |
-            <a href="">登录</a>
+            <c:choose>
+                <c:when test="${ sessionScope.user!=null }">
+                    <a>${ sessionScope.user.uname },欢迎您！</a>|
+                    <a href="testManager/outLogin.action">注销</a>
+                </c:when>
+                <c:otherwise>
+                    <a href="<%=path%>/jsp/clientReg.jsp">注册</a> |
+                    <a href="<%=path%>/jsp/login.jsp">登录</a>
+                </c:otherwise>
+            </c:choose>
         </div>
     </div>
     <div class="top-ban">
@@ -35,14 +45,14 @@
 </div>
 <div class="nav-box">
     <div class="nav">
-        <a href="">网站首页</a>
-        <a href="">了解我们</a>
-        <a href="">条件搜索</a>
-        <a href="">智能匹配</a>
-        <a href="">会员服务 </a>
-        <a href="">活动专题 </a>
-        <a href="">我的消息 </a>
-        <a href="">个人中心</a>
+        <a href="matchUser/matchByTime.action?limitString=12">网站首页</a>
+        <a href="jsp/clientAboutUs.jsp">了解我们</a>
+        <a id="searchUser" href="matchUser/smartMatch.action?limitString=30&usex=${user.usex}&condition=charm">条件搜索</a>
+        <a href="matchUser/smartUser.action?id=${sessionScope.user.userid}&roleid=${sessionScope.user.roleid}">智能匹配</a>
+        <a href="jsp/beVip.jsp">会员服务 </a>
+        <a href="jsp/clientActiveList.jsp">活动专题 </a>
+        <a href="<%=path%>/informManager/systemInform.action">我的消息 <div class="my-notice">${countList.get(0)+countList.get(1)+countList.get(2)+countList.get(3)}</div></a>
+        <a href="personalManager/aboutBasic.action">个人中心</a>
     </div>
 </div>
 
@@ -51,13 +61,18 @@
         <div class="main-left"><!--left-->
             <div class="s-address">当前位置：Ta 的主页 </div>
             <div class="s-top">
+
                 <div class="preview">
-                    <div id="vertical" class="bigImg"><img src="images/bgimg.jpg" width="300" height="300" alt="" id="midimg" /></div>
+                    <div id="vertical" class="bigImg"><img src="${requestScope.myPhotoList[0].imgurl}" width="300" height="300" alt="" id="midimg" /></div>
+
                     <div class="smallImg">
+
                         <div class="scrollbutton smallImgUp disabled"></div>
                         <div id="imageMenu">
                             <ul>
-                                <li id="onlickImg"><img src="images/test.png" width="60" height="60" /></li>
+                                <c:forEach items="${requestScope.myPhotoList}" var="myplist">
+                                    <li id="onlickImg"><img src="${myplist.imgurl}" width="68" height="68" /></li>
+                                </c:forEach>
                             </ul>
                         </div>
                         <div class="scrollbutton smallImgDown"></div>
@@ -65,47 +80,46 @@
                 </div>
                 <div class="s-minfor">
                     <div class="tit">
-                        <div class="s-mname">菇凉有点温柔</div>
+                        <div class="s-mname">${basicInfor.uname} </div>
                     </div>
                     <ul class="infor">
                         <li>
-                            <p>性&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;别：<span>女</span></p>
-                            <p>学&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;历：<span>大专</span></p>
+                            <p>性&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;别：<span>${basicInfor.usex} </span></p>
+                            <p>学&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;历：<span>${basicInfor.uedu}</span></p>
                         </li>
                         <li>
-                            <p>年&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;龄：<span>29</span></p>
-                            <p>身&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;高：<span>165cm</span></p>
+                            <p>年&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;龄：<span>${basicInfor.uage} </span></p>
+                            <p>身&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;高：<span>${basicInfor.uheight} cm</span></p>
                         </li>
                         <li>
-                            <p>星&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;座：<span>龙</span></p>
-                            <p>婚姻状况：<span>未婚</span></p>
+                            <p>星&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;座：<span>${basicInfor.constellation}</span></p>
+                            <p>婚姻状况：<span>${basicInfor.umerried}</span></p>
                         </li>
                         <li>
-                            <p>血&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;型：<span> O 型</span></p>
+                            <p>血&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;型：<span> ${basicInfor.ublood} </span></p>
                         </li>
                     </ul>
                     <ul class="infor1">
                         <li>
-                            <p style="width:300px">月&nbsp;&nbsp;收&nbsp;&nbsp;&nbsp;入：<span>100000元-100000</span> </p>
-                            <p>所&nbsp;&nbsp;在&nbsp;&nbsp;&nbsp;地：<span></span> </p>
+                            <p style="width:300px">月&nbsp;&nbsp;收&nbsp;&nbsp;&nbsp;入：<span>${basicInfor.uincome} </span> </p>
+                            <p>所&nbsp;&nbsp;在&nbsp;&nbsp;&nbsp;地：<span>${basicInfor.s_province}&nbsp;${basicInfor.s_city}</span> </p>
                         </li>
                     </ul>
+
                     <div class="s-introduce1">
-                        <p>由于您的资料不全，无法查看更多信息</p>
-                        <p><a href="">请前往个人中心</a></p>
-                        <p style="color: #eb6877;">安全设置——实名认证</p>
+                        <p>由于您还不是会员，无法查看更多信息</p>
+                        <p><a href="">请前往首页</a></p>
+                        <p style="color: #eb6877;">首页——会员服务</p>
                     </div>
                 </div>
             </div>
-
-
         </div><!--left-->
         <div class="main-right"><!--right-->
             <div class="main-log">
-                <div class="tit">菇凉有点温柔</div>
-                <div class="mem-pic"><img src="images/bgimg.jpg"/></div>
+                <div class="tit">${mineData.uname}</div>
+                <div class="mem-pic"><img src="${mineData.imgurl}"/></div>
                 <div class="main-pass-text" style="margin-top: 25px;">
-                    <a href="" class="entermem" style="color: #fff;">进入个人中心</a>
+                    <a href="" class="entermem" style="color: #fff;">进入我的主页</a>
                     <a href="" class="forget">忘记密码 ></a>
                 </div>
             </div>
@@ -113,48 +127,17 @@
             <div class="main-message">
                 <div class="tit">最新会员推荐</div>
                 <ul class="member-list">
-                    <li>
-                        <img src="images/bgimg.jpg" />
-                        <p>会员号：100001</p>
-                        <p>婚况：未      年龄：26</p>
-                        <p>学历：大专   身高：160cm</p>
-                        <p> 职业：CEO   房产：有房</p>
-                    </li>
-                    <li>
-                        <img src="images/bgimg.jpg" />
-                        <p>会员号：100001</p>
-                        <p>婚况：未      年龄：26</p>
-                        <p>学历：大专   身高：160cm</p>
-                        <p> 职业：CEO   房产：有房</p>
-                    </li>
-                    <li>
-                        <img src="images/bgimg.jpg" />
-                        <p>会员号：100001</p>
-                        <p>婚况：未      年龄：26</p>
-                        <p>学历：大专   身高：160cm</p>
-                        <p> 职业：CEO   房产：有房</p>
-                    </li>
-                    <li>
-                        <img src="images/bgimg.jpg" />
-                        <p>会员号：100001</p>
-                        <p>婚况：未      年龄：26</p>
-                        <p>学历：大专   身高：160cm</p>
-                        <p> 职业：CEO   房产：有房</p>
-                    </li>
-                    <li>
-                        <img src="images/bgimg.jpg" />
-                        <p>会员号：100001</p>
-                        <p>婚况：未      年龄：26</p>
-                        <p>学历：大专   身高：160cm</p>
-                        <p> 职业：CEO   房产：有房</p>
-                    </li>
-                    <li>
-                        <img src="images/bgimg.jpg" />
-                        <p>会员号：100001</p>
-                        <p>婚况：未      年龄：26</p>
-                        <p>学历：大专   身高：160cm</p>
-                        <p> 职业：CEO   房产：有房</p>
-                    </li>
+                    <c:forEach items="${memberlist}" var="list">
+                        <li>
+                            <a href="personalManager/showTaInforn.action?taId=${list.userid}">
+                                <img src="${list.uimgurl}" />
+                                <p>昵称：${list.uname}</p>
+                                <p>年龄：${list.uage}岁</p>
+                                <p>身高：${list.uheight}cm</p>
+                                <p> ♥${list.ucharm}</p>
+                            </a>
+                        </li>
+                    </c:forEach>
                 </ul>
             </div>
             <div class="main-message1">
@@ -176,25 +159,7 @@
         <p>Copyright©2019    厦门牵手西湖婚恋交友网    版权所有  </p>
         <p>地址：厦门市软件园二期观日路56号  电话：400-000-000   技术支持：<a target="_blank" href="http://www.cykjgroup.com/">传一科技</a></p>
     </div>
-    <!--在线客服-->
-    <div id="floatTools" class="rides-cs" style="height:246px;">
-        <div class="floatL">
-            <a id="aFloatTools_Show" class="btnOpen" title="查看在线客服" style="top:20px;display:block" href="javascript:void(0);">展开</a>
-            <a id="aFloatTools_Hide" class="btnCtn" title="关闭在线客服" style="top:20px;display:none" href="javascript:void(0);">收缩</a>
-        </div>
-        <div id="divFloatToolsView" class="floatR" style="display: none;height:237px;width: 140px;">
-            <div class="cn">
-                <h3 class="titZx">牵手西湖在线客服</h3>
-                <ul>
-                    <li><a target="_blank" href="http://wpa.qq.com/msgrd?v=3&uin=123456789&site=qq&menu=yes"><img border="0" src="images/qq.png" alt="点击这里给我发消息" title="点击这里给我发消息"/></a> <span>客服1</span></li>
-                    <li><a target="_blank" href="http://wpa.qq.com/msgrd?v=3&uin=123456789&site=qq&menu=yes"><img border="0" src="images/qq.png" alt="点击这里给我发消息" title="点击这里给我发消息"/></a><span>客服2</span> </li>
-                    <li><a target="_blank" href="http://wpa.qq.com/msgrd?v=3&uin=123456789&site=qq&menu=yes"><img border="0" src="images/qq.png" alt="点击这里给我发消息" title="点击这里给我发消息"/></a> <span>客服3</span></li>
-                    <li><a target="_blank" href="http://wpa.qq.com/msgrd?v=3&uin=123456789&site=qq&menu=yes"><img border="0" src="images/qq.png" alt="点击这里给我发消息" title="点击这里给我发消息"/></a> <span>客服4</span></li>
-                    <li style="border:none;"><span>电话：400-000-0000</span> </li>
-                </ul>
-            </div>
-        </div>
-    </div>
+
 </div>
 
 </body>

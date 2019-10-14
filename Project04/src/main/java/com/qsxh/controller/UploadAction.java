@@ -4,9 +4,11 @@ import com.alibaba.fastjson.JSON;
 import com.opensymphony.xwork2.ActionSupport;
 import com.qsxh.entity.ImageReturn;
 import com.qsxh.entity.Model;
+import com.qsxh.entity.User;
 import com.qsxh.service.IPersonalService;
 import com.qsxh.utiles.Base64Utils;
 import com.qsxh.utiles.RegDataUtil;
+import com.qsxh.utiles.checkIdCard;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -32,8 +34,7 @@ public class UploadAction extends ActionSupport {
         String s1,s2,s3,s4,s5;
         String  idcard = model.getIdcard();
         String name = model.getName();
-      //  String mapjson = checkIdCard.getResult(idcard,name);
-        String mapjson = "{'code':'0','message':'成功','result':{'name':'钟兴旺','idcard':'350823199305185819','res':'1','description':'一致','sex':'男','birthday':'19930518','address':'福建省上杭县'}}";
+        String mapjson = checkIdCard.getResult(idcard,name);
         Map map = JSON.parseObject(mapjson);
         s1 =((Map) map.get("result")).get("res").toString();
         if ("1".equals(s1)||"1"==s1){
@@ -56,6 +57,10 @@ public class UploadAction extends ActionSupport {
     **/
     @RequestMapping("/pictureManager")
     public @ResponseBody ImageReturn acceptPic(String imgBase,String imgFormat,HttpServletRequest request,ImageReturn imageReturn){
+
+        //获得id
+        User user = (User) request.getSession().getAttribute("user");
+        String userid = user.getUserid();
         //base64头部
         if ("jpg".equals(imgFormat)){
             imgFormat ="jpeg";
@@ -69,7 +74,7 @@ public class UploadAction extends ActionSupport {
         String url = "uploads/"+uuid+"."+imgFormat;
         //base64转换成图片并指定存放
         boolean flag = base64Utils.Base64ToImage(imgBase,imgFilePath,replaceStr);
-        imageReturn.setUserid("1001");
+        imageReturn.setUserid(userid);
          imageReturn.setImgurl(url);
         boolean flag1 = iPersonalService.insertPhotoWithUser(imageReturn);
        if (true==flag&&true==flag1){
@@ -85,6 +90,9 @@ public class UploadAction extends ActionSupport {
     **/
     @RequestMapping("/headPicture")
     public @ResponseBody ImageReturn updateHead(String image,ImageReturn imageReturn,HttpServletRequest request){
+        //获得id
+        User user = (User) request.getSession().getAttribute("user");
+        String userid = user.getUserid();
         //获取文件夹位置
         String path = request.getSession().getServletContext().getRealPath("/uploads/");
         String uuid =  UUID.randomUUID().toString().replace("-","");
@@ -95,7 +103,7 @@ public class UploadAction extends ActionSupport {
         String replaceStr = "data:image/png;base64,";
         //Base64转换成图片
         boolean flag = base64Utils.Base64ToImage(image,imgFilePath,replaceStr);
-        imageReturn.setUserid("1001");
+        imageReturn.setUserid(userid);
         imageReturn.setImgurl(url);
         boolean flag1 = iPersonalService.updateHeadImg(imageReturn);
         if (true==flag&&true==flag1){

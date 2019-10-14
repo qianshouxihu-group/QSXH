@@ -9,7 +9,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.annotation.Resource;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequestMapping("/matchUser")
@@ -41,7 +43,7 @@ public class MatchUserAction {
     }
 
     /*
-    按下搜索按钮时查询用户
+    点击搜索按钮时查询用户
      */
     @RequestMapping(value = "/matchByCondition", method= RequestMethod.GET, produces="application/json;charset=utf-8")
     public ModelAndView MatchUserListByCondition(UserAndData userAndData){
@@ -71,6 +73,23 @@ public class MatchUserAction {
         return mv;
     }
 
+    /*
+    首页的近期佳人，近期熟男查询,ajax
+     */
+    @RequestMapping(value = "/matchByTimeajax", method= RequestMethod.GET, produces="application/json;charset=utf-8")
+    public @ResponseBody
+    Map<String,List<UserAndData>> MatchByTimeAjax(UserAndData userAndData){
+        Map<String,List<UserAndData>> map = new HashMap<String,List<UserAndData>>();
+        //按性别根据时间排序查询用户
+        userAndData.setUsex("男");
+        manlist = matchUserService.findUserByTime(userAndData);
+        userAndData.setUsex("女");
+        womanlist = matchUserService.findUserByTime(userAndData);
+
+        map.put("manlist",manlist);
+        map.put("womanlist",womanlist);
+        return map;
+    }
 
     //ajax请求待条件的查询list
     @RequestMapping(value="/MatchForPage", method= RequestMethod.GET, produces="application/json;charset=utf-8")
@@ -81,8 +100,8 @@ public class MatchUserAction {
 
     //智能匹配功能
     @RequestMapping(value = "/smartUser", method= RequestMethod.GET, produces="application/json;charset=utf-8")
-    public ModelAndView  SmartUser(String id){
-        list = matchUserService.SmartUser(id);
+    public ModelAndView  SmartUser(String id,String roleid){
+        list = matchUserService.SmartUser(id,roleid);
         //request传给页面数据
         mv.addObject("MatchList",list);//回传智能匹配的用户list
         mv.setViewName("match");//跳转到智能匹配用户展示页面

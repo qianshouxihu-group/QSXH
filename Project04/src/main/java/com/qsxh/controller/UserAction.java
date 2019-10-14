@@ -48,6 +48,18 @@ public class UserAction extends ActionSupport {
         return mv;
     }
 
+    //后台注销
+    @RequestMapping("/outLogin2")
+    public ModelAndView backOutLogin(HttpSession session, HttpServletRequest request){
+        ModelAndView mv = new ModelAndView();
+        System.out.println("账号已注销");
+        //通过session.invalidata()方法来注销当前的session
+        session.invalidate();
+        //String path = request.getURI()
+        mv.setViewName("login_backstage");
+        return mv;
+    }
+
     //    普通用户查询
     @RequestMapping(value = "/userselect.action")
     public @ResponseBody

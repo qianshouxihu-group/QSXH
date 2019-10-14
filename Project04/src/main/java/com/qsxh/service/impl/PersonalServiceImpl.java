@@ -168,4 +168,14 @@ public class PersonalServiceImpl implements IPersonalService {
         }
     }
 
+    @Override
+    public boolean updateUserPass(String upass,String userid) {
+        Integer num = personalDao.updatePass(upass,userid);
+        if (num>=1){
+            return true;
+        }else {
+            return false;
+        }
+    }
+
 }

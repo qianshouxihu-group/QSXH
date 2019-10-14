@@ -2,6 +2,7 @@ package com.qsxh.controller;
 
 import com.qsxh.entity.User;
 import com.qsxh.service.IAdminBiz;
+import com.qsxh.utiles.MD5;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -64,6 +65,8 @@ public class AdminAction {
         int flag=0;
 //        注册日期
         Date now=new Date();
+        user.setUpass(MD5.getMD5(user.getUpass()));
+
         SimpleDateFormat dateFormat=new SimpleDateFormat("yyyy-MM-dd");//设置日期格式
         String createTime = dateFormat.format(now);//格式化然后放入字符串中
         user.setRegdate(createTime);
@@ -81,7 +84,10 @@ public class AdminAction {
     @RequestMapping(value = "/deleteAdmin.action")
     public @ResponseBody String deleteUser(String userid){
         int flag=0;
-        flag=iAdminBiz.deleteAdmin(userid);
+        //        超级管理员不能删除
+        if(iAdminBiz.getRoleidFromId(userid)!=1){
+            flag=iAdminBiz.deleteAdmin(userid);
+        }
         return String.valueOf(flag);
     }
 

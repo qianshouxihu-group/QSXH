@@ -56,7 +56,20 @@ i{ font-style: normal;}
 .focus .D1fBt a{position:relative; display:inline; width:12px; height:12px; margin:0 5px;color:#B0B0B0; text-decoration:none; text-align:center; outline:0; float:left; background:#D9D9D9; }    
 .focus .D1fBt .current,.focus .D1fBt a:hover{background:#fc114a;}    
 .focus .D1fBt img{display:none}    
-.focus .D1fBt i{display:none; font-style:normal; }    
+.focus .D1fBt i{display:none; font-style:normal; }
+
+
+.con-list{ margin-top: 30px; margin-left: 120px;}
+.con-list li{ float: left; width: 480px; }
+.con-list{ overflow: hidden;}
+.con-sel{ width: 236px; height: 25px; border: 1px solid #a0a0a0;}
+.con-list li p{margin-bottom: 15px; line-height: 27px;}
+
+.cond-list{ margin-top: 30px; margin-left: 120px;}
+.cond-list li{ float: left; width: 340px; }
+.cond-list{ overflow: hidden;}
+.cond-select{ width: 146px; height: 25px; border: 1px solid #a0a0a0;}
+.cond-list li p{margin-bottom: 15px; line-height: 27px;}
 
 .main-title{ margin: 20px 0; overflow: hidden; font-size: 24px; width: 950px; height: 50px; line-height: 50px; border-bottom: 1px solid #ddd; overflow: hidden;}
 .main-title span{ color: #6b6a6a; font-size: 14px;}

@@ -10,6 +10,9 @@
       <title>聊天窗口界面</title>
       <link rel="stylesheet" type="text/css" href="${cp}/font_Icon/iconfont.css">
       <link rel="stylesheet" type="text/css" href="${cp}/css/chat.css">
+      <script type="text/javascript" src="js/chatserver.js" ></script>
+      <script type="text/javascript" src="js/chat.js" ></script>
+
   </head>
   <body>
 

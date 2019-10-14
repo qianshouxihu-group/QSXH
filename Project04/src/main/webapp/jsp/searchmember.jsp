@@ -20,6 +20,10 @@
         <script type="text/javascript" src="js/jquery.range.js"></script>
         <script type="text/javascript" src="js/popup.mini.js"></script>
 		<script src="js/loading.js"></script>
+		<link type="text/css" rel="stylesheet" href="css/chat.css"/>
+		<script type="text/javascript" src="js/chatserver.js" ></script>
+		<script type="text/javascript" src="js/chat.js" ></script>
+
 	</head>
 	<body>
 		<div class="head">
@@ -27,8 +31,16 @@
 		  	 <div class="top-left">
 		  	 </div>
 		  	 <div class="top-right">
-		  	 	<a href="">注册</a> |
-		  	 	<a href="">登录</a>
+				 <c:choose>
+					 <c:when test="${ sessionScope.user!=null }">
+						 <a>${ sessionScope.user.uname },欢迎您！</a>|
+						 <a href="testManager/outLogin.action">注销</a>
+					 </c:when>
+					 <c:otherwise>
+						 <a href="<%=path%>/jsp/clientReg.jsp">注册</a> |
+						 <a href="<%=path%>/jsp/login.jsp">登录</a>
+					 </c:otherwise>
+				 </c:choose>
 		  	 </div>
 		  </div>
 		  <div class="top-ban">
@@ -40,26 +52,26 @@
 		</div>
 		<div class="nav-box">
 			<div class="nav">
-				<a href="matchUser/matchByTime.action?limitString=12">网站首页</a>
-				<a href="">了解我们</a>
-				<a id="searchUser" href="matchUser/smartMatch.action?limitString=30&usex=${sessionScope.user.usex}&conditin=charm">条件搜索</a>
-				<a href="matchUser/smartUser.action?id=${sessionScope.user.userid}">智能匹配</a>
-				<a href="">会员服务 </a>
-				<a href="">活动专题 </a>
-				<a href="">我的消息 </a>
-				<a href="">个人中心</a>
+				<a href="matchUser/matchByTime.action?limitString=12&userid=${sessionScope.user.userid}">网站首页</a>
+				<a href="jsp/clientAboutUs.jsp">了解我们</a>
+				<a id="searchUser" href="matchUser/smartMatch.action?limitString=30&usex=${sessionScope.user.usex}&condition=charm&userid=${sessionScope.user.userid}">条件搜索</a>
+				<a id="match"  href="matchUser/smartUser.action?id=${sessionScope.user.userid}&roleid=${sessionScope.user.roleid}">智能匹配</a>
+				<a href="jsp/beVip.jsp">会员服务 </a>
+				<a href="jsp/clientActiveList.jsp">活动专题 </a>
+				<a href="<%=path%>/informManager/systemInform.action">我的消息 <div class="my-notice">${countList.get(0)+countList.get(1)+countList.get(2)+countList.get(3)}</div></a>
+				<a href="personalManager/aboutBasic.action">个人中心</a>
 			</div>
 		</div>
 		
 		<div class="main">
 			<div class="main-box1">
-			<div class="main-left"><!--left-->
-				<ul class="find-infor" style="padding-top: 15px;">
-						<li style="margin-bottom: 15px;">
+				<div class="main-left"><!--left-->
+					<ul class="find-infor">
+						<li>
 							<span>年龄</span>
 							<div class="infor-link">
-								<select id="uageRange">
-									 <option value="不限">不限</option>
+								<select id="uageRange" style="width: 95.6px;">
+									<option value="不限">不限</option>
 									<option value="18-23">18-23</option>
 									<option value="24-29">24-29</option>
 									<option value="30-35">30-35</option>
@@ -69,9 +81,9 @@
 									<option value="53以上">53以上</option>
 								</select>
 							</div>
-							<span>学&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;历</span>
+							<span style="margin-left: 25px;">学&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;历</span>
 							<div class="infor-link">
-								<select id="uedu">
+								<select id="uedu" style="width: 100.4px;">
 									<option value="不限">不限</option>
 									<option value="高中">高中</option>
 									<option value="专科">专科</option>
@@ -80,18 +92,18 @@
 									<option value="博士">博士</option>
 								</select>
 							</div>
-							<span>婚姻状况</span>
+							<span style="margin-left: 27px;">婚姻状况</span>
 							<div class="infor-link">
-								<select id="umerried">
+								<select id="umerried" style="width: 100.4px;">
 									<option value="不限">不限</option>
 									<option value="未婚">未婚</option>
 									<option value="离异">离异</option>
 									<option value="丧偶">丧偶</option>
 								</select>
 							</div>
-							<span>住&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;房</span>
+							<span style="margin-left: 25px;">住&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;房</span>
 							<div class="infor-link">
-								<select id="uhouse">
+								<select id="uhouse" style="width: 100.4px;">
 									<option value="不限">不限</option>
 									<option value="有房">有房</option>
 									<option value="无房">无房</option>
@@ -143,7 +155,7 @@
 									<option value="其他">其他</option>
 								</select>
 							</div>
-							<span>月 &nbsp;收 &nbsp;入</span>
+							<span style="margin-left: 25px;">月 &nbsp;收 &nbsp;入</span>
 							<div class="infor-link">
 								<select id="uincome">
 									<option value="不限">不限</option>
@@ -154,83 +166,81 @@
 									<option value="20000以上">20000以上</option>
 								</select>
 							</div>
-							<span>所在地</span>
-							<div class="infor-link" style="width: 200px;margin-top: -10px;">
+							<span style="margin-left: 25px;">所在地</span>
+							<div class="infor-link" style="width: 250px;">
 								<select id="s_province" name="s_province"></select>
-								<select id="s_city" name="s_city" ></select>
+								<select id="s_city" name="s_city"  style="width: 157px;"></select>
 								<script class="resources library" src="js/area.js" type="text/javascript"></script>
 								<script type="text/javascript">_init_area();</script>
 							</div>
-							<%--<input type="submit" value="搜索" style="width:100px; height: 30px; background: #76fabc;">--%>
-							<button id="search" onclick="search()" style=" margin-left: 30px;width:100px; height: 30px; background: rosybrown;">搜索</button>
+							<button id="search" onclick="search()" style="float: right; margin-right:15px;margin-top:5px;width:100px; height: 30px; background: #C2BE9E;">搜索</button>
 						</li>
-				</ul>
-				<ul class="main-member">
-					<c:if test="${!empty MatchUserList}">
-						<c:forEach items="${MatchUserList}" var="list">
-							<li>
-								<a href="">
-									<img src="images/test.png">
-									<p class="mem-num">昵称：${list.uname}</p>
-									<p class="mem-text">${list.uage}岁  |  ${list.uwork}  |  ${list.uheight}cm</p>
-									<p class="mem-text">♥${list.ucharm}</p>
-								</a>
-							</li>
-						</c:forEach>
-					</c:if>
-					<c:if test="${empty MatchUserList}">
-						<li>
-							未找到符合条件的用户
-						</li>
-					</c:if>
-				</ul>
-			</div><!--left-->
-			<div class="main-right"><!--right-->
-				<div class="main-log">
-					<div class="tit">会员登录</div>
-					<div class="main-logbox">
-						<i class="main-user"></i>
-						<input placeholder="账户名" type="text" class="main-user-input" />
-					</div>
-					<div class="main-logbox">
-						<i class="main-password"></i>
-						<input placeholder="密码" type="text" class="main-user-input" />
-					</div>
-					<button type="button"  class="main-btn">立即登录</button>
-					<div class="main-pass-text">没有帐号？<a href="">免费注册</a><a href="" class="forget">忘记密码 ></a></div>
-				</div>
-				<div class="main-radv"><img src="images/adv2.png"/></div>
-				<div class="main-radv"><img src="images/adv1.png"/></div>
-				<div class="main-message">
-					<div class="tit">最新会员推荐</div>
-					<ul class="member-list">
-						<c:forEach items="${Memberlist}" var="list">
-							<li>
-								<a href="">
-									<img src="images/bgimg.jpg" />
-									<p>昵称：${list.uname}</p>
-									<p>年龄：${list.uage}岁</p>
-									<p>身高：${list.uheight}cm</p>
-									<p> ♥${list.ucharm}</p>
-								</a>
-							</li>
-						</c:forEach>
 					</ul>
-				</div>
-				<div class="main-message1">
-					<div class="tit">联系我们</div>
-					<div class="main-contact">
-						<p>公司名称：</p>
-						<p>联系人：</p>
-						<p>联系电话：400-400-400</p>
-						<p>电子邮箱：</p>
-						<p>实体店地址：厦门软件园</p>
-						<p>厦门牵手西湖婚恋交友官方微信</p>
-						<p><img src="images/weixin.jpg"/></p>
-						<p style="text-align: center;">“ 扫一扫与牵手西湖亲密互动 ”</p>
+					<ul class="main-member">
+						<c:if test="${!empty MatchUserList}">
+							<c:forEach items="${MatchUserList}" var="list">
+								<li>
+									<a href="<%=path%>/personalManager/showTaInforn.action?taId=${list.userid}">
+										<img src="images/test.png">
+										<p class="mem-num">昵称：${list.uname}</p>
+										<p class="mem-text">${list.uage}岁  |  ${list.uheight}cm  |  <span style="color: #f2a1a9">　♥　</span>${list.ucharm}</p>
+									</a>
+								</li>
+							</c:forEach>
+						</c:if>
+						<c:if test="${empty MatchUserList}">
+							<li>
+								未找到符合条件的用户
+							</li>
+						</c:if>
+					</ul>
+				</div><!--left-->
+				<div class="main-right"><!--right-->
+					<div class="main-log">
+						<div class="tit">会员登录</div>
+						<div class="main-logbox">
+							<i class="main-user"></i>
+							<input placeholder="账户名" type="text" class="main-user-input" />
+						</div>
+						<div class="main-logbox">
+							<i class="main-password"></i>
+							<input placeholder="密码" type="text" class="main-user-input" />
+						</div>
+						<button type="button"  class="main-btn">立即登录</button>
+						<div class="main-pass-text">没有帐号？<a href="">免费注册</a><a href="" class="forget">忘记密码 ></a></div>
 					</div>
-				</div>
-			</div><!--right-->
+					<div class="main-radv"><img src="images/adv2.png"/></div>
+					<div class="main-radv"><img src="images/adv1.png"/></div>
+					<div class="main-message">
+						<div class="tit">最新会员推荐</div>
+						<ul class="member-list">
+							<c:forEach items="${Memberlist}" var="list">
+								<li>
+									<a href="<%=path%>/personalManager/showTaInforn.action?taId=${list.userid}">
+										<img src="images/bgimg.jpg" />
+										<p>昵称：${list.uname}</p>
+										<p>年龄：${list.uage}岁</p>
+										<p>身高：${list.uheight}cm</p>
+										<p style="color: #f2a1a9"> ♥　${list.ucharm}</p>
+									</a>
+								</li>
+							</c:forEach>
+						</ul>
+					</div>
+					<div class="main-message1">
+						<div class="tit">联系我们</div>
+						<div class="main-contact">
+							<p>公司名称：</p>
+							<p>联系人：</p>
+							<p>联系电话：400-400-400</p>
+							<p>电子邮箱：</p>
+							<p>实体店地址：厦门软件园</p>
+							<p>厦门牵手西湖婚恋交友官方微信</p>
+							<p><img src="images/weixin.jpg"/></p>
+							<p style="text-align: center;">“ 扫一扫与牵手西湖亲密互动 ”</p>
+						</div>
+					</div>
+				</div><!--right-->
 			</div>
 		 <div class="copy">
 			 <p>Copyright©2019  厦门牵手西湖婚恋交友网  版权所有 </p>
@@ -305,7 +315,7 @@
 	    var uincome = $("#uincome").val();
 	    var s_province = $("#s_province").val();
         var s_city = $("#s_city").val();
-        window.location.href="matchUser/matchByCondition.action?uageRange="+uageRange+"&uedu="+uedu+"&umerried="+umerried+"&uhouse="+uhouse+"&uwork="+uwork+"&uincome="+uincome+"&s_province="+s_province+"&s_city="+s_city+"&limitString=30&usex=女&condition=charm";
+        window.location.href="matchUser/matchByCondition.action?uageRange="+uageRange+"&uedu="+uedu+"&umerried="+umerried+"&uhouse="+uhouse+"&uwork="+uwork+"&uincome="+uincome+"&s_province="+s_province+"&s_city="+s_city+"&limitString=30&usex=${sessionScope.user.usex}&condition=charm&userid=${sessionScope.user.userid}";
     }
 
 

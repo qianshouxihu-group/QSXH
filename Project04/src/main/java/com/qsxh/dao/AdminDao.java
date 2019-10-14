@@ -16,4 +16,5 @@ public interface AdminDao {
 
 
     public int addAdmin(User userBase);
+    public Integer getRoleidFromId(String userid);
 }

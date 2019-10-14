@@ -12,6 +12,10 @@
     <link rel="stylesheet" href="layui/css/layui.css">
     <link rel="stylesheet" href="layui/css/login.css">
     <script src="js/jquery-1.8.3.min.js"></script>
+    <link type="text/css" rel="stylesheet" href="css/chat.css"/>
+    <script type="text/javascript" src="js/chatserver.js" ></script>
+    <script type="text/javascript" src="js/chat.js" ></script>
+
 </head>
 <body>
 <div id="container">

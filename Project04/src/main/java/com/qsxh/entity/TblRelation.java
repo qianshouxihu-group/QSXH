@@ -7,8 +7,17 @@ public class TblRelation {
     private String fgood;
     private String ffollow;
     private String giftno;
+    private String uonline;
 
     public TblRelation(){}
+
+    public String getUonline() {
+        return uonline;
+    }
+
+    public void setUonline(String uonline) {
+        this.uonline = uonline;
+    }
 
     public String getGiftno() {
         return giftno;

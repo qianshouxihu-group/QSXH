@@ -1,9 +1,10 @@
 package com.qsxh.controller;
 
 import com.opensymphony.xwork2.ActionSupport;
-import com.qsxh.entity.HabitData;
-import com.qsxh.entity.PersonalData;
+import com.qsxh.entity.*;
 import com.qsxh.service.IPersonalService;
+import com.qsxh.service.RelationService;
+import com.qsxh.service.impl.MatchUserServiceImpl;
 import com.qsxh.utiles.AgeUtils;
 import com.qsxh.utiles.MD5;
 import org.springframework.stereotype.Controller;
@@ -25,7 +26,12 @@ import java.util.UUID;
 public class PersonalAction extends ActionSupport {
 
     @Resource
+    private RelationService relationService;
+
+    @Resource
     private IPersonalService iPersonalService;
+    @Resource
+    private MatchUserServiceImpl matchUserService;
     ModelAndView mv = new ModelAndView();
 
     /*
@@ -71,11 +77,16 @@ public class PersonalAction extends ActionSupport {
     基本资料查询
     **/
     @RequestMapping("/aboutBasic")
-    public ModelAndView findBasicInform(){
-        PersonalData personalData = iPersonalService.findBasicData("1001");
+    public ModelAndView findBasicInform(HttpServletRequest request){
+
+        //获得id
+        User user = (User) request.getSession().getAttribute("user");
+        String userid = user.getUserid();
+        //查询该用户基本资料
+        PersonalData personalData = iPersonalService.findBasicData(userid);
         String birthday = personalData.getUbirthday();
         try {
-        int age = AgeUtils.getAge(AgeUtils.parse(birthday));
+        int age = AgeUtils.getAge(AgeUtils.parse(birthday));   //得到最新年龄
         personalData.setUage(age);
         } catch (Exception e) {
             e.printStackTrace();
@@ -89,15 +100,18 @@ public class PersonalAction extends ActionSupport {
     更新基础资料
     **/
     @RequestMapping("/updateBasic")
-    public ModelAndView updateBasicInform(PersonalData personalData){
-        personalData.setUserid("1001");
+    public ModelAndView updateBasicInform(HttpServletRequest request,PersonalData personalData){
+        //获得id
+        User user = (User) request.getSession().getAttribute("user");
+        String userid = user.getUserid();
+        personalData.setUserid(userid);
         //获取提交的所在地信息
         String province = personalData.getS_province();
         String city = personalData.getS_city();
         if (("不限".equals(province)||"选择省份".equals(province))&&"地级市".equals(city)){
         boolean flag = iPersonalService.updateBasicWithoutAddress(personalData);
             if (true==flag){
-                PersonalData personData= iPersonalService.findBasicData("1001");
+                PersonalData personData= iPersonalService.findBasicData(userid);
                 mv.addObject("resultPersonalData",personData);
             }else{
                 System.out.println("更新资料失败");
@@ -113,7 +127,7 @@ public class PersonalAction extends ActionSupport {
         }
         boolean flag = iPersonalService.updateBasicData(personalData);
         if (true==flag){
-            PersonalData personData= iPersonalService.findBasicData("1001");
+            PersonalData personData= iPersonalService.findBasicData(userid);
             mv.addObject("resultPersonalData",personData);
         }else{
             System.out.println("更新资料失败");
@@ -127,8 +141,11 @@ public class PersonalAction extends ActionSupport {
     择偶条件查询
     **/
     @RequestMapping("/aboutCP")
-    public ModelAndView findCPInform(){
-        PersonalData personalData = iPersonalService.findCpLimitData("1001");
+    public ModelAndView findCPInform(HttpServletRequest request){
+        //获得id
+        User user = (User) request.getSession().getAttribute("user");
+        String userid = user.getUserid();
+        PersonalData personalData = iPersonalService.findCpLimitData(userid);
         mv.addObject("cpData",personalData);
         mv.setViewName("caboutcp");
         return mv;
@@ -138,15 +155,18 @@ public class PersonalAction extends ActionSupport {
     更新择偶条件
     **/
     @RequestMapping("/updateCP")
-    public ModelAndView updateCPInform(PersonalData personalData){
-        personalData.setUserid("1001");
+    public ModelAndView updateCPInform(HttpServletRequest request,PersonalData personalData){
+        //获得id
+        User user = (User) request.getSession().getAttribute("user");
+        String userid = user.getUserid();
+        personalData.setUserid(userid);
         //获取提交的所在地信息
         String province = personalData.getS_province();
         String city = personalData.getS_city();
         if ("选择省份".equals(province)&&"地级市".equals(city)){
             boolean flag = iPersonalService.updateCpWithoutAddress(personalData);
             if (true==flag){
-                PersonalData personData= iPersonalService.findCpLimitData("1001");
+                PersonalData personData= iPersonalService.findCpLimitData(userid);
                 mv.addObject("cpData",personData);
             }else{
                 System.out.println("更新资料失败");
@@ -166,7 +186,7 @@ public class PersonalAction extends ActionSupport {
             }
             boolean flag = iPersonalService.updateCpLimitData(personalData);
             if (true==flag){
-                PersonalData personData= iPersonalService.findCpLimitData("1001");
+                PersonalData personData= iPersonalService.findCpLimitData(userid);
                 mv.addObject("cpData",personData);
             }else{
                 System.out.println("更新资料失败");
@@ -180,8 +200,11 @@ public class PersonalAction extends ActionSupport {
     个性要求查询
     **/
     @RequestMapping("/aboutLimit")
-    public ModelAndView findLimitInform(){
-        PersonalData personalData = iPersonalService.findLimitData("1001");
+    public ModelAndView findLimitInform(HttpServletRequest request){
+        //获得id
+        User user = (User) request.getSession().getAttribute("user");
+        String userid = user.getUserid();
+        PersonalData personalData = iPersonalService.findLimitData(userid);
         mv.addObject("limitData",personalData);
         mv.setViewName("climitcon");
         return mv;
@@ -191,11 +214,14 @@ public class PersonalAction extends ActionSupport {
     个性要求更新
     **/
     @RequestMapping("/updateLimit")
-    public ModelAndView updateLimitInform(PersonalData personalData){
-        personalData.setUserid("1001");
+    public ModelAndView updateLimitInform(HttpServletRequest request,PersonalData personalData){
+        //获得id
+        User user = (User) request.getSession().getAttribute("user");
+        String userid = user.getUserid();
+        personalData.setUserid(userid);
         boolean flag = iPersonalService.updateLimitData(personalData);
         if (true==flag){
-            PersonalData personData = iPersonalService.findLimitData("1001");
+            PersonalData personData = iPersonalService.findLimitData(userid);
             mv.addObject("limitData",personData);
         }else{
             System.out.println("更新个性要求失败");
@@ -208,8 +234,11 @@ public class PersonalAction extends ActionSupport {
     工作学习查询
     **/
     @RequestMapping("/aboutWS")
-    public ModelAndView findWSInform(){
-        PersonalData personalData = iPersonalService.findWSData("1001");
+    public ModelAndView findWSInform(HttpServletRequest request){
+        //获得id
+        User user = (User) request.getSession().getAttribute("user");
+        String userid = user.getUserid();
+        PersonalData personalData = iPersonalService.findWSData(userid);
         mv.addObject("wsData",personalData);
         mv.setViewName("caboutstudy");
         return  mv;
@@ -219,11 +248,14 @@ public class PersonalAction extends ActionSupport {
     工作学习更新
     **/
     @RequestMapping("/updateWS")
-    public ModelAndView updateWSInform(PersonalData personalData){
-        personalData.setUserid("1001");
+    public ModelAndView updateWSInform(HttpServletRequest request,PersonalData personalData){
+        //获得id
+        User user = (User) request.getSession().getAttribute("user");
+        String userid = user.getUserid();
+        personalData.setUserid(userid);
         boolean flag = iPersonalService.updateWSData(personalData);
         if (true==flag){
-            PersonalData personData = iPersonalService.findWSData("1001");
+            PersonalData personData = iPersonalService.findWSData(userid);
             mv.addObject("wsData",personalData);
         }else{
             System.out.println("更新工作学习失败");
@@ -236,11 +268,14 @@ public class PersonalAction extends ActionSupport {
     兴趣爱好查询
     **/
     @RequestMapping("/aboutHabit")
-    public ModelAndView findHabitInform(){
+    public ModelAndView findHabitInform(HttpServletRequest request){
+        //获得id
+        User user = (User) request.getSession().getAttribute("user");
+        String userid = user.getUserid();
         //查询数据库中的兴趣爱好选项
         List list1 = iPersonalService.findHItemData();
         //查询用户兴趣
-        List list2 = iPersonalService.findHabitData("1001");
+        List list2 = iPersonalService.findHabitData(userid);
         mv.addObject("habitItem",list1);
         mv.addObject("userHabit",list2);
         mv.setViewName("cabouthobby");
@@ -252,15 +287,17 @@ public class PersonalAction extends ActionSupport {
     **/
     @RequestMapping("/updateHabit")
     public ModelAndView updateHabitInform(HttpServletRequest request, HabitData habitData){
-
+        //获得id
+        User user = (User) request.getSession().getAttribute("user");
+        String userid = user.getUserid();
         String[] habits =  request.getParameterValues("habits");
-        iPersonalService.deleteHabitData("1001");
+        iPersonalService.deleteHabitData(userid);
         List <Object> list = new ArrayList();
         for (int i = 0; i < habits.length; i++) {
            list.add(habits[i]);
         }
-        iPersonalService.insertHabitData(list,"1001");
-        List listData = iPersonalService.findHabitData("1001");
+        iPersonalService.insertHabitData(list,userid);
+        List listData = iPersonalService.findHabitData(userid);
         mv.addObject("userHabit",listData);
         mv.setViewName("cabouthobby");
         return  mv;
@@ -270,12 +307,15 @@ public class PersonalAction extends ActionSupport {
     确认修改密码
     **/
     @RequestMapping(value="/checkPassWord")
-    public @ResponseBody String checkUserPass(String upass){
-        System.out.println(upass);
+    public @ResponseBody String checkUserPass(HttpServletRequest request,String upass){
+        //获得id
+        User user = (User) request.getSession().getAttribute("user");
+        String userid = user.getUserid();
+        String addPass = MD5.getMD5(upass);   //加密转换
         String str = null;
-        PersonalData personalData = iPersonalService.findBasicData("1001");
+        PersonalData personalData = iPersonalService.findBasicData(userid);
         String pass =  personalData.getUpass();
-        if (pass.equals(upass)){
+        if (pass.equals(addPass)){
             str = "1" ;
         }else{
             str = "2" ;
@@ -287,10 +327,17 @@ public class PersonalAction extends ActionSupport {
     修改密码
     **/
     @RequestMapping("/rePassWord")
-    public ModelAndView updatePassWord(){
-
-
-        mv.setViewName("crepassword");
+    public ModelAndView updatePassWord(HttpServletRequest request,String newupass){
+        //获得id
+        User user = (User) request.getSession().getAttribute("user");
+        String userid = user.getUserid();
+        String addPass = MD5.getMD5(newupass); //加密转换
+        boolean flag = iPersonalService.updateUserPass(addPass,userid);
+        if (true == flag){
+            mv.setViewName("crepwdinfor");
+        }else{
+            mv.setViewName("crepassword");
+        }
         return mv;
     }
 
@@ -298,9 +345,12 @@ public class PersonalAction extends ActionSupport {
     我的主页
     **/
     @RequestMapping("/myHomePage")
-    public ModelAndView showMyHomepage(){
-
-        PersonalData personalData= iPersonalService.findBasicData("1001"); //基本资料
+    public ModelAndView showMyHomepage(HttpServletRequest request){
+        //获得id
+        User user = (User) request.getSession().getAttribute("user");
+        String userid = user.getUserid();
+        UserAndData userAndData = new UserAndData();
+        PersonalData personalData= iPersonalService.findBasicData(userid); //基本资料
         //实时更新年龄
         String birthday = personalData.getUbirthday();
         try {
@@ -309,11 +359,18 @@ public class PersonalAction extends ActionSupport {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        List list = iPersonalService.findPhotoWithUser("1001"); //相册查询
-        PersonalData cpDate = iPersonalService.findCpLimitData("1001"); //择偶要求
-        PersonalData workData = iPersonalService.findWSData("1001"); //工作要求
-        PersonalData requiredData = iPersonalService.findLimitData("1001"); //个性要求
-        List list1 = iPersonalService.findHabitData("1001");//兴趣爱好
+        List list = iPersonalService.findPhotoWithUser(userid); //相册查询
+        PersonalData cpDate = iPersonalService.findCpLimitData(userid); //择偶要求
+        PersonalData workData = iPersonalService.findWSData(userid); //工作要求
+        PersonalData requiredData = iPersonalService.findLimitData(userid); //个性要求
+        List list1 = iPersonalService.findHabitData(userid);//兴趣爱好
+
+        userAndData.setCondition("member");    //查询最新会员
+        userAndData.setLimitString("6");       //查询条数
+        userAndData.setUsex(user.getUsex());    //性别
+        List <UserAndData> memberlist = matchUserService.findUserByTime(userAndData);
+
+
 
         mv.addObject("basicInfor",personalData);
         mv.addObject("myPhotoList",list);
@@ -321,6 +378,7 @@ public class PersonalAction extends ActionSupport {
         mv.addObject("workDate",workData);
         mv.addObject("required",requiredData);
         mv.addObject("habitDate",list1);
+        mv.addObject("memberlist",memberlist);
         mv.setViewName("cmyhomepage");
         return mv;
     }
@@ -329,8 +387,11 @@ public class PersonalAction extends ActionSupport {
     我的相册
     **/
     @RequestMapping("/myPhotograph")
-    public ModelAndView showMyPhotograph(){
-       List list = iPersonalService.findPhotoWithUser("1001");
+    public ModelAndView showMyPhotograph(HttpServletRequest request){
+        //获得id
+        User user = (User) request.getSession().getAttribute("user");
+        String userid = user.getUserid();
+        List list = iPersonalService.findPhotoWithUser(userid);
         mv.addObject("photoList",list);
         mv.setViewName("cimgupload");
         return mv;
@@ -340,13 +401,79 @@ public class PersonalAction extends ActionSupport {
     删除照片
     **/
     @RequestMapping("/deleteMyPhotograph")
-    public ModelAndView deleteMyPhotograph(Integer photoid){
+    public ModelAndView deleteMyPhotograph(HttpServletRequest request,Integer photoid){
+        //获得id
+        User user = (User) request.getSession().getAttribute("user");
+        String userid = user.getUserid();
         boolean flag = iPersonalService.deleteMyPhoto(photoid);
         if(true==flag){
-            List list = iPersonalService.findPhotoWithUser("1001");
+            List list = iPersonalService.findPhotoWithUser(userid);
             mv.addObject("photoList",list);
         }
         mv.setViewName("cimgupload");
+        return mv;
+    }
+
+    /*
+        查看Ta的信息
+        **/
+    @RequestMapping("/showTaInforn")
+    public ModelAndView showTaHomepage(HttpServletRequest request,String taId){
+        System.out.println("======="+taId+"==========这是我的测试");
+        //获得id
+        User user = (User) request.getSession().getAttribute("user");
+        String userid = user.getUserid();
+        UserAndData userAndData = new UserAndData();
+        //查询登录用户信息
+        PersonalData mine = iPersonalService.findBasicData(userid);
+        PersonalData personalData= iPersonalService.findBasicData(taId); //基本资料
+        String role = mine.getRoleid();  //获取用户角色
+
+        //获取用户关系信息
+        TblRelation param = new TblRelation();
+        param.setFfromid(userid);
+        param.setFtoid(taId);
+        TblRelation relation = relationService.findRelation(param);
+
+        //实时更新年龄
+        String birthday = personalData.getUbirthday();
+        try {
+            int age = AgeUtils.getAge(AgeUtils.parse(birthday));
+            personalData.setUage(age);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        List list = iPersonalService.findPhotoWithUser(taId); //相册查询
+        PersonalData workData = iPersonalService.findWSData(taId); //工作要求
+        PersonalData cpDate = iPersonalService.findCpLimitData(taId); //择偶要求
+        PersonalData requiredData = iPersonalService.findLimitData(taId); //个性要求
+        List list1 = iPersonalService.findHabitData(taId);//兴趣爱好
+
+        userAndData.setUsex(user.getUsex());    //性别
+        userAndData.setCondition("member");    //查询最新会员
+        userAndData.setLimitString("6");       //查询条数
+        List <UserAndData> memberlist = matchUserService.findUserByTime(userAndData);
+
+        mv.addObject("mineData",mine);
+        mv.addObject("basicInfor",personalData);
+        mv.addObject("myPhotoList",list);
+        mv.addObject("memberlist",memberlist);
+
+        System.out.println(role);
+        if ("4".equals(role)){
+
+            mv.addObject("relationUser", relation);
+            mv.addObject("cpLimitDate",cpDate);
+            mv.addObject("workDate",workData);
+            mv.addObject("required",requiredData);
+            mv.addObject("habitDate",list1);
+            mv.setViewName("chomepage");
+        }
+
+        if ("3".equals(role)){
+            mv.setViewName("climithomepage");
+        }
+
         return mv;
     }
 

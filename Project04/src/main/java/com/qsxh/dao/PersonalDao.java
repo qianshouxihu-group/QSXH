@@ -26,5 +26,7 @@ public interface PersonalDao {
     public Integer updateUserWithHeadImg(ImageReturn imageReturn);
     //不带所在地的基础资料更新
     public Integer updateBasicWithoutAddress(PersonalData personalData);
+    //更改用户密码
+    public Integer updatePass(@Param("upass") String upass,@Param("userid") String userid);
 
 }

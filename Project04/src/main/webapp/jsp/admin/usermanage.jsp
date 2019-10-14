@@ -55,7 +55,7 @@
                 <div class="layui-input-inline" style="width:150px">
                     <select name="uedu" id="uedu" lay-verify="required">
                         <option value=""></option>
-                        <option value="高中及以下">高中及以下</option>
+                        <option value="高中">高中</option>
                         <option value="专科">专科</option>
                         <option value="本科">本科</option>
                         <option value="硕士">硕士</option>
@@ -115,13 +115,13 @@
                            class="layui-input">
                 </div>
             </div>
-            <div class="layui-inline">
-                <label class="layui-form-label">体重:</label>
-                <div class="layui-input-inline">
-                    <input type="text" name="uweight" autocomplete="off"
-                           class="layui-input">
-                </div>
-            </div>
+<%--            <div class="layui-inline">--%>
+<%--                <label class="layui-form-label">体重:</label>--%>
+<%--                <div class="layui-input-inline">--%>
+<%--                    <input type="text" name="uweight" autocomplete="off"--%>
+<%--                           class="layui-input">--%>
+<%--                </div>--%>
+<%--            </div>--%>
         </div>
         <div class="layui-form-item">
             <div class="layui-inline">
@@ -206,7 +206,7 @@
                 <label class="layui-form-label">学历</label>
                 <div class="layui-input-block" style="width:150px">
                     <select name="uedu"  lay-verify="required">
-                        <option value="高中及以下">高中及以下</option>
+                        <option value="高中">高中</option>
                         <option value="专科">专科</option>
                         <option value="本科">本科</option>
                         <option value="硕士">硕士</option>

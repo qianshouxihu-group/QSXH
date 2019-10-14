@@ -14,6 +14,10 @@
     <link type="image/x-icon" rel=icon href="images/icon.png" />
     <link type="text/css" rel="stylesheet" href="css/style.css"/>
     <link rel="stylesheet" href="css/MatchUser.css" type="text/css" />
+    <link type="text/css" rel="stylesheet" href="css/chat.css"/>
+    <script type="text/javascript" src="js/chatserver.js" ></script>
+    <script type="text/javascript" src="js/chat.js" ></script>
+
 </head>
 <body>
 <div class="head">
@@ -21,8 +25,16 @@
         <div class="top-left">
         </div>
         <div class="top-right">
-            <a href="">注册</a> |
-            <a href="">登录</a>
+            <c:choose>
+                <c:when test="${ sessionScope.user!=null }">
+                    <a>${ sessionScope.user.uname },欢迎您！</a>|
+                    <a href="testManager/outLogin.action">注销</a>
+                </c:when>
+                <c:otherwise>
+                    <a href="<%=path%>/jsp/clientReg.jsp">注册</a> |
+                    <a href="<%=path%>/jsp/login.jsp">登录</a>
+                </c:otherwise>
+            </c:choose>
         </div>
     </div>
     <div class="top-ban">
@@ -35,33 +47,36 @@
 </div>
 <div class="nav-box">
     <div class="nav">
-        <a href="matchUser/matchByTime.action?limitString=12">网站首页</a>
-        <a href="">了解我们</a>
-        <a href="matchUser/smartMatch.action?limitString=30&usex=女">条件搜索</a>
-        <a href="matchUser/smartUser.action?id=1001">智能匹配</a>
-        <a href="">会员服务 </a>
-        <a href="">活动专题 </a>
-        <a href="">我的消息 </a>
-        <a href="">个人中心</a>
+        <a href="matchUser/matchByTime.action?limitString=12&userid=${sessionScope.user.userid}">网站首页</a>
+        <a href="jsp/clientAboutUs.jsp">了解我们</a>
+        <a id="searchUser" href="matchUser/smartMatch.action?limitString=30&usex=${sessionScope.user.usex}&condition=charm&userid=${sessionScope.user.userid}">条件搜索</a>
+        <a id="match"  href="matchUser/smartUser.action?id=${sessionScope.user.userid}&roleid=${sessionScope.user.roleid}">智能匹配</a>
+        <a href="jsp/beVip.jsp">会员服务 </a>
+        <a href="jsp/clientActiveList.jsp">活动专题 </a>
+        <a href="<%=path%>/informManager/systemInform.action">我的消息 <div class="my-notice">${countList.get(0)+countList.get(1)+countList.get(2)+countList.get(3)}</div></a>
+        <a href="personalManager/aboutBasic.action">个人中心</a>
     </div>
 </div>
 <div class="main">
     <div class="main-box1">
-        <!--<div class="login-left"><img src="images/loginpic.png"/></div> -->
         <div class="bodyCon08">
             <div class="students">
 
                 <div id="four_flash">
                     <div class="flashBg">
                         <ul class="mobile">
-                            <c:forEach items="${MatchList}" var="list">
-                                <li>
-                                    <img src="images/test.png" />
-                                    <dd>${list.uname}</dd>
-                                    <p>匹配指数：${list.count}</p>
-                                    <a href="" title="查看详细资料"></a>
-                                </li>
-                            </c:forEach>
+                            <c:if test="${!empty MatchList || MatchList != null}">
+                                <c:forEach items="${MatchList}" var="list">
+                                    <c:if test="${list.condition != 'notMember'}">
+                                        <li>
+                                            <img src="images/test.png" />
+                                            <dd>${list.uname}</dd>
+                                            <p>匹配指数：${list.count}</p>
+                                            <a href="<%=path%>/personalManager/showTaInforn.action?taId=${list.userid}" title="查看详细资料"></a>
+                                        </li>
+                                    </c:if>
+                                </c:forEach>
+                            </c:if>
                         </ul>
                     </div>
                     <div class="but_left"><img src="images/qianxleft.png" /></div>
@@ -78,6 +93,16 @@
 </div>
 <script type="text/javascript" src="js/jquery.js"></script>
 <script type="text/javascript">
+    <c:forEach items="${MatchList}" var="list">
+        <c:if test="${list.condition == 'notMember'}">
+            alert("您不是会员，无法进行智能匹配！！！");
+        history.go(-1);
+        </c:if>
+    </c:forEach>
+    <c:if test="${empty MatchList || null == MatchList}">
+        alert("资料未完善，请尽快完善择偶要求！！！");
+        history.go(-1);
+    </c:if>
     var _index5=0;
 
     $("#four_flash .but_right img").click(function(){

@@ -70,7 +70,6 @@ com\qsxh\dao\HabitDao.class
 com\qsxh\interceptor\Log.class
 com\qsxh\service\UserBiz.class
 com\qsxh\service\IDatingBiz.class
-com\qsxh\utiles\SleepHelper.class
 com\qsxh\controller\TestAction.class
 com\qsxh\service\impl\FundServiceImpl.class
 com\qsxh\service\impl\DatingBizImpl.class
@@ -78,7 +77,6 @@ com\qsxh\service\ICheckBiz.class
 com\qsxh\dao\InformDao.class
 com\qsxh\service\UserService.class
 com\qsxh\service\IPersonalService.class
-com\qsxh\utiles\BookAOP.class
 com\qsxh\controller\DatingAction.class
 com\qsxh\controller\UserLogAction.class
 com\qsxh\entity\UserAndData.class
@@ -102,7 +100,6 @@ com\qsxh\entity\ImageReturn.class
 com\qsxh\service\impl\StatServiceImpl.class
 com\qsxh\entity\ResultObj.class
 com\qsxh\entity\Role.class
-com\qsxh\utiles\Operation.class
 com\qsxh\service\RoleService.class
 com\qsxh\controller\RoleAction.class
 com\qsxh\service\impl\AdminBizImpl.class

@@ -8,7 +8,7 @@
     <select id="findUserByCondition" resultType="com.qsxh.entity.UserAndData" parameterType="com.qsxh.entity.UserAndData">
         select * from tbluser u,tbldata d
         <where>
-            u.userid = d.userid and usex = #{usex}
+            u.userid = d.userid and d.usex = #{usex} and u.userid != #{userid}
             <if test="null != uageRange"><!--年龄-->
             and d.ubirthday &gt;= #{maxbir} and d.ubirthday &lt;= #{minbir}
             </if>
@@ -37,13 +37,13 @@
                 and d.uaddress like #{Buaddress}
             </if>
             <if test="condition == 'charm'"> <!--按魅力值排序-->
-                order by ucharm DESC
+                order by d.ucharm DESC
             </if>
             <if test="condition == 'member'"><!--按最新会员排序-->
-                and roleid = 4 order by regdate DESC
+                and u.roleid = 4 order by u.regdate DESC
             </if>
             <if test="condition == 'user'"><!--按最新用户排序-->
-                and roleid = 3 order by regdate DESC
+                and u.roleid = 3 order by u.regdate DESC
             </if>
             <if test="limit != null and limit != 0">
                 limit #{page},#{limit}
@@ -56,7 +56,7 @@
     <select id="SmartMatchAll" resultType="com.qsxh.entity.UserAndData" parameterType="com.qsxh.entity.UserCondition">
         select * from tbluser u,tbldata d
         <where>
-        u.userid = d.userid and d.usex = #{usex} and ((d.ubirthday &gt;= #{maxBir}  and d.ubirthday &lt;= #{minBir})
+        u.userid = d.userid and d.usex = #{usex} and u.userid != #{userid} and ((d.ubirthday &gt;= #{maxBir}  and d.ubirthday &lt;= #{minBir})
         or (d.uheight &gt;= #{minHeight} and d.uheight &lt;= #{maxHeight}) or d.umerried = #{umerried}
         or d.uaddress like '%'#{uaddress}'%' or d.uedu = #{uedu} or d.ublood = #{ublood}
         or d.uincome = #{uincome} or d.uwork = #{uwork} or d.uhouse = #{uhouse} or d.ucar = #{ucar})

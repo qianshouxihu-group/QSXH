@@ -19,6 +19,10 @@
         <script type="text/javascript" src="js/koala.min.1.5.js"></script>
         <script type="text/javascript" src="js/jquery.collapse.js" ></script>
         <script src="js/loading.js"></script>
+		<link type="text/css" rel="stylesheet" href="css/chat.css"/>
+		<script type="text/javascript" src="js/chatserver.js" ></script>
+		<script type="text/javascript" src="js/chat.js" ></script>
+
 	</head>
 	<body>
 		<div class="head">
@@ -26,8 +30,16 @@
 		  	 <div class="top-left">
 		  	 </div>
 		  	 <div class="top-right">
-		  	 	<a href="">注册</a> |
-		  	 	<a href="">登录</a>
+				 <c:choose>
+					 <c:when test="${ sessionScope.user!=null }">
+						 <a>${ sessionScope.user.uname },欢迎您！</a>|
+						 <a href="testManager/outLogin.action">注销</a>
+					 </c:when>
+					 <c:otherwise>
+						 <a href="<%=path%>/jsp/clientReg.jsp">注册</a> |
+						 <a href="<%=path%>/jsp/login.jsp">登录</a>
+					 </c:otherwise>
+				 </c:choose>
 		  	 </div>
 		  </div>
 		  <div class="top-ban">
@@ -39,14 +51,14 @@
 		</div>
 		<div class="nav-box">
 			<div class="nav">
-				<a href="matchUser/matchByTime.action?limitString=12">网站首页</a>
-				<a href="">了解我们</a>
-				<a id="searchUser" href="matchUser/smartMatch.action?limitString=30&usex=${user.usex}&condition=charm">条件搜索</a>
-				<a href="matchUser/smartUser.action?id=${sessionScope.user.userid}">智能匹配</a>
-				<a href="">会员服务 </a>
-				<a href="">活动专题 </a>
-				<a href="">我的消息 </a>
-				<a href="">个人中心</a>
+				<a href="matchUser/matchByTime.action?limitString=12&userid=${sessionScope.user.userid}">网站首页</a>
+				<a href="jsp/clientAboutUs.jsp">了解我们</a>
+				<a id="searchUser" href="matchUser/smartMatch.action?limitString=30&usex=${sessionScope.user.usex}&condition=charm&userid=${sessionScope.user.userid}">条件搜索</a>
+				<a id="match"  href="matchUser/smartUser.action?id=${sessionScope.user.userid}&roleid=${sessionScope.user.roleid}">智能匹配</a>
+				<a href="jsp/beVip.jsp">会员服务 </a>
+				<a href="jsp/clientActiveList.jsp">活动专题 </a>
+				<a href="<%=path%>/informManager/systemInform.action">我的消息 <div class="my-notice">${countList.get(0)+countList.get(1)+countList.get(2)+countList.get(3)}</div></a>
+				<a href="personalManager/aboutBasic.action">个人中心</a>
 			</div>
 		</div>
 		<div class="banner"><img src="images/banner.jpg"/></div>
@@ -84,35 +96,16 @@
 					近期佳人<span>全城为您找到最靠谱的佳人</span>
 					<a href="">更多></a>
 				</div>
-				<ul class="main-member">
-					<c:forEach items="${WomanList}" var="list">
-						<li>
-							<a href="">
-								<img src="images/test.png">
-                                <p class="mem-num">昵称：${list.uname}</p>
-                                <p class="mem-text">${list.uage}岁  |  ${list.uheight}cm  |  ♥${list.ucharm}</p>
-							</a>
-						</li>
-					</c:forEach>
+				<ul class="main-member" id="woman">
 				</ul>
 				<div class="main-title">
 					近期熟男<span>全城为您找到最靠谱的帅哥</span>
 					<a href="">更多></a>
 				</div>
-				<ul class="main-member">
-					<c:forEach items="${ManList}" var="list">
-						<li>
-							<a href="">
-								<img src="images/test3.png">
-								<p class="mem-num">昵称：${list.uname}</p>
-								<p class="mem-text">${list.uage}岁  |  ${list.uheight}cm  |  ♥${list.ucharm}</p>
-							</a>
-						</li>
-					</c:forEach>
+				<ul class="main-member" id="man">
 				</ul>
 			    <div class="main-title">
 					友情链接<span>以下商家为“牵手西湖”合作伙伴</span>
-					<a href="">更多></a>
 				</div>
 				<ul class="friend-link">
 					<li><a href=""><img src="images/link3.png"/></a></li>
@@ -121,20 +114,38 @@
 					<li><a href=""><img src="images/link2.png"/></a></li>
 				</ul>
 			</div><!--left-->
-			<div class="main-right"><!--right-->
-				<div class="main-log">
-					<div class="tit">会员登录</div>
-					<div class="main-logbox">
-						<i class="main-user"></i>
-						<input placeholder="账户名" type="text" class="main-user-input" />
-					</div>
-					<div class="main-logbox">
-						<i class="main-password"></i>
-						<input placeholder="密码" type="text" class="main-user-input" />
-					</div>
-					<button type="button"  class="main-btn">立即登录</button>
-					<div class="main-pass-text">没有帐号？<a href="">免费注册</a><a href="" class="forget">忘记密码 ></a></div>
-				</div>
+				<div class="main-right"><!--right-->
+
+					<c:if test="${!empty user}">
+						<div class="main-log">
+							<div class="tit">${user.uname}</div>
+							<div class="mem-pic"><img src="${user.uimgurl}"/></div>
+							<div class="main-pass-text" style="margin-top: 25px;">
+								<a href="" class="entermem" style="color: #fff;">进入我的主页</a>
+							</div>
+						</div>
+					</c:if>
+					<c:if test="${empty user}">
+						<div class="main-log">
+							<div class="tit">会员登录</div>
+							<div class="main-logbox">
+								<i class="main-user"></i>
+								<input placeholder="账户名" type="text" class="main-user-input" />
+							</div>
+							<div class="main-logbox">
+								<i class="main-password"></i>
+								<input placeholder="密码" type="text" class="main-user-input" />
+							</div>
+							<button type="button"  class="main-btn">立即登录</button>
+							<div class="main-pass-text">没有帐号？<a href="">免费注册</a><a href="" class="forget">忘记密码 ></a></div>
+						</div>
+					</c:if>
+
+
+
+
+
+
 				<div class="main-radv"><img src="images/adv2.png"/></div>
 				<div class="main-radv"><img src="images/adv1.png"/></div>
 				<div class="main-message">
@@ -185,6 +196,51 @@
 		</div>
 	
 <script type="text/javascript">
+	//==========================================页面加载时查询近期用户=======================
+	$(document).ready(function () {
+		//执行数据加载
+		$.ajax({
+			url:"matchUser/matchByTimeajax.action?limitString=12&userid=${sessionScope.user.userid}",
+			type: "GET",
+			contentType: "application/json; charset=utf-8",
+			dataType: "json",
+			success:function (data) {
+				//这里的cityInfo1是后端map的key
+				var manlist = data["manlist"];
+				var firstCity ="";
+				$("#man").html("");
+				for(var i in manlist){
+					var str = "<li>" +
+							"<a href='<%=path%>/personalManager/showTaInforn.action?taId="+manlist[i].userid+"'>" +
+							"<img src='images/test3.png'>" +
+							"<p class='mem-num'>昵称：" + manlist[i].uname + "</p>" +
+							"<p class='mem-text'>"+manlist[i].uage+"岁  |  "+manlist[i].uheight +"cm  |  <span style='color: #f2a1a9'>　♥　</span>"+manlist[i].ucharm+"</p>"+
+							"</a>" +
+							"</li>";
+					$("#man").append(str);
+				}
+				var womanlist = data["womanlist"];
+				var firstCity ="";
+				$("#woman").html("");
+				for(var i in womanlist){
+					var str = "<li>" +
+							"<a href='<%=path%>/personalManager/showTaInforn.action?taId="+womanlist[i].userid+"'>" +
+							"<img src='images/test.png'>" +
+							"<p class='mem-num'>昵称：" + womanlist[i].uname + "</p>" +
+							"<p class='mem-text'>"+womanlist[i].uage+"岁  |  "+womanlist[i].uheight +"cm  |  <span style='color: #f2a1a9'>　♥　</span>"+womanlist[i].ucharm+"</p>"+
+							"</a>" +
+							"</li>";
+					$("#woman").append(str);
+				}
+			},
+			error:function () {
+
+			}
+		})
+	})
+
+	//===================================================================
+
 	Qfast.add('widgets', { path: "js/terminator2.2.min.js", type: "js", requires: ['fx'] });  
 	Qfast(false, 'widgets', function () {
 		K.tabs({
@@ -202,15 +258,22 @@
 		}) 
 	})
 
-    //loading全屏，加载等待效果
-    $('#searchUser').click(function(){
-        var load = new Loading();
-        load.init();
-        load.start();
-        setTimeout(function() {
-            load.stop();
-        }, 30000)
-    });
+	//===============================loading全屏，加载等待效果================
+	$('#searchUser').click(function(){
+		toload();
+	});
+
+	function toload(){
+		var load = new Loading();
+		load.init();
+		load.start();
+		setTimeout(function() {
+			load.stop();
+		}, 20000)
+	}
+	$('#match').click(function(){
+		toload();
+	});
 </script>
 </body>
 </html>

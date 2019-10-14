@@ -7,10 +7,7 @@ import com.qsxh.service.MatchUserService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
-import java.util.Calendar;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
+import java.util.*;
 
 @Service("matchUserService")
 public class MatchUserServiceImpl implements MatchUserService {
@@ -37,6 +34,12 @@ public class MatchUserServiceImpl implements MatchUserService {
         userAndData.setMinbir(minage+"");//设置默认最小年龄de年份
         userAndData.setMaxbir(maxage+"");//设置默认最大年龄de年份
         userAndData.setUageRange("不限");
+        //根据用户的性别查询异性
+        if (userAndData.getUsex().equals("男")){
+            userAndData.setUsex("女");
+        }else{
+            userAndData.setUsex("男");
+        }
         userAndData.setLimit(Integer.parseInt(userAndData.getLimitString()));//将前台页面传来的要显示的记录条数转成int
         //将list中的出生年月换算成年龄在页面显示，hs()
         list = hs(matchUserDao.findUserByCondition(userAndData));
@@ -60,6 +63,15 @@ public class MatchUserServiceImpl implements MatchUserService {
      */
     @Override
     public List<UserAndData> findUserByTime(UserAndData userAndData) {
+        //获取现在的时间
+        Calendar mycalendar=Calendar.getInstance();
+        //获取年份
+        String year=String.valueOf(mycalendar.get(Calendar.YEAR));
+        int minage = (Integer.parseInt(year)-18);
+        int maxage = (Integer.parseInt(year)-200);
+        userAndData.setMinbir(minage+"");//设置默认最小年龄de年份
+        userAndData.setMaxbir(maxage+"");//设置默认最大年龄de年份
+        userAndData.setUageRange("不限");
         userAndData.setLimit(Integer.parseInt(userAndData.getLimitString()));//将前台页面传来的要显示的记录条数转成int
         //将list中的出生年月换算成年龄在页面显示，hs()
         list = hs(matchUserDao.findUserByCondition(userAndData));
@@ -70,50 +82,57 @@ public class MatchUserServiceImpl implements MatchUserService {
     智能匹配
      */
     @Override
-    public List<UserAndData> SmartUser(String id) {
-        //根据userid查出择偶要求,以及用户的性别
-        userCondition = matchUserDao.findUserCondition(id);
+    public List<UserAndData> SmartUser(String id, String roleid) {
+        System.out.println(id+"id值");
+        System.out.println(roleid+"roleid值");
+        if(roleid.equals("4")){//判断是否为会员，否则无法智能匹配
+            //根据userid查出择偶要求,以及用户的性别
+            userCondition = matchUserDao.findUserCondition(id);
 
-
-
-        //需要判断该用户择偶要求是否为空！！！
-        //如果是空，跳到提示页面，提示页面可以跳转到完善资料页
-
-
-
-        //获取年龄范围
-        int minage = 0;
-        int maxage = 0;
-        if(!userCondition.getAgerange().equals("不限")){
-            String[] Age = userCondition.getAgerange().split("-");
-            minage=Integer.parseInt(Age[0]);
-            minage=Integer.parseInt(Age[1]);
-        }
-        //获取身高范围
-        String[] Height = userCondition.getUheight().split("-");
-        userCondition.setMinHeight(Height[0]);
-        userCondition.setMaxHeight(Height[1]);
-        //根据用户的性别查询异性
-        if (userCondition.getUsex().equals("男")){
-            userCondition.setUsex("女");
+            //需要判断该用户择偶要求是否为空！！！
+            if(userCondition != null){
+                //获取年龄范围
+                int minage = 0;
+                int maxage = 0;
+                if(!userCondition.getAgerange().equals("不限")){
+                    String[] Age = userCondition.getAgerange().split("-");
+                    minage=Integer.parseInt(Age[0]);
+                    minage=Integer.parseInt(Age[1]);
+                }
+                //获取身高范围
+                String[] Height = userCondition.getUheight().split("-");
+                userCondition.setMinHeight(Height[0]);
+                userCondition.setMaxHeight(Height[1]);
+                //根据用户的性别查询异性
+                if (userCondition.getUsex().equals("男")){
+                    userCondition.setUsex("女");
+                }else{
+                    userCondition.setUsex("男");
+                }
+                //获取现在的时间
+                Calendar mycalendar=Calendar.getInstance();
+                //获取年份
+                String year=String.valueOf(mycalendar.get(Calendar.YEAR));
+                //将条件中的最小最大年龄转换成出生年
+                userCondition.setMinBir(Integer.parseInt(year)-minage+"");
+                userCondition.setMaxBir(Integer.parseInt(year)-maxage+"");
+                userCondition.setMinage(minage);
+                userCondition.setMaxage(maxage);
+                //将择偶要求作为条件进行匹配,查出所有任意符合其中一个条件及以上的异性用户
+                list = matchUserDao.SmartMatchAll(userCondition);
+                //list统计匹配指数
+                list = MatchCalculation(list);
+                //按照匹配指数对list进行排序
+                list = MatchRank(list);
+            }else{//如果是空，提示完善资料
+                list = null;
+            }
         }else{
-            userCondition.setUsex("男");
+            list = new ArrayList<UserAndData>();
+            UserAndData users = new UserAndData();
+            users.setCondition("notMember");
+            list.add(users);
         }
-        //获取现在的时间
-        Calendar mycalendar=Calendar.getInstance();
-        //获取年份
-        String year=String.valueOf(mycalendar.get(Calendar.YEAR));
-        //将条件中的最小最大年龄转换成出生年
-        userCondition.setMinBir(Integer.parseInt(year)-minage+"");
-        userCondition.setMaxBir(Integer.parseInt(year)-maxage+"");
-        userCondition.setMinage(minage);
-        userCondition.setMaxage(maxage);
-        //将择偶要求作为条件进行匹配,查出所有任意符合其中一个条件及以上的异性用户
-        list = matchUserDao.SmartMatchAll(userCondition);
-        //list统计匹配指数
-        list = MatchCalculation(list);
-        //按照匹配指数对list进行排序
-        list = MatchRank(list);
         return list;
     }
 
@@ -211,7 +230,7 @@ public class MatchUserServiceImpl implements MatchUserService {
     }
 
     /*
-    换算年龄
+    生日换算成年龄
      */
     public List<UserAndData> hs(List<UserAndData> list){
         //获取现在的时间
@@ -264,18 +283,26 @@ public class MatchUserServiceImpl implements MatchUserService {
         String year=String.valueOf(mycalendar.get(Calendar.YEAR));
 
         if("不限".equals(userAndData.getUageRange())){
-            minage = (Integer.parseInt(year)-18);
+            minage = (Integer.parseInt(year)-18)+1;
             maxage = (Integer.parseInt(year)-200);
         }else if("53以上".equals(userAndData.getUageRange())){
-            minage = (Integer.parseInt(year)-53);
+            minage = (Integer.parseInt(year)-53)+1;
             maxage = (Integer.parseInt(year)-200);
         }else{
             String age[] = userAndData.getUageRange().split("-");//将年龄范围切割为最大，最小年龄
-            minage = (Integer.parseInt(year)-Integer.parseInt(age[0]));
+            minage = (Integer.parseInt(year)-Integer.parseInt(age[0]))+1;
             maxage = (Integer.parseInt(year)-Integer.parseInt(age[1]));
+            System.out.println("小年龄："+minage);
+            System.out.println("大年龄："+maxage);
         }
         userAndData.setMinbir(minage+"");
         userAndData.setMaxbir(maxage+"");
+        //根据用户的性别查询异性
+        if (userAndData.getUsex().equals("男")){
+            userAndData.setUsex("女");
+        }else{
+            userAndData.setUsex("男");
+        }
         return userAndData;
     }
 }

@@ -91,6 +91,7 @@ public class UserLogAction extends ActionSupport {
                 }
                 if("5".equals(user.getRoleid())){
                     request.getSession().setAttribute("userid",user.getUserid());
+                    mv.addObject("userid", user.getUserid());
                     mv.setViewName("cregdata");
                 }
                 if("6".equals(user.getRoleid())){
@@ -114,7 +115,10 @@ public class UserLogAction extends ActionSupport {
     public ModelAndView managerLogin2(HttpServletRequest request, String uname, String password) {
         ModelAndView mv = new ModelAndView();
         HttpSession session = request.getSession();
-        User user = us.userLogin2(uname,password);
+
+        String md5pass = MD5.getMD5(password);
+        User user = us.userLogin2(uname,md5pass);
+
         System.out.println(""+uname+"   "+password);
         String verifyCode = request.getParameter("verifyCode");
         String sessionVerifyCode = (String) session.getAttribute("verifyCodeValue");

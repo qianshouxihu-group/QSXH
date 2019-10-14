@@ -17,7 +17,7 @@
     </update>
     <!--基础资料查询-->
     <select id="findUserWithBasic" resultType="com.qsxh.entity.PersonalData">
-        select u.userid,u.uname,u.upass,u.uimgurl as imgurl,d.ubirthday,d.umerried,d.uheight,d.uincome,d.uweight,d.uedu,d.usex,d.ublood,d.conste as constellation,
+        select u.roleid,u.userid,u.uname,u.upass,u.uimgurl as imgurl,d.ubirthday,d.umerried,d.uheight,d.uincome,d.uweight,d.uedu,d.usex,d.ublood,d.conste as constellation,
         d.uage,d.uaddress,d.uinstro,d.s_province,d.s_city
         from tbluser u, tbldata d where u.userid =d.userid and u.userid =#{userid}
     </select>
@@ -68,6 +68,12 @@
         t1.uname=#{uname},t2.uweight =#{uweight},t2.uage =#{uage}
         WHERE t1.userid = #{userid} and t1.userid =t2.userid
     </update>
+
+    <!--修改用户密码-->
+    <update id="updatePass">
+        UPDATE tbluser SET upass = #{upass} where userid = #{userid}
+    </update>
+
 
 </mapper>
 
