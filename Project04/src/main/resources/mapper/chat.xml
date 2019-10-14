@@ -38,9 +38,8 @@
     <!--查询聊天记录-->
     <select id="findMessage" resultType="com.qsxh.entity.TblChatMessage">
         SELECT fromid,toid,type,time,content
-        FROM tblchatmessage WHERE
-        (fromid=#{fromid} and toid='1007')
-        OR (fromid='1007' and toid=#{fromid})
+        FROM tblchatmessage WHERE (fromid=#{fromid} AND toid=#{toid})
+        OR (fromid=#{toid} and toid=#{fromid}) ORDER BY time
     </select>
 
     <!--删除聊天记录-->
@@ -50,10 +49,10 @@
     </delete>
 
     <!--查找指定记录-->
-    <select id="findSomeone" parameterType="com.qsxh.entity.TblChatMessage">
+    <select id="findSomeone" parameterType="com.qsxh.entity.TblChatMessage" resultType="java.lang.String">
         SELECT content FROM tblchatmessage WHERE type=#{type}
-        AND (fromid=#{fromid} and toid=#{toid})
-        OR (fromid=#{toid} and toid=#{fromid})
+        AND ( (fromid=#{fromid} and toid=#{toid})
+        OR (fromid=#{toid} and toid=#{fromid}) )
     </select>
 
 </mapper>

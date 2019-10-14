@@ -3,6 +3,7 @@ package com.qsxh.service;
 import com.qsxh.entity.TblChatMessage;
 import com.qsxh.entity.TblUser;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 public interface ChatService {
@@ -20,7 +21,10 @@ public interface ChatService {
     public boolean online(String userid);
 
     //删除聊天好友
-    public boolean delete(String fromid,String toid);
+    public boolean delete(String fromid, String toid, HttpServletRequest request);
+
+    //获取聊天记录
+    public List<TblChatMessage> messages(String fromid,String toid);
 
     //根据消息类型，执行不同的操作
     public String chatControl(TblChatMessage chatMessage);

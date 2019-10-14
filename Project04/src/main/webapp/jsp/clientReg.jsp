@@ -156,6 +156,66 @@
                 return true;
             }
         }
+
+        <%--手机验证码格式验证--%>
+        function checkCode() {
+            var code = $("#code").val();
+            if(null == code || 0 == code.length)
+            {
+                $("#codeError").html("请输入短信验证码！").attr("class","main-userNoctice");
+                return false;
+            }
+            else if(code.length != 6)
+            {
+                $("#codeError").html("短信验证码需为6位数字！").attr("class","main-userNoctice");
+                return false;
+            }
+            else
+            {
+                $("#codeError").html("格式正确！").attr("class","main-userCan");
+                return true;
+            }
+        }
+        <%--获取验证码--%>
+        function getCodeFuction() {
+            <%-- 先验证手机号格式 --%>
+            var phone = $("#phone").val();
+            var test = /^1([38]\d|5[0-35-9]|7[3678])\d{8}$/;/*正则表达式*/
+            if(null == phone || 0 == phone.length)
+            {
+                //alert("请输入手机号！");
+                $("#phoneError").html("手机号不可为空！").attr("class","main-userNoctice");
+            }
+            else if(!test.test(phone))
+            {
+                $("#phoneError").html("手机号格式不正确！").attr("class","main-userNoctice");
+                //alert("手机号格式不正确！");
+            }
+            else
+            {
+                $.ajax({
+                    type : "GET",
+                    contentType : 'application/json;charset=UTF-8',
+                    data : {"phone" : phone},
+                    url : "<%=path%>/regManager/getCode.action",
+                    dataType:"text",
+                    success : function(data) {
+                        if(data == "success")
+                        {
+                            // alert("此手机号可用");
+                            // $("#phoneError").html("此手机号可用！");
+                            alert("验证码已发送至您的手机，5分钟后失效！")
+                        }
+                        else if(data == "fail")
+                        {
+                            //alert("获取验证码失败！");
+                            // alert("此手机号已被注册！");
+                            $("#phoneError").html("此手机号已被注册！").attr("class","main-userNoctice");
+                        }
+                    }
+                });
+            }
+        }
     </script>
 </head>
 <body>
@@ -218,8 +278,10 @@
 
                     <div class="main-logbox" style="border: 0;">
                         <input type="text" name="code" placeholder="手机验证码" class="yzm">
-                        <button>获取验证码</button>
+                        <button id="getCode" onclick="getCodeFuction()">获取验证码</button>
                     </div>
+                    <%--提示信息--%>
+                    <span id="codeError" class="main-userSpan">请输入正确手机验证码</span><p/>
                     <div class="remember">
                         <input type="checkbox" checked="checked">
                         <label>我同意</label><a>服务协议</a>

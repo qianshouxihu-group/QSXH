@@ -8,9 +8,10 @@
 			nowuserid = userid;
 			serverurl = url;
 
+
 			//获取服务端地址
 			ws = "ws://" + serverurl + "/ws";
-
+			alert(ws);
 			//判断当前浏览器是否支持WebSocket
 			if ('WebSocket' in window) {
 				websocket = new WebSocket(ws);
@@ -22,7 +23,6 @@
 			websocket.onopen = function() {
 				//显示在线状态
                 alert('连接成功')
-
 
 			};
 
@@ -47,7 +47,6 @@
 
 		//监听窗口关闭事件，当窗口关闭时，主动去关闭websocket连接，防止连接还没断开就关闭窗口，server端会抛异常。
 		window.onbeforeunload = function() {
-			onLineStatusNotice(4);
 			closeWebSocket();
 		};
 
@@ -69,7 +68,7 @@
 			messages = JSON.parse(message);
 
 			//判断是否为申请通知
-			if(messages.type == "apply" || messages.type == 4){
+			if(messages.type == "apply" ){
 			    if (confirm('是否接受来自 '+ messages.content +' 的聊天申请？')){
                     sendMessage(messages.content,messages.fromid,'agree');
                 }
@@ -77,19 +76,34 @@
                     sendMessage(messages.content,messages.fromid,'refuse');
                 }
 			}
-			else if (messages.type == 'img'){
-				showReceiveImage(messages.content, messages.time);
+			else if (messages.type == 'img'|| messages.type == 'text'){
+				var inputId = '#'+messages.fromid;
+				if (chatState=='close'){
+					$(".chatBtn").click();
+                    $(".chatBox-list").children(inputId).next().click();
+				}
+				else if (chatState=='show'&&messages.fromid!=toid){
+					$(".chat-return").click();
+                    $(".chatBox-list").children(inputId).next().click();
+				}
+				else if (chatState=='list') {
+                    $(".chatBox-list").children(inputId).next().click();
+				}
+				else if (messages.type == 'img') {
+					showReceiveImage(messages.content, messages.time);
+				}
+				else if (messages.type == 'text'){
+					showReceiveMessage(messages.content, messages.time);
+				}
+
 			}
 			else if(messages.type == 'agree'){
 				alert(messages.content + '同意了您的聊天请求');
-				showChatList();
+				showChatList(messages.toid);
 			}
 			else if (messages.type == 'refuse'){
 				alert(messages.content + '拒绝了您的聊天请求');
 			}
-			else if(messages.type == 0 ||messages.type == -1 || messages.type == 'text'){
-                showReceiveMessage(messages.content, messages.time);
-            }
 
 		}
 		
@@ -106,14 +120,14 @@
 			}));
 		}
 
-		//展示图片和表情消息
+		//展示文字和表情消息
 		function showReceiveMessage(content, time) {
 
 			$(".chatBox-content-demo").append("<div class=\"clearfloat\"><div class=\"author-name\">\n" +
 				"<small class=\"chat-date\">"+
 				time + "</small></div><div class=\"left\">" +
 				"<div class=\"chat-avatars\"><img src=" +
-				"\"img/icon01.png\"" + " alt=\"头像\"></div><div class=\"chat-message\">" +
+				"\"images/icon01.png\"" + " alt=\"头像\"></div><div class=\"chat-message\">" +
 				content + "</div></div></div>");
 
 			//聊天框默认最底部
@@ -129,7 +143,7 @@
 				"<small class=\"chat-date\">"+
 				time + "</small></div><div class=\"left\">" +
 				"<div class=\"chat-avatars\"><img src=" +
-				"\"img/icon01.png\"" + " alt=\"头像\"></div><div class=\"chat-message\"><img src=\""+
+				"\"images/icon01.png\"" + " alt=\"头像\"></div><div class=\"chat-message\"><img src=\""+
 				url+"\" alt=\"\"></div></div></div>");
 
 			//聊天框默认最底部
@@ -164,20 +178,6 @@
 		}
 
 
-		//上下线通知
-		function onLineStatusNotice(type){
-			var allRelations = getAllRelations();
-			var content = null;
-			if(type==3)
-				content='上线通知';
-			else if(type==4)
-				content='下线通知';
-			var usersId = new Array();
-			for(var i=0;i<allRelations.length;i++){
-				usersId[i] = allRelations[i].userId;
-			}
-			sendMessage(content,usersId,type);
-		}
 
 		//通过ajax获取聊天记录
 		function getMessages(mfromid,mtoid) {

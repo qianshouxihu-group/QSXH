@@ -10,6 +10,7 @@ import com.qsxh.service.RelationService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.annotation.Resource;
@@ -33,7 +34,7 @@ public class MyFollowAction {
         String userid = user.getUserid();
 
         //dao查找并分页
-        PageHelper.startPage(page,2);
+        PageHelper.startPage(page,5);
         List<TblUser> followlist = relationService.findFollowed(userid);
 
         PageInfo pageInfo = new PageInfo(followlist, 5);
@@ -46,6 +47,7 @@ public class MyFollowAction {
 
     @RequestMapping("/good")//点赞
     @Log(actionType = "用户操作", actionName = "点赞")
+    @ResponseBody
     public String giveGood(HttpServletRequest request,String followedid){
         System.out.println("---进入点赞逻辑---");
 
@@ -60,11 +62,14 @@ public class MyFollowAction {
 
         boolean result = relationService.good(users);
 
-        return "forward:/MyFollowManager/getlist.action";
+        String state = result ? "yes" : "no";
+
+        return state;
     }
 
     @RequestMapping("/change")//更改关注状态
     @Log(actionType = "关注列表", actionName = "修改关注状态")
+    @ResponseBody
     public String cancelFollow(HttpServletRequest request,String followedid){
         System.out.println("---进入关注逻辑---");
 
@@ -83,11 +88,14 @@ public class MyFollowAction {
 
         boolean result = relationService.follow(users);
 
-        return "forward:/MyFollowManager/getlist.action";
+        String state = result ? "yes" : "no";
+
+        return state;
     }
 
     @RequestMapping("/gift")//赠送礼物
     @Log(actionType = "用户操作", actionName = "赠送礼物")
+    @ResponseBody
     public String sendGift(HttpServletRequest request,String toid){
         System.out.println("---进入赠送礼物逻辑---");
 
@@ -102,9 +110,9 @@ public class MyFollowAction {
 
         System.out.println(userid+"---"+toid);
 
-        boolean result = relationService.sendGift(users);
+        String result = relationService.sendGift(users);
 
-        return "forward:/MyFollowManager/getlist.action";
+        return result;
     }
 
 
