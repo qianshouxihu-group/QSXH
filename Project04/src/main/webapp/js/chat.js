@@ -154,9 +154,18 @@
 
                 chatState = 'show';
 
+
                 //加载送礼图标
                 giftText="<div class='gift-send'><a href='javascript:void(0);' title='赠送礼物'><img  src='images/gift.png' alt='赠送礼物'></a></div>";
                 $(".ChatInfoName").append(giftText);
+
+                //
+                emptyText="<div class='gift-send'><img  src='images/icon.png' alt='哈哈'></div>";
+                $(".ChatInfoName").append(emptyText);
+
+                //加载约会图标
+                dateText="<div class='fast-date'><a href='javascript:void(0);' title='发起约会'><img  src='images/cdating.png' alt='发起约会'></a></div>";
+                $(".ChatInfoName").append(dateText);
 
                 //赠送礼物
                 $(".gift-send").click(function(){

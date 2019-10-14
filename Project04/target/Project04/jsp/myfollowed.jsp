@@ -2,7 +2,7 @@
 <%
     String path = request.getContextPath();
     String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
-    String chatPath = request.getServerName()+":"+request.getServerPort()+request.getContextPath()+"/";
+    String chatPath = request.getServerName()+":"+request.getServerPort()+request.getContextPath();
 %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <html>

@@ -305,6 +305,11 @@
     float:right;
     margin-top: 3px;
 }
+
+.fast-date{
+    float:right;
+    margin-top: 3px;
+}
 .chat-list-people>div.message-num{
     display: inline-block;
     height: auto;

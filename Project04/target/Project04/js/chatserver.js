@@ -11,7 +11,6 @@
 
 			//获取服务端地址
 			ws = "ws://" + serverurl + "/ws";
-			alert(ws);
 			//判断当前浏览器是否支持WebSocket
 			if ('WebSocket' in window) {
 				websocket = new WebSocket(ws);
