@@ -6,15 +6,7 @@
     </artifacts-to-build>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="882b8d06-e5f0-40b1-abe5-5b09df724c53" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/css/chat.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/css/chat.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/css/font-awesome.min.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/css/font-awesome.min.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/images/gift.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/images/gift.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/images/icon.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/images/icon.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/js/chat.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/js/chat.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/js/chatserver.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/js/chatserver.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/jsp/myfollowed.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/jsp/myfollowed.jsp" afterDir="false" />
-    </list>
+    <list default="true" id="882b8d06-e5f0-40b1-abe5-5b09df724c53" name="Default Changelist" comment="" />
     <ignored path="$PROJECT_DIR$/classes/" />
     <ignored path="$PROJECT_DIR$/target/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -315,7 +307,7 @@
       <workItem from="1570886081205" duration="662000" />
       <workItem from="1570930749741" duration="5535000" />
       <workItem from="1570949288578" duration="16500000" />
-      <workItem from="1571018056361" duration="17360000" />
+      <workItem from="1571018056361" duration="17513000" />
     </task>
     <servers />
   </component>
@@ -328,7 +320,7 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="79886000" />
+    <option name="totallyTimeSpent" value="80039000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
@@ -343,7 +335,7 @@
       <window_info id="Web" order="7" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info anchor="bottom" id="Run" order="2" visible="true" weight="0.06710311" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.06710311" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
