@@ -83,12 +83,16 @@
     <!--===============kjy===============-->
     <!--用户登录-->
     <select id="userLogin" resultType="com.qsxh.entity.User">
-        select * from tbluser where userid = #{userid} and upass = #{upass} and roleid in (3,4,5,6)
+        select u.* , d.* from tbluser u , tbldata d
+        where u.userid = #{userid}
+        and u.userid = d.userid
+        and u.upass = #{upass}
+        and u.roleid in (3,4,5,6)
     </select>
 
     <!--管理员登录-->
     <select id="userLogin2" resultType="com.qsxh.entity.User">
-        select * from tbluser where userid = #{userid} and upass = #{upass} and roleid in (1,2)
+        select * from tbluser where userid = #{userid} and upass = #{upass} and roleid in (1,2,7)
     </select>
 
     <!--根据id得到用户资料-->
@@ -115,6 +119,7 @@
     <update id="changeRoldid" parameterType="java.lang.String">
        update tbluser SET roleid = #{rid} where userid = #{id}
     </update>
+
     <!--=======================gjy===================-->
     <!--    普通用户列表-->
     <select id="findUserList" parameterType="com.qsxh.entity.User" resultType="com.qsxh.entity.User">
@@ -159,7 +164,7 @@
     </select>
 
     <update id="userPassReset" parameterType="java.lang.String" >
-        update tbluser set upass='123456' where userid=#{userid}
+        update tbluser set upass='8715a4f66d9eeddba20b5453edc41bd7' where userid=#{userid}
     </update>
 
 

@@ -12,11 +12,21 @@ public class UserInterceptor implements HandlerInterceptor {
     public boolean preHandle(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object o) throws Exception {
         System.out.println("进入登录判断拦截器");
         User user= (User) httpServletRequest.getSession().getAttribute("user");
-            if (null == user) {
+        User manager = (User) httpServletRequest.getSession().getAttribute("manager");
+
+        if (null == user || user.getRoleid().equals('5') || user.getRoleid().equals('6'))
+        {
             httpServletRequest.setAttribute("log","log");
             httpServletRequest.getRequestDispatcher("/jsp/login.jsp").forward(httpServletRequest,httpServletResponse);
             return false;
-        }else return true;
+        }
+        else if (null == manager)
+        {
+            httpServletRequest.setAttribute("log","log");
+            httpServletRequest.getRequestDispatcher("/jsp/login_backstage.jsp").forward(httpServletRequest,httpServletResponse);
+            return false;
+        }
+        else return true;
     }
 
     @Override

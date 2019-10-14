@@ -49,4 +49,8 @@ public class AdminBizImpl implements IAdminBiz {
     public int addAdmin(User user) {
         return adminDao.addAdmin(user);
     }
+    @Override
+    public Integer getRoleidFromId(String userid) {
+        return adminDao.getRoleidFromId(userid);
+    }
 }

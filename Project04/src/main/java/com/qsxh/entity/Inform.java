@@ -12,11 +12,13 @@ public class Inform {
 
     private int page;
     private int limit;
+    private String begindate;//查询条件 起始时间
+    private String enddate;//查询条件 终止时间
 
     public Inform() {
     }
 
-    public Inform(Integer informid, String itime, String ititle, String icontext, String itype, String itoid, String iurl, String istate, int page, int limit) {
+    public Inform(Integer informid, String itime, String ititle, String icontext, String itype, String itoid, String iurl, String istate, int page, int limit, String begindate, String enddate) {
         this.informid = informid;
         this.itime = itime;
         this.ititle = ititle;
@@ -27,6 +29,8 @@ public class Inform {
         this.istate = istate;
         this.page = page;
         this.limit = limit;
+        this.begindate = begindate;
+        this.enddate = enddate;
     }
 
     public Integer getInformid() {
@@ -53,11 +57,11 @@ public class Inform {
         this.ititle = ititle;
     }
 
-    public String geticontext() {
+    public String getIcontext() {
         return icontext;
     }
 
-    public void seticontext(String icontext) {
+    public void setIcontext(String icontext) {
         this.icontext = icontext;
     }
 
@@ -107,5 +111,21 @@ public class Inform {
 
     public void setLimit(int limit) {
         this.limit = limit;
+    }
+
+    public String getBegindate() {
+        return begindate;
+    }
+
+    public void setBegindate(String begindate) {
+        this.begindate = begindate;
+    }
+
+    public String getEnddate() {
+        return enddate;
+    }
+
+    public void setEnddate(String enddate) {
+        this.enddate = enddate;
     }
 }

@@ -14,6 +14,10 @@
     <link type="image/x-icon" rel=icon href="images/icon.png"/>
     <link type="text/css" rel="stylesheet" href="css/style.css"/>
     <script src="js/jquery-1.8.3.min.js"></script>
+    <link type="text/css" rel="stylesheet" href="css/chat.css"/>
+    <script type="text/javascript" src="js/chatserver.js" ></script>
+    <script type="text/javascript" src="js/chat.js" ></script>
+
 </head>
 <body>
 <%String chongzhi = request.getParameter("chongzhi");%>
@@ -31,8 +35,8 @@
                     <a href="testManager/outLogin.action">注销</a>
                 </c:when>
                 <c:otherwise>
-                    <a href="">注册</a> |
-                    <a href="">登录</a>
+                    <a href="<%=path%>/jsp/clientReg.jsp">注册</a> |
+                    <a href="<%=path%>/jsp/login.jsp">登录</a>
                 </c:otherwise>
             </c:choose>
         </div>
@@ -47,14 +51,14 @@
 </div>
 <div class="nav-box">
     <div class="nav">
-        <a href="">网站首页</a>
-        <a href="">了解我们</a>
-        <a href="">搜索会员 </a>
-        <a href="">婚恋课堂 </a>
-        <a href="">活动专题 </a>
-        <a href="">婚恋故事</a>
-        <a href="">联系社区工作人员</a>
-        <a href="">个人中心</a>
+        <a href="matchUser/matchByTime.action?limitString=12">网站首页</a>
+        <a href="jsp/clientAboutUs.jsp">了解我们</a>
+        <a id="searchUser" href="matchUser/smartMatch.action?limitString=30&usex=${user.usex}&condition=charm">条件搜索</a>
+        <a href="matchUser/smartUser.action?id=${sessionScope.user.userid}&roleid=${sessionScope.user.roleid}">智能匹配</a>
+        <a href="jsp/beVip.jsp">会员服务 </a>
+        <a href="jsp/clientActiveList.jsp">活动专题 </a>
+        <a href="<%=path%>/informManager/systemInform.action">我的消息 <div class="my-notice">${countList.get(0)+countList.get(1)+countList.get(2)+countList.get(3)}</div></a>
+        <a href="personalManager/aboutBasic.action">个人中心</a>
     </div>
 </div>
 <div class="main">

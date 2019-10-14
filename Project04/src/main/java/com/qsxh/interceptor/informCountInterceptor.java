@@ -21,11 +21,14 @@ public class InformCountInterceptor implements HandlerInterceptor {
         System.out.println("进入消息数拦截器");
         HttpSession session = request.getSession();
         User user = (User) session.getAttribute("user");
-        String userid = user.getUserid();
+        if(null != user)
+        {
+            String userid = user.getUserid();
 
-        List<Integer> list = informBiz.unreadCount(userid);
-        request.setAttribute("countList", list);
-
+            List<Integer> list = informBiz.unreadCount(userid);
+            request.setAttribute("countList", list);
+            System.out.println("用户："+userid+"未读数："+list.get(0)+list.get(1)+list.get(2)+list.get(3));
+        }
         return true;
     }
 

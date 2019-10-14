@@ -56,7 +56,20 @@ i{ font-style: normal;}
 .focus .D1fBt a{position:relative; display:inline; width:12px; height:12px; margin:0 5px;color:#B0B0B0; text-decoration:none; text-align:center; outline:0; float:left; background:#D9D9D9; }    
 .focus .D1fBt .current,.focus .D1fBt a:hover{background:#fc114a;}    
 .focus .D1fBt img{display:none}    
-.focus .D1fBt i{display:none; font-style:normal; }    
+.focus .D1fBt i{display:none; font-style:normal; }
+
+
+.con-list{ margin-top: 30px; margin-left: 120px;}
+.con-list li{ float: left; width: 480px; }
+.con-list{ overflow: hidden;}
+.con-sel{ width: 236px; height: 25px; border: 1px solid #a0a0a0;}
+.con-list li p{margin-bottom: 15px; line-height: 27px;}
+
+.cond-list{ margin-top: 30px; margin-left: 120px;}
+.cond-list li{ float: left; width: 340px; }
+.cond-list{ overflow: hidden;}
+.cond-select{ width: 146px; height: 25px; border: 1px solid #a0a0a0;}
+.cond-list li p{margin-bottom: 15px; line-height: 27px;}
 
 .main-title{ margin: 20px 0; overflow: hidden; font-size: 24px; width: 950px; height: 50px; line-height: 50px; border-bottom: 1px solid #ddd; overflow: hidden;}
 .main-title span{ color: #6b6a6a; font-size: 14px;}
@@ -77,7 +90,7 @@ i{ font-style: normal;}
 .main-user{ position: absolute; background: url(../images/name.png); width: 22px; height: 22px; top: 8px; left: 5px;}
 .main-password{ position: absolute; background:url(../images/password.png); width: 22px; height: 22px; top: 4px; left: 5px;}
 .main-btn{ width: 210px; height: 32px; margin: 0 auto; display: block; border: 0; background: #eb6877; text-align: center; color: #fff; font-size: 16px;}
-.main-pass-text{ display: block; color: #eb6877; width: 210px; margin: 0 auto; font-size: 12px; margin-top: 10px;}
+.main-pass-text{ display: block; color: #eb6877; width: 210px; margin: 0 auto; font-size: 12px; margin-top: 30px;}
 .main-pass-text a{ color: #eb6877;}
 .main-log .forget{ float: right;}
 .main-radv{ width: 233px; margin-top: 20px; border: 1px solid #ddd;}
@@ -244,7 +257,7 @@ i{ font-style: normal;}
 .login-left{ width: 700px; float: left;}
 .login-right{ float: left;}
 .login-left img{ margin: 20px 0px 0px 230px;}
-.login-right img{ margin-top: 50px;}
+.login-right img{ margin-top: 10px;}
 .yzm{ height: 30px; border: 1px solid #BFBFBF; text-indent: 12px; float: left; width: 162px;}
 .main-logbox button{ cursor: pointer; margin-left: 20px; background: #eb6877; color: #fff; border: 0; line-height: 30px; width: 115px; margin-left: 20px;}
 .remember {

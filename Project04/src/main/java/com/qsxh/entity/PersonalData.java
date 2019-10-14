@@ -24,7 +24,7 @@ public class PersonalData {
     private String ucar;
     private String uwork;
     private String agerange;
-    private String position;
+    private String positions;
     private String major;
     private String gradtime;
     private String uschool;
@@ -34,6 +34,9 @@ public class PersonalData {
     private String drink;
     private String wedding;
     private String uinstro;
+    private String upass;
+    private String idcard;
+    private String roleid;
 
     public PersonalData() {
     }
@@ -214,12 +217,12 @@ public class PersonalData {
         this.agerange = agerange;
     }
 
-    public String getPosition() {
-        return position;
+    public String getPositions() {
+        return positions;
     }
 
-    public void setPosition(String position) {
-        this.position = position;
+    public void setPositions(String positions) {
+        this.positions = positions;
     }
 
     public String getMajor() {
@@ -292,5 +295,29 @@ public class PersonalData {
 
     public void setUinstro(String uinstro) {
         this.uinstro = uinstro;
+    }
+
+    public String getUpass() {
+        return upass;
+    }
+
+    public void setUpass(String upass) {
+        this.upass = upass;
+    }
+
+    public String getIdcard() {
+        return idcard;
+    }
+
+    public void setIdcard(String idcard) {
+        this.idcard = idcard;
+    }
+
+    public String getRoleid() {
+        return roleid;
+    }
+
+    public void setRoleid(String roleid) {
+        this.roleid = roleid;
     }
 }

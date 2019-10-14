@@ -34,7 +34,6 @@ public interface UserDao {
     /*============cjc=============*/
     //获取聊天列表
     public List<TblUser> findUser(@Param("userid") String userid);
-
     /*===========kjy============*/
     //用户登录
     public User userLogin(@Param("userid") String userid, @Param("upass") String upass);

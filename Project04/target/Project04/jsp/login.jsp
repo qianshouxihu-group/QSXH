@@ -14,8 +14,9 @@
     <link type="image/x-icon" rel=icon href="images/icon.png"/>
     <link type="text/css" rel="stylesheet" href="css/style.css"/>
     <script src="js/jquery-1.8.3.min.js"></script>
+    <link type="text/css" rel="stylesheet" href="css/chat.css"/>
     <style>
-        .main-log{ height: 260px; width: 350px; margin-bottom: 30px; background: #fff;}
+        .main-log{ height: 280px; width: 350px; margin-bottom: 30px; background: #fff;}
         .main-logbox{ width: 300px;}
         .main-user-input{ width: 270px;}
         .main-log .tit{ height: 50px; line-height: 50px; font-size: 24px;}
@@ -35,8 +36,8 @@
                     <a href="testManager/outLogin.action">注销</a>
                 </c:when>
                 <c:otherwise>
-                    <a href="">注册</a> |
-                    <a href="">登录</a>
+                    <a href="<%=path%>/jsp/clientReg.jsp">注册</a> |
+                    <a href="<%=path%>/jsp/login.jsp">登录</a>
                 </c:otherwise>
             </c:choose>
         </div>
@@ -83,7 +84,7 @@
                 <div class="main-logbox">
                     <i class="fa fa-picture-o"></i>
                     <input class="main-user-input"  type="text" id="verifyCode" name="verifyCode" placeholder="验证码" maxlength="4">
-                    <img style="position: absolute;right: 0;top: -50px;"  src="log/getVerifyCode.action" width="110" height="34" id="verifyCodeImage" onclick="javascript:changeImage();">
+                    <img style="position: absolute;right: 0;top: -10px;"  src="log/getVerifyCode.action" width="110" height="34" id="verifyCodeImage" onclick="javascript:changeImage();">
                 </div>
 
                 <button type="submit" class="main-btn">立即登录</button>

@@ -29,4 +29,18 @@ public interface InformDao {
     public List<Inform> informList(Inform inform);
     //历史推送消息 记录数
     public Integer informCount(Inform inform);
+
+    //查询所有的用户id
+    public List<String> findAll(@Param("ol") String online);//形参为是否在线
+    //查询所有的男性用户id
+    public List<String> findAllMan(@Param("ol") String online);
+    //查询所有的女性用户id
+    public List<String> findAllWomen(@Param("ol") String online);
+    //查询所有的普通用户id
+    public List<String> findAllUser(@Param("ol") String online);
+    //查询所有的vip用户id
+    public List<String> findAllVip(@Param("ol") String online);
+
+    //新增消息推送记录
+    public Integer addRecord(Inform inform);
 }

@@ -38,10 +38,12 @@ public class FileDeleteUtil {
         flag = false;
         file = new File(sPath);
         // 路径为文件且不为空则进行删除
+
         if (file.isFile() && file.exists()) {
             file.delete();
             flag = true;
         }
+        System.out.println("sPath = " + sPath + "---flag="+flag);
         return flag;
     }
 
@@ -82,6 +84,27 @@ public class FileDeleteUtil {
         } else {
             return false;
         }
+    }
+
+    public static boolean deleteImg(String parentPath,String imgPath) {
+
+        String[] fileName = imgPath.split("temp/");
+        flag = false;
+        file = new File(parentPath+fileName[1]);
+
+        // 路径为文件且不为空则进行删除
+        if (file.isFile() && file.exists()) {
+            file.delete();
+            flag = true;
+        }
+        return flag;
+    }
+
+
+    public void test(){
+        String b = "temp/6f686842d41740e685788eb06f6983c4_hnavi-global.png";
+        String[] a = b.split("temp/");
+        System.out.println(a[1]);
     }
 
 }

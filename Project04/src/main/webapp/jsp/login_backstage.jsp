@@ -12,30 +12,36 @@
     <link rel="stylesheet" href="layui/css/layui.css">
     <link rel="stylesheet" href="layui/css/login.css">
     <script src="js/jquery-1.8.3.min.js"></script>
+    <link type="text/css" rel="stylesheet" href="css/chat.css"/>
+    <script type="text/javascript" src="js/chatserver.js" ></script>
+    <script type="text/javascript" src="js/chat.js" ></script>
+
 </head>
 <body>
 <div id="container">
-    <div></div>
+    <img src="<%=path%>/images/timg.jpg" width="100%" height="100%" />
     <div class="admin-login-background">
         <!--<div class="admin-header">-->
         <!--<img src="image/ex_logo.png" class="admin-logo">-->
         <!--</div>-->
+
+
         <form class="layui-form" action="log/login2.action" method="post">
             <div>
                 <i class="layui-icon layui-icon-username admin-icon admin-icon-username"></i>
-                <input type="text" name="user.username" placeholder="请输入用户名"
+                <input type="text" name="uname" placeholder="请输入用户名"
                        autocomplete="off"
                        class="layui-input admin-input admin-input-username">
             </div>
             <div>
                 <i class="layui-icon layui-icon-password admin-icon admin-icon-password"></i>
-                <input type="password" name="user.password"
+                <input type="password" name="password"
                        placeholder="请输入密码"
                        autocomplete="off"
                        class="layui-input admin-input">
             </div>
             <div>
-                <input type="text" name="verify"
+                <input type="text" name="verifyCode"
                        placeholder="请输入验证码"
                        autocomplete="off"
                        class="layui-input admin-input admin-input-verify">

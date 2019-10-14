@@ -6,8 +6,9 @@
 
   <!--首页 -->
   <welcome-file-list>
-    <welcome-file>jsp/login.jsp</welcome-file>
+    <welcome-file>jsp/login_backstage.jsp</welcome-file>
   </welcome-file-list>
+
 
   <!-- 指定spring配置文件的路径 -->
   <context-param>
@@ -61,20 +62,6 @@
     <url-pattern>/ws</url-pattern>
   </servlet-mapping>
 
-  <!--编码过滤器-->
-<!--  <filter>-->
-<!--    <filter-name>CharacterEncoding</filter-name>-->
-<!--    <filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>-->
-<!--    <init-param>-->
-<!--      <param-name>encoding</param-name>-->
-<!--      <param-value>UTF-8</param-value>-->
-<!--    </init-param>-->
-<!--  </filter>-->
-<!--  <filter-mapping>-->
-<!--    <filter-name>CharacterEncoding</filter-name>-->
-<!--    <url-pattern>/*</url-pattern>-->
-<!--  </filter-mapping>-->
-
   <!-- 日志记录 -->
   <context-param>
     <param-name>log4jConfiguration</param-name>
@@ -104,5 +91,4 @@
     <dispatcher>ERROR</dispatcher>
   </filter-mapping>
   <!-- log4j2-end -->
-
 </web-app>

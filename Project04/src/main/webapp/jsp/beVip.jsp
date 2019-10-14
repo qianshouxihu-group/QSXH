@@ -14,6 +14,9 @@
     <link type="image/x-icon" rel=icon href="images/icon.png"/>
     <link type="text/css" rel="stylesheet" href="css/style.css"/>
     <script src="js/jquery-1.8.3.min.js"></script>
+    <link type="text/css" rel="stylesheet" href="css/chat.css"/>
+    <script type="text/javascript" src="js/chatserver.js" ></script>
+    <script type="text/javascript" src="js/chat.js" ></script>
 </head>
 <body>
 <div class="head">
@@ -21,15 +24,14 @@
         <div class="top-left">
         </div>
         <div class="top-right">
-
             <c:choose>
                 <c:when test="${ sessionScope.user!=null }">
                     <a>${ sessionScope.user.uname },欢迎您！</a>|
                     <a href="testManager/outLogin.action">注销</a>
                 </c:when>
                 <c:otherwise>
-                    <a href="">注册</a> |
-                    <a href="">登录</a>
+                    <a href="<%=path%>/jsp/clientReg.jsp">注册</a> |
+                    <a href="<%=path%>/jsp/login.jsp">登录</a>
                 </c:otherwise>
             </c:choose>
         </div>
@@ -44,25 +46,56 @@
 </div>
 <div class="nav-box">
     <div class="nav">
-        <a href="">网站首页</a>
-        <a href="">条件搜索</a>
-        <a href="">智能匹配</a>
-        <a href="">我的关注</a>
-        <a href="">个人中心</a>
-        <a href="">我的消息</a>
-        <a href="">会员服务</a>
-        <a href="">活动专题</a>
+        <a href="matchUser/matchByTime.action?limitString=12">网站首页</a>
+        <a href="jsp/clientAboutUs.jsp">了解我们</a>
+        <a id="searchUser" href="matchUser/smartMatch.action?limitString=30&usex=${user.usex}&condition=charm">条件搜索</a>
+        <a href="matchUser/smartUser.action?id=${sessionScope.user.userid}&roleid=${sessionScope.user.roleid}">智能匹配</a>
+        <a href="jsp/beVip.jsp">会员服务 </a>
+        <a href="jsp/clientActiveList.jsp">活动专题 </a>
+        <a href="<%=path%>/informManager/systemInform.action">我的消息 <div class="my-notice">${countList.get(0)+countList.get(1)+countList.get(2)+countList.get(3)}</div></a>
+        <a href="personalManager/aboutBasic.action">个人中心</a>
     </div>
 </div>
 <div class="main">
     <div class="main-box1" style="width:1200px; height:600px;">
 
+        <div class="login-right">
+            <div class="list-main1-title">会员服务</div>
+            <div class="col c2"><!--menu-->
+                <div class="list-top">
+                    <a href="<%=path%>/jsp/beVip.jsp">
+                        <label style="color: red;">会员管理</label>&nbsp;<div class="my-notice">${countList.get(0)}</div>
+                    </a>
+                </div>
+                <div class="list-top">
+                    <a href="<%=path%>/AccountAction/arec.action">
+                        <label>充值记录</label>&nbsp;<div class="my-notice">${countList.get(0)}</div>
+                    </a>
+                </div>
+                <div class="list-top">
+                    <a href="<%=path%>/AccountAction/grec.action">
+                        <label>消费记录</label>&nbsp;<div class="my-notice">${countList.get(1)}</div>
+                    </a>
+                </div>
+
+            </div>
+
+        </div><!--menu-->
+
         <div class="s-address">会员服务中心</div>
         <form action="AccountAction/bevip2.action" method="post">
 
         <div class="main-box1" style="width:800px; height:400px; ">
+            <c:choose>
+                <c:when test="${ roleid eq '4'}">
+                    <span>尊敬的用户 ${sessionScope.userBase.uname}，您的身份是 ${role}</span>
+                </c:when>
 
-            <span>尊敬的用户 ${sessionScope.userBase.uname}，您的身份是 ${role}</span><br><br><br><br><br><br><br>
+                <c:otherwise>
+                    <span>尊敬的用户 ${sessionScope.userBase.uname}，您的身份是 普通用户</span>
+                </c:otherwise>
+            </c:choose>
+<br><br><br><br><br><br><br>
             <li>
                 <span>
 

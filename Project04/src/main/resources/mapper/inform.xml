@@ -44,18 +44,20 @@
     <!--历史推送消息 列表-->
     <select id="informList" parameterType="com.qsxh.entity.Inform" resultType="com.qsxh.entity.Inform">
         select * from tblinform
-<!--        <if test=" !(''.equals(dfromid)) and null!= dfromid">-->
-<!--            and dfromid like '%${dfromid}%'-->
-<!--        </if>-->
-<!--        <if test=" !(''.equals(dtoid)) and null!= dtoid">-->
-<!--            and dtoid like '%${dtoid}%'-->
-<!--        </if>-->
-<!--        <if test=" !(''.equals(begindate)) and null!= begindate ">-->
-<!--            and ddate &gt;= #{begindate}-->
-<!--        </if>-->
-<!--        <if test=" !(''.equals(enddate)) and null!= enddate">-->
-<!--            and ddate &lt;= #{enddate}-->
-<!--        </if>-->
+        <where>
+            <if test=" !(''.equals(itype)) and null!= itype">
+                and itype = #{itype}
+            </if>
+            <if test=" !(''.equals(ititle)) and null!= ititle">
+                and ititle like '%${ititle}%'
+            </if>
+            <if test=" !(''.equals(begindate)) and null!= begindate ">
+                and itime &gt;= #{begindate}
+            </if>
+            <if test=" !(''.equals(enddate)) and null!= enddate">
+                and itime &lt;= #{enddate}
+            </if>
+        </where>
         ORDER BY itime desc
         limit #{page},#{limit}
     </select>
@@ -63,18 +65,72 @@
     <!--历史推送消息 记录数-->
     <select id="informCount" parameterType="com.qsxh.entity.Inform" resultType="java.lang.Integer">
         select count(*) from tblinform
-        <!--        <if test=" !(''.equals(dfromid)) and null!= dfromid">-->
-        <!--            and dfromid like '%${dfromid}%'-->
-        <!--        </if>-->
-        <!--        <if test=" !(''.equals(dtoid)) and null!= dtoid">-->
-        <!--            and dtoid like '%${dtoid}%'-->
-        <!--        </if>-->
-        <!--        <if test=" !(''.equals(begindate)) and null!= begindate ">-->
-        <!--            and ddate &gt;= #{begindate}-->
-        <!--        </if>-->
-        <!--        <if test=" !(''.equals(enddate)) and null!= enddate">-->
-        <!--            and ddate &lt;= #{enddate}-->
-        <!--        </if>-->
+        <where>
+            <if test=" !(''.equals(itype)) and null!= itype">
+                and itype = #{itype}
+            </if>
+            <if test=" !(''.equals(ititle)) and null!= ititle">
+                and ititle like '%${ititle}%'
+            </if>
+            <if test=" !(''.equals(begindate)) and null!= begindate ">
+                and itime &gt;= #{begindate}
+            </if>
+            <if test=" !(''.equals(enddate)) and null!= enddate">
+                and itime &lt;= #{enddate}
+            </if>
+        </where>
     </select>
+
+    <!--查询所有的用户id-->
+    <select id="findAll" resultType="java.lang.String">
+        select userid from tbluser
+        <if test=" !(''.equals(ol)) and null!= ol">
+            and uonline = '11'
+        </if>
+    </select>
+
+    <!--查询所有的男性用户id-->
+    <select id="findAllMan" resultType="java.lang.String">
+        select u.userid from tbluser u , tbldata d
+        where u.userid = d.userid
+        and d.usex = '男'
+        <if test=" !(''.equals(ol)) and null!= ol">
+            and u.uonline = '11'
+        </if>
+    </select>
+
+    <!--查询所有的女性用户id-->
+    <select id="findAllWomen" resultType="java.lang.String">
+        select u.userid from tbluser u , tbldata d
+        where u.userid = d.userid
+        and d.usex = '女'
+        <if test=" !(''.equals(ol)) and null!= ol">
+            and u.uonline = '11'
+        </if>
+    </select>
+
+    <!--查询所有的普通用户id-->
+    <select id="findAllUser" resultType="java.lang.String">
+        select userid from tbluser
+        where roleid = '3'
+        <if test=" !(''.equals(ol)) and null!= ol">
+            and uonline = '11'
+        </if>
+    </select>
+
+    <!--查询所有的vip用户id-->
+    <select id="findAllVip" resultType="java.lang.String">
+        select userid from tbluser
+        where roleid = '4'
+        <if test=" !(''.equals(ol)) and null!= ol">
+            and uonline = '11'
+        </if>
+    </select>
+
+    <!--新增消息推送记录-->
+    <insert id="addRecord" parameterType="com.qsxh.entity.Inform">
+        insert into tblinform (itime , ititle , icontext , itype , itoid , iurl , istate)
+        values (#{itime} , #{ititle} , #{icontext} , #{itype} , #{itoid} , #{iurl} , #{istate})
+    </insert>
 
 </mapper>

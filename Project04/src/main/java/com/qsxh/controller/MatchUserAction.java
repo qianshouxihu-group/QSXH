@@ -4,37 +4,50 @@ import com.qsxh.entity.UserAndData;
 import com.qsxh.service.impl.MatchUserServiceImpl;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.annotation.Resource;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequestMapping("/matchUser")
 public class MatchUserAction {
     private List<UserAndData> list;
+    private List<UserAndData> memberlist;
     private List<UserAndData> manlist;
     private List<UserAndData> womanlist;
     private ModelAndView mv = new ModelAndView();
     @Resource
     private MatchUserServiceImpl matchUserService;
 
-    @RequestMapping("/smartMatch")
-    public ModelAndView smartMatch(){
-        //条件搜索页面默认查询
-        list = matchUserService.findUserByCharisma();
-//        for (int i =0; i<list.size();i++){
-//            System.out.println(list.get(i).getUname());
-//        }
+    /*
+    从首页进入搜索页面时，默认展示的list查询
+     */
+    @RequestMapping(value = "/smartMatch", method= RequestMethod.GET, produces="application/json;charset=utf-8")
+    public ModelAndView smartMatch(UserAndData userAndData){
+        //条件搜索页面de默认查询
+        list = matchUserService.findUserByCharisma(userAndData);
+        //条件搜索页面de查询最新会员推荐
+        userAndData.setCondition("member");
+        userAndData.setLimitString("6");
+        memberlist = matchUserService.findUserByTime(userAndData);
         //request传给页面数据
         mv.addObject("MatchUserList",list);//回传魅力值排序用户列表
+        mv.addObject("Memberlist",memberlist);//回传魅力值排序用户列表
         mv.setViewName("searchmember");//跳转到条件搜索界面
         return mv;
     }
 
-    @RequestMapping("/matchByCondition")
+    /*
+    点击搜索按钮时查询用户
+     */
+    @RequestMapping(value = "/matchByCondition", method= RequestMethod.GET, produces="application/json;charset=utf-8")
     public ModelAndView MatchUserListByCondition(UserAndData userAndData){
-//        条件搜索页面按条件查询
+        //条件搜索页面按条件查询
         list = matchUserService.findUserByCondition(userAndData);
         //request传给页面数据
         mv.addObject("MatchUserList",list);//回传魅力值排序用户列表
@@ -43,14 +56,16 @@ public class MatchUserAction {
         return mv;
     }
 
-    @RequestMapping("/matchByTime")
-    public ModelAndView MatchByTime(){
-        //条件搜索页面默认查询
-        manlist = matchUserService.findUserByTime("男");
-        womanlist = matchUserService.findUserByTime("女");
-//        for (int i =0; i<list.size();i++){
-//            System.out.println(list.get(i).getUname());
-//        }
+    /*
+    首页的近期佳人，近期熟男查询
+     */
+    @RequestMapping(value = "/matchByTime", method= RequestMethod.GET, produces="application/json;charset=utf-8")
+    public ModelAndView MatchByTime(UserAndData userAndData){
+        //按性别根据时间排序查询用户
+        userAndData.setUsex("男");
+        manlist = matchUserService.findUserByTime(userAndData);
+        userAndData.setUsex("女");
+        womanlist = matchUserService.findUserByTime(userAndData);
         //request传给页面数据
         mv.addObject("ManList",manlist);//回传近期男性用户列表
         mv.addObject("WomanList",womanlist);//回传近期女性用户列表
@@ -58,13 +73,39 @@ public class MatchUserAction {
         return mv;
     }
 
+    /*
+    首页的近期佳人，近期熟男查询,ajax
+     */
+    @RequestMapping(value = "/matchByTimeajax", method= RequestMethod.GET, produces="application/json;charset=utf-8")
+    public @ResponseBody
+    Map<String,List<UserAndData>> MatchByTimeAjax(UserAndData userAndData){
+        Map<String,List<UserAndData>> map = new HashMap<String,List<UserAndData>>();
+        //按性别根据时间排序查询用户
+        userAndData.setUsex("男");
+        manlist = matchUserService.findUserByTime(userAndData);
+        userAndData.setUsex("女");
+        womanlist = matchUserService.findUserByTime(userAndData);
 
-//    //ajax请求待条件的查询list
-//    @RequestMapping(value="/MatchByCondition", method= RequestMethod.POST, produces="application/json;charset=utf-8")
-//    public @ResponseBody List<UserAndData> MatchUserAllList(@RequestBody UserAndData userAndData){
-//
-//        return list;
-//    }
+        map.put("manlist",manlist);
+        map.put("womanlist",womanlist);
+        return map;
+    }
 
+    //ajax请求待条件的查询list
+    @RequestMapping(value="/MatchForPage", method= RequestMethod.GET, produces="application/json;charset=utf-8")
+    public @ResponseBody List<UserAndData> MatchUserAllList(UserAndData userAndData){
+        list = matchUserService.Page(userAndData);
+        return list;
+    }
+
+    //智能匹配功能
+    @RequestMapping(value = "/smartUser", method= RequestMethod.GET, produces="application/json;charset=utf-8")
+    public ModelAndView  SmartUser(String id,String roleid){
+        list = matchUserService.SmartUser(id,roleid);
+        //request传给页面数据
+        mv.addObject("MatchList",list);//回传智能匹配的用户list
+        mv.setViewName("match");//跳转到智能匹配用户展示页面
+        return mv;
+    }
 
 }

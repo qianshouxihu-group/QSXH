@@ -9,7 +9,6 @@ import com.qsxh.entity.User;
 import com.qsxh.service.ICheckBiz;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.annotation.Resource;
 import java.text.SimpleDateFormat;
@@ -119,22 +118,22 @@ public class CheckBizImpl implements ICheckBiz {
             case "pass":
             {
                 inform.setItitle("资料审核通过");
-                inform.seticontext("恭喜您，您的资料已通过我们的审核，祝您在牵手西湖早日找到伴侣！");
+                inform.setIcontext("恭喜您，您的资料已通过我们的审核，祝您在牵手西湖早日找到伴侣！");
                 break;
             }
             case "nopass":
             {
                 inform.setItitle("资料审核未通过");
-                inform.seticontext("抱歉，您的资料未通过我们的审核，请重新填写完善您的资料！");
+                inform.setIcontext("抱歉，您的资料未通过我们的审核，请重新填写完善您的资料！");
                 break;
             }
             case "datingPass":
                 inform.setItitle("约会审核通过");
-                inform.seticontext("恭喜您，您的约会申请已通过我们的审核，请等待对方回复！");//这边需要将接收人的姓名返回给发起人，让其知道是哪条约会
+                inform.setIcontext("恭喜您，您的约会申请已通过我们的审核，请等待对方回复！");//这边需要将接收人的姓名返回给发起人，让其知道是哪条约会
                 break;
             case "datingNoPass":
                 inform.setItitle("约会审核未通过");
-                inform.seticontext("抱歉，您的约会申请未通过我们的审核，请重新申请约会！");//这边需要将接收人的姓名返回给发起人，让其知道是哪条约会
+                inform.setIcontext("抱歉，您的约会申请未通过我们的审核，请重新申请约会！");//这边需要将接收人的姓名返回给发起人，让其知道是哪条约会
                 break;
             default:break;
         }

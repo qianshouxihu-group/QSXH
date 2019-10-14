@@ -5,11 +5,11 @@
 <mapper namespace="com.qsxh.dao.RoleDao">
 
     <select id="findRoleList" parameterType="com.qsxh.entity.Role" resultType="com.qsxh.entity.Role">
-        select * from tblrole limit #{page},#{limit}
+        select * from tblrole where roleid in(1,2,7) limit #{page},#{limit}
     </select>
 
     <select id="getRoleNum" parameterType="com.qsxh.entity.Role" resultType="java.lang.Integer">
-        select count(*) from tblrole
+        select count(*) from tblrole where roleid in (1,2,7)
     </select>
 
 </mapper>

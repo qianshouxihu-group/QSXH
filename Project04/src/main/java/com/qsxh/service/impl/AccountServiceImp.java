@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 import java.util.List;
 
-@Service("accountService")
+@Service("/Account")
 public class AccountServiceImp implements AccountService {
 
     @Resource

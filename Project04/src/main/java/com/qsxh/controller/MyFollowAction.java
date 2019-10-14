@@ -6,7 +6,6 @@ import com.qsxh.entity.TblRelation;
 import com.qsxh.entity.TblUser;
 import com.qsxh.entity.User;
 import com.qsxh.interceptor.Log;
-import com.qsxh.service.ChatService;
 import com.qsxh.service.RelationService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,8 +23,6 @@ public class MyFollowAction {
 
     @Resource
     private RelationService relationService;
-    @Resource
-    private ChatService chatService;
 
     @RequestMapping("/getlist")//获得关注列表
     @Log(actionType = "关注列表", actionName = "获得关注列表")
@@ -36,11 +33,8 @@ public class MyFollowAction {
         User user = (User) request.getSession().getAttribute("user");
         String userid = user.getUserid();
 
-        List<TblUser> chatList = chatService.findUser(userid);
-        request.getSession().setAttribute("chatlist",chatList);
-
         //dao查找并分页
-        PageHelper.startPage(page,2);
+        PageHelper.startPage(page,5);
         List<TblUser> followlist = relationService.findFollowed(userid);
 
         PageInfo pageInfo = new PageInfo(followlist, 5);
@@ -52,6 +46,8 @@ public class MyFollowAction {
     }
 
     @RequestMapping("/good")//点赞
+    @Log(actionType = "用户操作", actionName = "点赞")
+    @ResponseBody
     public String giveGood(HttpServletRequest request,String followedid){
         System.out.println("---进入点赞逻辑---");
 
@@ -66,27 +62,20 @@ public class MyFollowAction {
 
         boolean result = relationService.good(users);
 
-        return "forward:/MyFollowManager/getlist.action";
-    }
+        String state = result ? "yes" : "no";
 
-    @RequestMapping("/chat")//获得聊天列表
-    @ResponseBody
-    public List<TblUser> chatList(@RequestParam String userid){
-
-        System.out.println("userid = [" + userid + "]");
-        List<TblUser> chatList = chatService.findUser(userid);
-
-        for (int i=0;i<chatList.size();i++){
-            System.out.println(chatList.get(i).getUonline());
-        }
-
-        return chatList;
+        return state;
     }
 
     @RequestMapping("/change")//更改关注状态
     @Log(actionType = "关注列表", actionName = "修改关注状态")
+    @ResponseBody
     public String cancelFollow(HttpServletRequest request,String followedid){
         System.out.println("---进入关注逻辑---");
+
+        String requestUrl = request.getRequestURL().toString();
+        String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+request.getContextPath()+"/";
+        String[] url = requestUrl.split(basePath);
 
         //获得id
         User user = (User) request.getSession().getAttribute("user");
@@ -99,10 +88,14 @@ public class MyFollowAction {
 
         boolean result = relationService.follow(users);
 
-        return "forward:/MyFollowManager/getlist.action";
+        String state = result ? "yes" : "no";
+
+        return state;
     }
 
     @RequestMapping("/gift")//赠送礼物
+    @Log(actionType = "用户操作", actionName = "赠送礼物")
+    @ResponseBody
     public String sendGift(HttpServletRequest request,String toid){
         System.out.println("---进入赠送礼物逻辑---");
 
@@ -117,9 +110,9 @@ public class MyFollowAction {
 
         System.out.println(userid+"---"+toid);
 
-        boolean result = relationService.sendGift(users);
+        String result = relationService.sendGift(users);
 
-        return "forward:/MyFollowManager/getlist.action";
+        return result;
     }
 
 

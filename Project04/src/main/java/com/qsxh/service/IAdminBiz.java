@@ -16,4 +16,5 @@ public interface IAdminBiz {
     public int deleteAdmin(String userid);
     public void deleteAdmins(String[] userids);
     public int addAdmin(User user);
+    public Integer getRoleidFromId(String userid);
 }

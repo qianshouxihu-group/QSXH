@@ -6,6 +6,7 @@ import com.qsxh.dao.UserDao;
 import com.qsxh.entity.Account;
 import com.qsxh.entity.TblRelation;
 import com.qsxh.entity.TblUser;
+import com.qsxh.entity.User;
 import com.qsxh.service.RelationService;
 import org.springframework.stereotype.Service;
 
@@ -35,9 +36,14 @@ public class RelationServiceImpl implements RelationService {
 
         TblRelation result = relationDao.findRelation(relation);
 
+
         if (result==null){
             relationDao.addRelation(relation);
+            result = relationDao.findRelation(relation);
         }
+
+        User user = userDao.getUser(relation.getFtoid());
+        result.setUonline(user.getUonline());
 
         return result;
     }
@@ -83,7 +89,7 @@ public class RelationServiceImpl implements RelationService {
     }
 
     @Override//送礼
-    public boolean sendGift(TblRelation relation) {
+    public String sendGift(TblRelation relation) {
 
         String fromid = relation.getFfromid();
         String toid = relation.getFtoid();
@@ -98,12 +104,22 @@ public class RelationServiceImpl implements RelationService {
         param.setAtype("22");
 
         //扣金币
-        boolean goldResult = goldAccount(param);
+        String goldResult = goldAccount(param);
 
-        //金币消费成功，增加魅力值
-        result = goldResult ? addCharm(toid,charmNum) : false;
+        if (goldResult.equals("noenough")){
+            return goldResult;
+        }
+        else if (goldResult.equals("yes")){
+            //金币消费成功，增加魅力值
+            result = addCharm(toid,charmNum);
+        }
+        else if (goldResult.equals("no")){
+            result = false;
+        }
 
-        return result;
+        String back = result ? "yes" : "no";
+
+        return back;
     }
 
     @Override//增加魅力值
@@ -124,7 +140,7 @@ public class RelationServiceImpl implements RelationService {
     }
 
     @Override//金币消费
-    public boolean goldAccount(Account param) {
+    public String goldAccount(Account param) {
 
         String userid = param.getUserid();
 
@@ -136,7 +152,7 @@ public class RelationServiceImpl implements RelationService {
         String agold = nowGold + "";
 
         if (nowGold<0){
-            return false;
+            return "noenough";
         }
 
         int goldNum = accountDao.changegold(agold,userid);
@@ -156,9 +172,9 @@ public class RelationServiceImpl implements RelationService {
 
         int accountNum = accountDao.recharge(account);
 
-        result = goldNum>0&&accountNum>0 ? true : false;
+        String back = goldNum>0&&accountNum>0 ? "yes" : "no";
 
-        return result;
+        return back;
     }
 
 

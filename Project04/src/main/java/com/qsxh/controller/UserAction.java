@@ -1,10 +1,11 @@
 package com.qsxh.controller;
 
+import com.aliyuncs.dysmsapi.model.v20170525.SendSmsResponse;
+import com.aliyuncs.exceptions.ClientException;
 import com.opensymphony.xwork2.ActionSupport;
-import com.qsxh.AopLog.Log;
 import com.qsxh.entity.User;
-import com.qsxh.interceptor.Log;
 import com.qsxh.service.AccountService;
+import com.qsxh.service.AliMessagesUtil;
 import com.qsxh.service.UserBiz;
 import com.qsxh.service.UserService;
 import org.springframework.stereotype.Controller;
@@ -34,32 +35,6 @@ public class UserAction extends ActionSupport {
     private User user;
     private List<User> userList;
 
-    //登录测试
-    //1、判断是否会员 2、若是会员判断到期日 3、如果是，并到期。把身份变为普通用户，并清除到期日。
-    @RequestMapping("/login")
-    @Log(actionType = "登录", actionName = "前台用户登录")
-    public ModelAndView managerLogin(HttpServletRequest request, String uname, String password){
-        ModelAndView mv = new ModelAndView();
-        User user = us.userLogin(uname,password);
-        HttpSession session = request.getSession();
-        System.out.println("账号名"+uname+"   "+"密码"+password);
-        System.out.println("登的"+user.getUname());
-        if(null!= user)
-        {
-          session.setAttribute("user", user);
-         // 1
-          if("4".equals(user.getRoleid())){
-            String vipdate= as.getVipenddate(user.getUserid());
-            Date date = new Date();
-            DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
-            // 2
-            if (df.format(date).compareTo(vipdate)>0) {
-                // 3
-                us.changeRoldid(user.getUserid(),"3");
-                as.addVipenddate(user.getUserid(),"");
-            }
-        }
-
 
     //注销方法
     @RequestMapping("/outLogin")
@@ -69,7 +44,19 @@ public class UserAction extends ActionSupport {
         //通过session.invalidata()方法来注销当前的session
         session.invalidate();
         //String path = request.getURI()
-        mv.setViewName("test");
+        mv.setViewName("login");
+        return mv;
+    }
+
+    //后台注销
+    @RequestMapping("/outLogin2")
+    public ModelAndView backOutLogin(HttpSession session, HttpServletRequest request){
+        ModelAndView mv = new ModelAndView();
+        System.out.println("账号已注销");
+        //通过session.invalidata()方法来注销当前的session
+        session.invalidate();
+        //String path = request.getURI()
+        mv.setViewName("login_backstage");
         return mv;
     }
 
@@ -132,21 +119,43 @@ public class UserAction extends ActionSupport {
         }
     }
 
-    /*--------------------------------------测试AOP日志--------------------------------------*/
-    @Log(operationType = "增加操作", operationName = "添加用户")
-    public void testAOP(String userName, String password){
-        System.out.println("UserController被调用了~~~~~~~~~~~~~~~~···");
+    //忘记密码--发送短信验证码
+    @RequestMapping("/sendcode")
+    public @ResponseBody Map  sendcode(String userid,HttpSession session) throws ClientException {
+        System.out.println("忘记密码--发送短信验证码 userid="+userid);
+        Map<String , String> map = new HashMap<>();
 
-        String tmp = null;
-        tmp.substring(1);
+        String code= AliMessagesUtil.getRandNum(6);
+        SendSmsResponse response= AliMessagesUtil.sendSms(userid,code);
+        System.out.println("验证码是"+code);
+        if (null!=response) {
+            map.put("msg", "success");
+            userBiz.userPassReset(userid);
+            session.setAttribute("code",code);
+        }else {
+            map.put("msg", "fail");
+        }
+        return map;
     }
 
-    public String getUserid() {
-        return userid;
+    //忘记密码--验证 验证码的正误，并重置密码
+    @RequestMapping("/checkcode")
+    public @ResponseBody Map checkcode(HttpSession session, HttpServletRequest request,String code)
+    {
+        Map<String , String> map = new HashMap<>();
+        String scode= (String) session.getAttribute("code");
+        if(scode.equals(code)){
+            //验证码正确
+            //移除session中存储的验证码
+            session.removeAttribute("code");
+            map.put("msg", "success");
+
+        }else{
+            //验证码错误
+            map.put("msg", "fail");
+        }
+        return map;
     }
 
-    public void setUserid(String userid) {
-        this.userid = userid;
-    }
 
 }

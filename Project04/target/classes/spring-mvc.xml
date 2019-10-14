@@ -13,7 +13,7 @@
     http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-4.0.xsd">
 
     <!--配置组件扫描器-->
-    <context:component-scan base-package="com.qsxh.controller,com.qsxh.interceptor,com.qsxh.websocket"></context:component-scan>
+    <context:component-scan base-package="com.qsxh"></context:component-scan>
 
     <!--配置自动代理-->
     <aop:aspectj-autoproxy proxy-target-class="true"></aop:aspectj-autoproxy>
@@ -66,17 +66,20 @@
 <!--    </mvc:annotation-driven>-->
 
         <mvc:interceptors>
-           <!-- 登录状态判断拦截-->
-            <mvc:interceptor>
-                <mvc:mapping path="/**"/>
-                <mvc:exclude-mapping path="/log/*" />
-                <bean class="com.qsxh.interceptor.UserInterceptor" />
-            </mvc:interceptor>
+<!--           &lt;!&ndash; 登录状态判断拦截&ndash;&gt;-->
+<!--            <mvc:interceptor>-->
+<!--                <mvc:mapping path="/**"/>-->
+<!--                <mvc:exclude-mapping path="/log/*" />-->
+<!--                <mvc:exclude-mapping path="/regManager/*"/>-->
+<!--                <bean class="com.qsxh.interceptor.UserInterceptor" />-->
+<!--            </mvc:interceptor>-->
+
             <!--未读消息数拦截-->
             <mvc:interceptor>
                 <mvc:mapping path="/**"/>
                 <mvc:exclude-mapping path="/log/*"/>
                 <mvc:exclude-mapping path="/regManager/*"/>
+                <mvc:exclude-mapping path="/testManager"/>
                 <bean class="com.qsxh.interceptor.InformCountInterceptor"/>
             </mvc:interceptor>
         </mvc:interceptors>

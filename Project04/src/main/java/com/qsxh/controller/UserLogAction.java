@@ -1,10 +1,11 @@
 package com.qsxh.controller;
 
 import com.opensymphony.xwork2.ActionSupport;
+import com.qsxh.entity.Menu;
 import com.qsxh.entity.User;
-import com.qsxh.service.AccountService;
-import com.qsxh.service.UserBiz;
-import com.qsxh.service.UserService;
+import com.qsxh.interceptor.Log;
+import com.qsxh.service.*;
+import com.qsxh.utiles.MD5;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
@@ -23,8 +24,8 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Random;
+import java.util.List;
+import java.util.*;
 
 @Controller
 @RequestMapping("/log")
@@ -35,13 +36,20 @@ public class UserLogAction extends ActionSupport {
     private AccountService as;
     @Resource
     private UserBiz userBiz;
+    @Resource
+    private IInformBiz informBiz;
 
+    @Resource
+    private MenuService menuService;
 
     //前台用户登录逻辑
     @RequestMapping("/login")
+    @Log(actionType = "登录", actionName = "前台用户登录")
     public ModelAndView managerLogin(HttpServletRequest request, String uname, String password){
         ModelAndView mv = new ModelAndView();
-        User user = us.userLogin(uname,password);
+        //md5加密
+        String md5pass = MD5.getMD5(password);
+        User user = us.userLogin(uname,md5pass);
         HttpSession session = request.getSession();
 
         System.out.println("账号名"+uname+"   "+"密码"+password);
@@ -49,6 +57,7 @@ public class UserLogAction extends ActionSupport {
 
         String verifyCode = request.getParameter("verifyCode");
         String sessionVerifyCode = (String) session.getAttribute("verifyCodeValue");
+        System.out.println("验证码"+sessionVerifyCode);
         if (!verifyCode.equalsIgnoreCase(sessionVerifyCode)) {
             //验证失败逻辑
             request.setAttribute("log","codeerror");
@@ -59,6 +68,10 @@ public class UserLogAction extends ActionSupport {
             if(null!= user)
             {
                 session.setAttribute("user", user);
+                //登录后，计算消息未读数（王宗清）
+                //登录需做特殊处理，如果用拦截器来做消息未读数，登录会被拦截
+                List<Integer> list = informBiz.unreadCount(user.getUserid());
+                request.setAttribute("countList", list);
                 // 1
                 if("4".equals(user.getRoleid())){
                     String vipdate= as.getVipenddate(user.getUserid());
@@ -70,10 +83,22 @@ public class UserLogAction extends ActionSupport {
                         us.changeRoldid(user.getUserid(),"3");
                         as.addVipenddate(user.getUserid(),"");
                     }
+                    mv.setViewName("index");
                 }
 
+                if("3".equals(user.getRoleid())){
+                    mv.setViewName("index");
+                }
+                if("5".equals(user.getRoleid())){
+                    request.getSession().setAttribute("userid",user.getUserid());
+                    mv.addObject("userid", user.getUserid());
+                    mv.setViewName("cregdata");
+                }
+                if("6".equals(user.getRoleid())){
+                    request.getSession().setAttribute("userid",user.getUserid());
+                    mv.setViewName("cregsuccess");
+                }
 
-                mv.setViewName("muban");
             }else{
                 request.setAttribute("log","lf");
                 mv.setViewName("login");
@@ -90,8 +115,11 @@ public class UserLogAction extends ActionSupport {
     public ModelAndView managerLogin2(HttpServletRequest request, String uname, String password) {
         ModelAndView mv = new ModelAndView();
         HttpSession session = request.getSession();
-        User user = us.userLogin2(uname,password);
 
+        String md5pass = MD5.getMD5(password);
+        User user = us.userLogin2(uname,md5pass);
+
+        System.out.println(""+uname+"   "+password);
         String verifyCode = request.getParameter("verifyCode");
         String sessionVerifyCode = (String) session.getAttribute("verifyCodeValue");
         if (!verifyCode.equalsIgnoreCase(sessionVerifyCode)) {
@@ -101,17 +129,24 @@ public class UserLogAction extends ActionSupport {
         }else{
             if(null!= user)
             {
-                session.setAttribute("manager", user);
 
-                mv.setViewName("");
+                //角色对应的菜单map
+                String roleid=user.getRoleid();
+                List<com.qsxh.entity.Menu> menuList=new ArrayList<Menu>();
+                menuList=menuService.selectRoleMenuList(roleid);
+                Map<String, List<com.qsxh.entity.Menu>> menumap = new HashMap<String, List<Menu>>();
+                menumap=menuService.listToMap(menuList);
+
+                session.setAttribute("manager", user);
+                session.setAttribute("menumap", menumap);
+
+                mv.setViewName("admin/adminindex");
             }else{
                 request.setAttribute("log","lf");
                 mv.setViewName("login_backstage");
             }
 
         }
-
-
         return mv;
     }
 

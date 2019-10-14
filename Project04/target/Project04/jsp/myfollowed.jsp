@@ -32,8 +32,8 @@
                     <a href="testManager/outLogin.action">注销</a>
                 </c:when>
                 <c:otherwise>
-                    <a href="">注册</a> |
-                    <a href="">登录</a>
+                    <a href="jsp/clinetReg.jsp">注册</a> |
+                    <a href="jsp/login.jsp">登录</a>
                 </c:otherwise>
             </c:choose>
         </div>
@@ -47,14 +47,14 @@
 </div>
 <div class="nav-box">
     <div class="nav">
-        <a href="">网站首页</a>
-        <a href="">了解我们</a>
-        <a href="">条件搜索</a>
-        <a href="">智能匹配</a>
-        <a href="">会员服务 </a>
-        <a href="">活动专题 </a>
-        <a href="">我的消息 &nbsp; <div class="my-notice">12</div></a>
-        <a href="">个人中心</a>
+        <a href="matchUser/matchByTime.action?limitString=12">网站首页</a>
+        <a href="jsp/clientAboutUs.jsp">了解我们</a>
+        <a id="searchUser" href="matchUser/smartMatch.action?limitString=30&usex=${user.usex}&condition=charm">条件搜索</a>
+        <a href="matchUser/smartUser.action?id=${sessionScope.user.userid}&roleid=${sessionScope.user.roleid}">智能匹配</a>
+        <a href="jsp/beVip.jsp">会员服务 </a>
+        <a href="jsp/clientActiveList.jsp">活动专题 </a>
+        <a href="informManager/systemInform.action">我的消息 <div class="my-notice">${countList.get(0)+countList.get(1)+countList.get(2)+countList.get(3)}</div></a>
+        <a href="personalManager/aboutBasic.action">个人中心</a>
     </div>
 </div>
 <div class="main">
@@ -62,27 +62,27 @@
         <div class="main-right" style="margin-left: 0; margin-right: 14px;"><!--right-->
             <div class="list-main1-title">个人中心</div>
             <div class="col c2"><!--menu-->
-                <div class="list-top"><a href="">基本资料</a></div>
-                <div class="list-top"><a href="">择偶条件</a></div>
-                <div class="list-top"><a href="">我的照片</a></div>
+                <div class="list-top"><a href="personalManager/myHomePage.action">我的主页</a></div>
+                <div class="list-top"><a href="personalManager/myPhotograph.action">我的照片</a></div>
                 <div class="list-top"><a href="MyFollowManager/getlist.action" class="cur">我的关注</a></div>
+                <div class="list-top"><a href="personalManager/aboutBasic.action">基本资料</a></div>
+                <div class="list-top"><a href="personalManager/aboutCP.action" >择偶条件</a></div>
+
                 <div class="css3-animated-example">
-                    <h3>详情资料</h3>
+                    <h3 >详情资料</h3>
                     <div>
                         <div class="content">
-                            <p><a href="">工作学习</a></p>
-                            <p><a href="">兴趣爱好</a></p>
-                            <p><a href="">个性要求</a></p>
+                            <p><a href="personalManager/aboutWS.action">工作学习</a></p>
+                            <p><a href="personalManager/aboutHabit.action">兴趣爱好</a></p>
+                            <p><a href="personalManager/aboutLimit.action">个性要求</a></p>
                         </div>
                     </div>
                 </div>
-                <div class="list-top"><a href="">关于举报</a></div>
                 <div class="css3-animated-example">
                     <h3 style=" border-bottom: 0;">系统设置</h3>
                     <div>
                         <div class="content">
-                            <p><a href="">密码修改</a></p>
-                            <p><a href="">更换手机</a></p>
+                            <p><a href="<%=basePath%>jsp/crepassword.jsp">密码修改</a></p>
                         </div>
                     </div>
                 </div>
@@ -92,7 +92,7 @@
             <div class="s-address">当前位置：<a href="">首页 </a>&gt;个人中心&gt;我的关注</div>
             <div class="safty">
                 <%--<div class="tit">关注列表  >></div>--%>
-                <ul class="success">
+                <ul class="success" >
                     <c:forEach items="${requestScope.pageInfo.list}" var="followuser">
                         <form method="post">
                         <li>
@@ -121,7 +121,7 @@
                                 </p>
                                 <p>&nbsp;</p>
                                 <p class="mem-text">&nbsp;${followuser.uage}&nbsp;岁&nbsp;|&nbsp;${followuser.uheight}&nbsp;CM&nbsp;|&nbsp;${followuser.conste}&nbsp;|&nbsp;月收入：&nbsp;${followuser.uincome}&nbsp;元</p>
-                                <p><a href="javascript:void(0);" class="cf60">[查看详情]</a></p>
+                                <p><a href="javascript:void(0);" class="cf60" onclick="getDetails(this)">[查看详情]</a></p>
                             </div>
                             <input type="hidden" value="${followuser.uname}">
                         </li>
@@ -168,26 +168,8 @@
         <p>Copyright©2019   牵手西湖婚恋交友网   版权所有 </p>
         <p>地址：厦门市软件园二期观日路56号  电话：400-000-000  技术支持：<a target="_blank" href="http://www.cykjgroup.com/">传一科技</a></p>
     </div>
-    <!--在线客服-->
-    <div id="floatTools" class="rides-cs" style="height:246px;">
-        <div class="floatL">
-            <a id="aFloatTools_Show" class="btnOpen" title="查看在线客服" style="top:20px;display:block" href="javascript:void(0);">展开</a>
-            <a id="aFloatTools_Hide" class="btnCtn" title="关闭在线客服" style="top:20px;display:none" href="javascript:void(0);">收缩</a>
-        </div>
-        <div id="divFloatToolsView" class="floatR" style="display: none;height:237px;width: 140px;">
-            <div class="cn">
-                <h3 class="titZx">牵手西湖在线客服</h3>
-                <ul>
-                    <li><a target="_blank" href="http://wpa.qq.com/msgrd?v=3&uin=123456789&site=qq&menu=yes"><img border="0" src="images/qq.png" alt="点击这里给我发消息" title="点击这里给我发消息"/></a> <span>客服1</span></li>
-                    <li><a target="_blank" href="http://wpa.qq.com/msgrd?v=3&uin=123456789&site=qq&menu=yes"><img border="0" src="images/qq.png" alt="点击这里给我发消息" title="点击这里给我发消息"/></a><span>客服2</span> </li>
-                    <li><a target="_blank" href="http://wpa.qq.com/msgrd?v=3&uin=123456789&site=qq&menu=yes"><img border="0" src="images/qq.png" alt="点击这里给我发消息" title="点击这里给我发消息"/></a> <span>客服3</span></li>
-                    <li><a target="_blank" href="http://wpa.qq.com/msgrd?v=3&uin=123456789&site=qq&menu=yes"><img border="0" src="images/qq.png" alt="点击这里给我发消息" title="点击这里给我发消息"/></a> <span>客服4</span></li>
-                    <li style="border:none;"><span>电话：400-000-0000</span> </li>
-                </ul>
-            </div>
-        </div>
-    </div>
 
+    <%--在线聊天--%>
     <div class="chatContainer">
         <div class="chatBtn">
             <i class="iconfont icon-xiaoxi1"></i>
@@ -373,23 +355,59 @@
 
     function giveGood(touser) {
         goodurl = "MyFollowManager/good.action";
-        var toform = $(touser).parent().parent().parent().parent();
-        $(toform).attr('action',goodurl);
-        $(toform).submit();
+        var gtoid = $(touser).parent().parent().prev().val();
+        // $(toform).attr('action',goodurl);
+        // $(toform).submit();
+        $.ajax({
+            async : false, //设置同步
+            type : 'POST',
+            url : goodurl,
+            data : {followedid:gtoid},
+            success : function(result){
+                if (result=='yes'){
+                    alert('点赞成功');
+                }
+                else if (result=='no'){
+                    alert('点赞失败，未知异常');
+                }
+            },
+            error : function(result){
+                alert('点赞失败，连接异常');
+            }
+        });
+        location.href="MyFollowManager/getlist.action";
     }
 
     function cancelFollow(touser) {
+        if (!confirm("确定取消关注该用户？")){
+            return false;
+        }
         cancelurl = "MyFollowManager/change.action";
-        var toform = $(touser).parent().parent().parent().parent();
-        $(toform).attr('action',cancelurl);
-        $(toform).submit();
+        var ftoid = $(touser).parent().parent().prev().val();
+        // $(toform).attr('action',cancelurl);
+        // $(toform).submit();
+        $.ajax({
+            async : false, //设置同步
+            type : 'POST',
+            url : cancelurl,
+            data : {followedid:ftoid},
+            success : function(result){
+                if (result=='no'){
+                    alert('取关失败，未知异常');
+                }
+            },
+            error : function(result){
+                alert('取关失败，连接异常');
+            }
+        });
+        location.href="MyFollowManager/getlist.action";
     }
 
     function chatApply(touser) {
         var toid = $(touser).parent().parent().prev().val();
         var uname = $(touser).parent().parent().next().val();
         var chatid = '#'+toid;
-        if (toid==$(chatid).val()){
+        if (toid==$(".chatBox-list").children(chatid).val()){
             alert('对方已在聊天列表中！');
         }
         else if (confirm('是否发起聊天？')){
@@ -398,10 +416,13 @@
     }
 
     function getDetails(touser) {
-        detailurl = "MyFollowManager/chat.action";
-        var toform = $(touser).parent().parent().parent().parent();
-        $(toform).attr('action',detailurl);
-        $(toform).submit();
+
+        var taid = $(touser).parent().parent().prev().val();
+        alert(taid);
+        detailurl = "personalManager/showTaInforn.action?taId="+taid;
+        // $(toform).attr('action',detailurl);
+        // $(toform).submit();
+        location.href=detailurl;
     }
 
     $(".chatBox").hide();
@@ -410,5 +431,7 @@
 
 </script>
 </body>
+
+
 </html>
 

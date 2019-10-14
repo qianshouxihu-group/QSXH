@@ -55,7 +55,7 @@
                 <div class="layui-input-inline" style="width:150px">
                     <select name="uedu" id="uedu" lay-verify="required">
                         <option value=""></option>
-                        <option value="高中及以下">高中及以下</option>
+                        <option value="高中">高中</option>
                         <option value="专科">专科</option>
                         <option value="本科">本科</option>
                         <option value="硕士">硕士</option>
@@ -73,10 +73,14 @@
     </div>
     <!-- 数据表格开始 -->
     <div class="layui-card-body"  >
-        <div style="display: none;" id="userToolBar">
-            <button type="button" class="layui-btn layui-btn-sm" lay-event="add">增加</button>
-            <button class="layui-btn layui-btn-sm layui-btn-danger" lay-event="getCheckData">批量删除用户</button>
-        </div>
+
+        <%--    超级管理员和中级管理员才能操作--%>
+        <c:if test="${sessionScope.manager.roleid=='1' || sessionScope.manager.roleid=='7'}" var="flag" scope="session">
+            <div style="display: none;" id="userToolBar">
+                <button class="layui-btn layui-btn-sm layui-btn-danger" lay-event="getCheckData">批量删除用户</button>
+            </div>
+        </c:if>
+
         <table class="layui-table" lay-filter="test" id="demo" align="center">
         </table>
     </div>
@@ -111,13 +115,13 @@
                            class="layui-input">
                 </div>
             </div>
-            <div class="layui-inline">
-                <label class="layui-form-label">体重:</label>
-                <div class="layui-input-inline">
-                    <input type="text" name="uweight" autocomplete="off"
-                           class="layui-input">
-                </div>
-            </div>
+<%--            <div class="layui-inline">--%>
+<%--                <label class="layui-form-label">体重:</label>--%>
+<%--                <div class="layui-input-inline">--%>
+<%--                    <input type="text" name="uweight" autocomplete="off"--%>
+<%--                           class="layui-input">--%>
+<%--                </div>--%>
+<%--            </div>--%>
         </div>
         <div class="layui-form-item">
             <div class="layui-inline">
@@ -191,8 +195,9 @@
             <div class="layui-inline">
                 <label class="layui-form-label">出生日期:</label>
                 <div class="layui-input-inline">
-                    <input type="text" name="ubirthday" lay-verify="required" autocomplete="off"
-                           class="layui-input">
+<%--                    <input type="text" name="ubirthday" lay-verify="required" autocomplete="off"--%>
+<%--                           class="layui-input">--%>
+                    <input type="text" name="ubirthday" id="ubirthday" lay-verify="date" placeholder="yyyy-MM-dd" autocomplete="off" class="layui-input">
                 </div>
             </div>
         </div>
@@ -201,7 +206,7 @@
                 <label class="layui-form-label">学历</label>
                 <div class="layui-input-block" style="width:150px">
                     <select name="uedu"  lay-verify="required">
-                        <option value="高中及以下">高中及以下</option>
+                        <option value="高中">高中</option>
                         <option value="专科">专科</option>
                         <option value="本科">本科</option>
                         <option value="硕士">硕士</option>
@@ -222,7 +227,7 @@
         <div class="layui-form-item" style="text-align: center;">
             <div class="layui-input-block">
                 <button type="button" class="layui-btn layui-btn-normal layui-btn-sm layui-icon layui-icon-release" lay-filter="doSubmit" lay-submit="">提交</button>
-                <button type="reset" class="layui-btn layui-btn-warm layui-btn-sm layui-icon layui-icon-refresh" >重置</button>
+<%--                <button type="reset" class="layui-btn layui-btn-warm layui-btn-sm layui-icon layui-icon-refresh" >重置</button>--%>
             </div>
         </div>
     </form>
@@ -233,11 +238,17 @@
 </body>
 <%--行操作按钮--%>
 <script id="barDemo" type="text/html">
-    <div class="layui-btn-container">
-    <button class="layui-btn layui-btn-sm" lay-event="edit">编辑</button>
-    <button class="layui-btn layui-btn-sm layui-btn-danger" lay-event="delete">删除</button>
-    <button class="layui-btn layui-btn-sm layui-btn-warm" lay-event="resetpwd">重置密码</button>
-    </div>
+
+<%--    超级管理员和中级管理员才能操作--%>
+    <c:if test="${sessionScope.manager.roleid=='1' || sessionScope.manager.roleid=='7'}" var="flag" scope="session">
+        <div class="layui-btn-container">
+            <button class="layui-btn layui-btn-sm" lay-event="edit">编辑</button>
+            <button class="layui-btn layui-btn-sm layui-btn-danger" lay-event="delete">删除</button>
+            <button class="layui-btn layui-btn-sm layui-btn-warm" lay-event="resetpwd">重置密码</button>
+        </div>
+    </c:if>
+
+
 </script>
 
 <script>
@@ -297,6 +308,10 @@
                 })
             }
         });
+
+        laydate.render({
+            elem: '#ubirthday' //指定元素
+        });
     });
 </script>
 <script >
@@ -305,8 +320,8 @@
         var form = layui.form;
         table.render({
             elem: '#demo'
-            ,height: 312
-            ,limit: 3
+            ,limits:[5,10]
+            ,limit: 5
             ,toolbar:"#userToolBar"
             ,id: 'docReload'
             ,url: '<%=path%>testManager/userselect.action' //数据接口

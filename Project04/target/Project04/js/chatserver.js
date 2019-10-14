@@ -23,7 +23,6 @@
 				//显示在线状态
                 alert('连接成功')
 
-
 			};
 
 			//接收到消息的回调方法
@@ -69,7 +68,7 @@
 			messages = JSON.parse(message);
 
 			//判断是否为申请通知
-			if(messages.type == "apply" || messages.type == 4){
+			if(messages.type == "apply" ){
 			    if (confirm('是否接受来自 '+ messages.content +' 的聊天申请？')){
                     sendMessage(messages.content,messages.fromid,'agree');
                 }
@@ -77,19 +76,34 @@
                     sendMessage(messages.content,messages.fromid,'refuse');
                 }
 			}
-			else if (messages.type == 'img'){
-				showReceiveImage(messages.content, messages.time);
+			else if (messages.type == 'img'|| messages.type == 'text'){
+				var inputId = '#'+messages.fromid;
+				if (chatState=='close'){
+					$(".chatBtn").click();
+                    $(".chatBox-list").children(inputId).next().click();
+				}
+				else if (chatState=='show'&&messages.fromid!=toid){
+					$(".chat-return").click();
+                    $(".chatBox-list").children(inputId).next().click();
+				}
+				else if (chatState=='list') {
+                    $(".chatBox-list").children(inputId).next().click();
+				}
+				else if (messages.type == 'img') {
+					showReceiveImage(messages.content, messages.time);
+				}
+				else if (messages.type == 'text'){
+					showReceiveMessage(messages.content, messages.time);
+				}
+
 			}
 			else if(messages.type == 'agree'){
 				alert(messages.content + '同意了您的聊天请求');
-				showChatList();
+				showChatList(messages.toid);
 			}
 			else if (messages.type == 'refuse'){
 				alert(messages.content + '拒绝了您的聊天请求');
 			}
-			else if(messages.type == 0 ||messages.type == -1 || messages.type == 'text'){
-                showReceiveMessage(messages.content, messages.time);
-            }
 
 		}
 		
@@ -106,14 +120,14 @@
 			}));
 		}
 
-		//将消息显示在网页上
+		//展示文字和表情消息
 		function showReceiveMessage(content, time) {
 
 			$(".chatBox-content-demo").append("<div class=\"clearfloat\"><div class=\"author-name\">\n" +
 				"<small class=\"chat-date\">"+
 				time + "</small></div><div class=\"left\">" +
 				"<div class=\"chat-avatars\"><img src=" +
-				"\"img/icon01.png\"" + " alt=\"头像\"></div><div class=\"chat-message\">" +
+				"\"images/icon01.png\"" + " alt=\"头像\"></div><div class=\"chat-message\">" +
 				content + "</div></div></div>");
 
 			//聊天框默认最底部
@@ -129,7 +143,7 @@
 				"<small class=\"chat-date\">"+
 				time + "</small></div><div class=\"left\">" +
 				"<div class=\"chat-avatars\"><img src=" +
-				"\"img/icon01.png\"" + " alt=\"头像\"></div><div class=\"chat-message\"><img src=\""+
+				"\"images/icon01.png\"" + " alt=\"头像\"></div><div class=\"chat-message\"><img src=\""+
 				url+"\" alt=\"\"></div></div></div>");
 
 			//聊天框默认最底部
@@ -162,34 +176,7 @@
 			window.open('', '_self');
 			window.close();
 		}
-		
-		//使用ajax获取当前用户的所有好友
-		function getAllRelations(){
-			var allRelations = null;
-			var currentUser = {};
-			currentUser.userId = nowuserid;
-			$.ajax({
-				async : false, //设置同步
-				type : 'POST',
-				url : serverurl+'/getRelations',
-				data : currentUser,
-				dataType : 'json',
-				success : function(result) {
-					if (result!=null) {
-						allRelations = result.relations;
-					}
-					else{
-						alert('查询错误');
-					}
-				},
-				error : function(result) {
-					alert('查询错误');
-				}
-				});
-			//划重点划重点，这里的eval方法不同于prase方法，外面加括号
-			allRelations = eval("("+allRelations+")");
-			return allRelations;
-		}
+
 
 		//上下线通知
 		function onLineStatusNotice(type){
@@ -205,17 +192,74 @@
 			}
 			sendMessage(content,usersId,type);
 		}
-		
-		function addThisUser(userId){
-			var text = document.getElementById('addFriendMessage').value;
-			var usersId = new Array();
-			usersId[0] = userId;
-			sendMessage(text,usersId,5);
-		}
-		
-		//ajax获取两用户之间的消息记录
-		function getMessageRecordBetweenUsers(userId){
 
+		//通过ajax获取聊天记录
+		function getMessages(mfromid,mtoid) {
+			var messagesData;
+			$.ajax({
+				async : false, //设置同步
+				type : 'POST',
+				url : 'ChatOnline/messages.action',
+				data : {fromid:mfromid,toid:mtoid},
+				dataType : 'json',
+				success : function(result){
+					messagesData = result;
+				},
+				error : function(result){
+					alert('获取聊天记录异常');
+				}
+			});
+			return messagesData;
 		}
 
+		//展示聊天记录
+		function showMessages(smfromid,smtoid,fromimg,toimg) {
+			var messagesList = getMessages(smfromid,smtoid);
+			for (i = 0; i < messagesList.length; i++) {
+				//取到每一条记录
+				var chatMessage = messagesList[i];
+				//判断是否是收到还是发出，这里是发出，展示在右边
+				if (chatMessage.fromid==smfromid){
+					//判断消息类型
+					if (chatMessage.type=='img'){
+						$(".chatBox-content-demo").append("<div class=\"clearfloat\">" +
+							"<div class=\"author-name\"><small class=\"chat-date\">"+
+							chatMessage.time +"</small> </div> " +
+							"<div class=\"right\"> <div class=\"chat-message\"><img src=" + chatMessage.content + "></div> " +
+							"<div class=\"chat-avatars\"><img src=\""+fromimg+"\" alt=\"头像\" /></div> </div> </div>");
+					}
+					else {
+						$(".chatBox-content-demo").append("<div class=\"clearfloat\">" +
+							"<div class=\"author-name\"><small class=\"chat-date\">"+
+							chatMessage.time +"</small> </div> " +
+							"<div class=\"right\"> <div class=\"chat-message\"> " +
+							chatMessage.content + " </div><div class=\"chat-avatars\"><img src=\""+
+							fromimg + "\" alt=\"头像\" /></div> </div> </div>");
+					}
+
+				}
+				//收到，展示在左边
+				else {
+					//图片类型，获取图片
+					if (chatMessage.type=='img'){
+						$(".chatBox-content-demo").append("<div class=\"clearfloat\"><div class=\"author-name\">" +
+							"<small class=\"chat-date\">"+
+							chatMessage.time + "</small></div><div class=\"left\">" +
+							"<div class=\"chat-avatars\"><img src=" +
+							toimg + " alt=\"头像\"></div><div class=\"chat-message\"><img src=\""+
+							chatMessage.content+"\" alt=\"\"></div></div></div>");
+					}
+					else {
+						$(".chatBox-content-demo").append("<div class=\"clearfloat\"><div class=\"author-name\">\n" +
+							"<small class=\"chat-date\">"+
+							chatMessage.time + "</small></div><div class=\"left\">" +
+							"<div class=\"chat-avatars\"><img src=" +
+							toimg + " alt=\"头像\"></div><div class=\"chat-message\">" +
+							chatMessage.content + "</div></div></div>");
+					}
+
+				}
+
+			}
+		}
       
