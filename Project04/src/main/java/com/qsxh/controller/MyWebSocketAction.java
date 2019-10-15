@@ -63,12 +63,14 @@ public class MyWebSocketAction implements WebSocketHandler{
 
         String toid = chatMessage.getToid();
         String type = chatMessage.getType();
-        String toType = chatMessage.getContent();
+//        String toType = chatMessage.getContent();
 
-        if (type.equals("push")){
+        if (type.equals("push"))
+        {
             System.out.println("websocket执行系统推送");
+            System.out.println("要推送的类型是："+toid);
             //根据toid（类型）查询所有用户id
-            switch (toType)
+            switch (toid)
             {
                 case "all":
                     userids = informDao.findAll("ol");
@@ -91,6 +93,7 @@ public class MyWebSocketAction implements WebSocketHandler{
             TextMessage msg = new TextMessage("newPush");//json格式
             for (String userid : userids)
             {
+                System.out.println("===执行发送给"+userid);
                 //for循环发送实时消息
                 sendMessageToUser(userid , msg);
             }

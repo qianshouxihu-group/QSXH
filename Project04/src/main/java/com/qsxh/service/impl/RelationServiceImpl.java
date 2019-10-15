@@ -36,10 +36,15 @@ public class RelationServiceImpl implements RelationService {
 
         TblRelation result = relationDao.findRelation(relation);
 
+        String toid = relation.getFtoid();
 
-        if (result==null){
+        boolean param = toid==null||toid.equals("") ? false : true;
+
+        if (result==null&&param){
             relationDao.addRelation(relation);
-            result = relationDao.findRelation(relation);
+            result = relation;
+            result.setFfollow("72");
+            result.setFgood("62");
         }
 
         User user = userDao.getUser(relation.getFtoid());

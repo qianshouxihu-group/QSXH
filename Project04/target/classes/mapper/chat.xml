@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.qsxh.dao.ChatUserDao">
+
+    <!--查找聊天列表-->
+    <select id="findUser" resultType="com.qsxh.entity.TblUser">
+        SELECT tu.userid,tu.uname,tu.uimgurl,tu.uonline
+        FROM tblchatuser tcu,tbluser tu
+        WHERE (tcu.fromid = #{userid} AND tcu.toid=tu.userid)
+        OR (tcu.toid = #{userid} AND tcu.fromid=tu.userid)
+        GROUP BY tu.userid
+    </select>
+
+    <!-- 添加到聊天列表-->
+    <insert id="addChat" parameterType="com.qsxh.entity.TblChatMessage">
+        INSERT INTO tblchatuser (fromid, toid) VALUES (#{toid}, #{fromid})
+    </insert>
+
+    <!-- 删除聊天好友-->
+    <delete id="deleteChat">
+        DELETE FROM tblchatuser WHERE (toid=#{toid} AND fromid=#{fromid})
+        OR (toid=#{fromid} AND fromid=#{toid})
+    </delete>
+
+    <!-- 修改用户上下线-->
+    <update id="changeLine" >
+        UPDATE tbluser SET uonline=#{uonline} WHERE userid=#{userid}
+    </update>
+
+    <!--新增聊天记录-->
+    <insert id="addMessage" parameterType="com.qsxh.entity.TblChatMessage">
+        INSERT INTO tblchatmessage (fromid, toid, type, time, content)
+        VALUES (#{fromid}, #{toid}, #{type}, #{time},#{content})
+    </insert>
+
+    <!--查询聊天记录-->
+    <select id="findMessage" resultType="com.qsxh.entity.TblChatMessage">
+        SELECT fromid,toid,type,time,content
+        FROM tblchatmessage WHERE (fromid=#{fromid} AND toid=#{toid})
+        OR (fromid=#{toid} and toid=#{fromid}) ORDER BY time
+    </select>
+
+    <!--删除聊天记录-->
+    <delete id="deleteMessage">
+        DELETE FROM tblchatmessage WHERE (toid=#{toid} AND fromid=#{fromid})
+        OR (toid=#{fromid} AND fromid=#{toid})
+    </delete>
+
+    <!--查找指定记录-->
+    <select id="findSomeone" parameterType="com.qsxh.entity.TblChatMessage" resultType="java.lang.String">
+        SELECT content FROM tblchatmessage WHERE type=#{type}
+        AND ( (fromid=#{fromid} and toid=#{toid})
+        OR (fromid=#{toid} and toid=#{fromid}) )
+    </select>
+
+</mapper>

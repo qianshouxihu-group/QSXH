@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.qsxh.dao.MatchUserDao">
+
+    <!--按所选条件查询-->
+    <select id="findUserByCondition" resultType="com.qsxh.entity.UserAndData" parameterType="com.qsxh.entity.UserAndData">
+        select * from tbluser u,tbldata d
+        <where>
+            u.userid = d.userid and d.usex = #{usex} and u.userid != #{userid}
+            <if test="null != uageRange"><!--年龄-->
+            and d.ubirthday &gt;= #{maxbir} and d.ubirthday &lt;= #{minbir}
+            </if>
+            <if test="null != uedu and '不限' != uedu"><!--学历-->
+                <bind name="Buedu" value="'%'+uedu+'%'"/>
+                and d.uedu like #{Buedu}
+            </if>
+            <if test="null != umerried and '不限' != umerried"><!--婚姻状况-->
+                <bind name="Bumerried" value="'%'+umerried+'%'"/>
+                and d.umerried like #{Bumerried}
+            </if>
+            <if test="null != uhouse and '不限' != uhouse"><!--住房-->
+                <bind name="Buhouse" value="'%'+uhouse+'%'"/>
+                and d.uhouse like #{Buhouse}
+            </if>
+            <if test="null != uwork and '不限' != uwork"><!--工作-->
+                <bind name="Buwork" value="'%'+uwork+'%'"/>
+                and d.uwork like #{Buwork}
+            </if>
+            <if test="null != uincome and '不限' != uincome"><!--收入-->
+                <bind name="Buincome" value="'%'+uincome+'%'"/>
+                and d.uincome like #{Buincome}
+            </if>
+            <if test="null != uaddress and '不限' != uaddress"><!--地址-->
+                <bind name="Buaddress" value="'%'+uaddress+'%'"/>
+                and d.uaddress like #{Buaddress}
+            </if>
+            <if test="condition == 'charm'"> <!--按魅力值排序-->
+                order by d.ucharm DESC
+            </if>
+            <if test="condition == 'member'"><!--按最新会员排序-->
+                and u.roleid = 4 order by u.regdate DESC
+            </if>
+            <if test="condition == 'user'"><!--按最新用户排序-->
+                and u.roleid = 3 order by u.regdate DESC
+            </if>
+            <if test="limit != null and limit != 0">
+                limit #{page},#{limit}
+            </if>
+
+        </where>
+    </select>
+
+    <!--符合一项以上条件的异性用户-->
+    <select id="SmartMatchAll" resultType="com.qsxh.entity.UserAndData" parameterType="com.qsxh.entity.UserCondition">
+        select * from tbluser u,tbldata d
+        <where>
+        u.userid = d.userid and d.usex = #{usex} and u.userid != #{userid} and ((d.ubirthday &gt;= #{maxBir}  and d.ubirthday &lt;= #{minBir})
+        or (d.uheight &gt;= #{minHeight} and d.uheight &lt;= #{maxHeight}) or d.umerried = #{umerried}
+        or d.uaddress like '%'#{uaddress}'%' or d.uedu = #{uedu} or d.ublood = #{ublood}
+        or d.uincome = #{uincome} or d.uwork = #{uwork} or d.uhouse = #{uhouse} or d.ucar = #{ucar})
+        </where>
+    </select>
+
+    <!--登录用户的择偶信息查询-->
+    <select id="findUserCondition" resultType="com.qsxh.entity.UserCondition">
+        select * from tblcplimit c,tbldata d where c.userid = d.userid and c.userid = #{userid}
+    </select>
+</mapper>
+

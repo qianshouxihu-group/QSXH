@@ -93,6 +93,7 @@ public class InformPushBizImpl implements IInformPushBiz {
                 //交给 消息生产者 将消息放入队列
                 //格式：itime,ititle,icontext,itype,itoid,iurl
                 inform.setItoid(userid);
+                inform.setIstate("32");
                 Gson gson = new Gson();
                 String informJson = gson.toJson(inform);
                 try {

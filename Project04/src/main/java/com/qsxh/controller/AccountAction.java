@@ -69,6 +69,9 @@ public class AccountAction extends ActionSupport {
         return "forward:/AccountAction/arec.action";//action之间跳转
     }
 
+
+
+
    @RequestMapping("/arec")//获取充值记录列表
     public ModelAndView aRecords(HttpServletRequest request, @RequestParam(value = "page", defaultValue = "1") Integer page) {
         ModelAndView mv = new ModelAndView();
@@ -139,7 +142,9 @@ public class AccountAction extends ActionSupport {
                     as.addVipenddate(uu.getUserid(),df.format(cal.getTime()));
                     //增加金币消费记录
                     as.recharge(new Account(df.format(date),"100","23","",uu.getUserid()));
+                    request.getSession().setAttribute("user",us.getUser(uu.getUserid()));
                     request.setAttribute("flog","success");
+
                 }else {
                     request.setAttribute("flog","error");
                 }
@@ -161,7 +166,9 @@ public class AccountAction extends ActionSupport {
                     as.addVipenddate(uu.getUserid(),df.format(cal.getTime()));
                     //增加金币消费记录
                     as.recharge(new Account(df.format(date),"500","23","",uu.getUserid()));
+                    request.getSession().setAttribute("user",us.getUser(uu.getUserid()));
                     request.setAttribute("flog","success");
+
                 }else {
                     request.setAttribute("flog","error");
                 }

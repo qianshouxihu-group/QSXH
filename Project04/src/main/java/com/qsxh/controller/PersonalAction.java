@@ -60,6 +60,7 @@ public class PersonalAction extends ActionSupport {
         upload.transferTo(new File(path,filename));
         personalData.setImgurl(filepath);  //接收保存路径
         personalData.setRoleid("6");       //更改状态
+        System.out.println(personalData.getUname()+"这是完善注册信息中的获取用户名");
         personalData.setIdcard(MD5.getMD5(personalData.getIdcard()));   //身份证加密
         boolean flag = iPersonalService.improvingRegData(personalData);
         String msg = null;
@@ -369,8 +370,6 @@ public class PersonalAction extends ActionSupport {
         userAndData.setLimitString("6");       //查询条数
         userAndData.setUsex(user.getUsex());    //性别
         List <UserAndData> memberlist = matchUserService.findUserByTime(userAndData);
-
-
 
         mv.addObject("basicInfor",personalData);
         mv.addObject("myPhotoList",list);
